@@ -1,8 +1,6 @@
 import React from 'react';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import './App.css';
-
-// Importación de las páginas
 import Dashboard from './pages/Dashboard/Dashboard';
 import Configuracion from './pages/Configuracion/Configuracion';
 import Perfil from './pages/Perfil/Perfil';

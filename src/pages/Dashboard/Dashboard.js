@@ -2,15 +2,12 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import Card from '../../components/Card/card';
 import './Dashboard.css'; 
-
-// Importamos los íconos desde la librería react-icons
 import { FiPieChart, FiPackage, FiUsers, FiBarChart2, FiSettings, FiUser } from 'react-icons/fi';
 
 function Dashboard() {
   return (
     <div className="dashboard-layout">
       
-      {/* ================= SIDEBAR ================= */}
       <aside className="sidebar">
         <h2>La Nutria</h2>
         <nav>
@@ -32,17 +29,15 @@ function Dashboard() {
         </nav>
       </aside>
 
-      {/* ================= ÁREA PRINCIPAL ================= */}
       <main className="main-area">
         
-        {/* TOPBAR */}
+
         <header className="topbar">
           <div className="user-icon">
             <FiUser size={20} color="white" />
           </div>
         </header>
 
-        {/* CONTENIDO DEL DASHBOARD */}
         <section className="content">
           <h1>Dashboard</h1>
           

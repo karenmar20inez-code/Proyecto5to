@@ -1,5 +1,5 @@
 .card-kpi {
-  background: white;
+  background: rgb(245, 180, 248);
   padding: 24px;
   border-radius: 16px;
   max-width: 320px;
@@ -9,18 +9,18 @@
 .card-kpi h3 {
   margin: 0;
   font-size: 18px;
-  color: #64748b;
+  color: #f6f7f9;
 }
 
 .card-valor {
   margin: 16px 0;
   font-size: 40px;
   font-weight: bold;
-  color: #2563eb;
+  color: #ffffff;
 }
 
 .card-descripcion {
   margin: 0;
   font-size: 14px;
-  color: #475569;
+  color: #000000;
 }

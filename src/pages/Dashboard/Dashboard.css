@@ -1,14 +1,14 @@
 .dashboard-layout {
   display: flex;
   height: 100vh;
-  background-color: #f5b8ee; 
+  background-color: #f685eb; 
   color: rgb(242, 240, 243);
   font-family: system-ui, -apple-system, sans-serif;
   overflow: hidden;
 }
 .sidebar {
   width: 240px;
-  background-color: #4a154b; 
+  background-color: #24013b; 
   padding: 24px 16px;
   display: flex;
   flex-direction: column;
@@ -50,7 +50,7 @@
 
 .topbar {
   height: 60px;
-  background-color: #3b0a3c; 
+  background-color: #24013b; 
   display: flex;
   justify-content: flex-end;
   align-items: center;
