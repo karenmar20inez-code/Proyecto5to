@@ -1,12 +1,11 @@
-import React from 'react';
-import './Card.css';
+import "./Card.css";
 
 function Card({ titulo, valor, descripcion }) {
   return (
-    <div className="Card-kpi">
+    <div className="card-kpi">
       <h3>{titulo}</h3>
-      <p className="Card-valor">{valor}</p>
-      <p className="Card-descripcion">{descripcion}</p>
+      <p className="card-valor">{valor}</p>
+      <p className="card-descripcion">{descripcion}</p>
     </div>
   );
 }

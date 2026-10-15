@@ -1,42 +1,26 @@
-.Card-kpi {
-  border: 1px solid rgb(250, 243, 243);
-  border-radius: 1rem;
-  padding: 24px 16px;
-  min-height: 20px; 
-  gap: 15px; 
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-  transition: box-shadow 0.3s ease, transform 0.3s ease;
-  background-color: transparent;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  text-align: center;
+.card-kpi {
+  background: white;
+  padding: 24px;
+  border-radius: 16px;
+  max-width: 320px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.12);
 }
 
-.Card-kpi:hover {
-  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.4);
-  transform: translateY(-5px);
-  background-color: rgba(255, 255, 255, 0.05);
-}
-
-.Card-kpi h3 {
+.card-kpi h3 {
   margin: 0;
-  font-size: 16px;
-  color: white;
-  text-transform: uppercase;
+  font-size: 18px;
+  color: #64748b;
+}
+
+.card-valor {
+  margin: 16px 0;
+  font-size: 40px;
   font-weight: bold;
+  color: #2563eb;
 }
 
-.Card-valor {
+.card-descripcion {
   margin: 0;
-  font-size: 38px; 
-  font-weight: bold;
-  color: rgb(10, 10, 10);
-}
-
-.Card-descripcion {
-  margin: 0;
-  font-size: 13px;
-  color: #000000;
+  font-size: 14px;
+  color: #475569;
 }
