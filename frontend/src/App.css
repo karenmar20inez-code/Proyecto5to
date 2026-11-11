@@ -1,0 +1,6 @@
+.loader-pantalla-completa {
+  position: fixed; inset: 0;
+  display: flex; justify-content: center; align-items: center;
+  background: var(--fondo);
+  z-index: 99999;
+}

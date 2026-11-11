@@ -1,0 +1,134 @@
+/* ==========================================
+   LAYOUT GENERAL · menú lateral de vidrio verde + barra superior
+========================================== */
+
+.dashboard-layout { display: flex; min-height: 100vh; color: var(--texto-2); }
+
+/* ---------- Menú lateral ---------- */
+.sidebar {
+  position: sticky; top: 0;
+  width: 276px; min-width: 276px; height: 100vh;
+  display: flex; flex-direction: column;
+  padding: var(--e4) var(--e3);
+  background: linear-gradient(180deg, rgba(143, 169, 143, 0.10), rgba(143, 169, 143, 0) 40%), var(--vidrio-navegacion);
+  backdrop-filter: var(--vidrio-blur);
+  -webkit-backdrop-filter: var(--vidrio-blur);
+  border-right: 1px solid var(--borde);
+  border-radius: 0 20px 20px 0;
+  box-shadow: 6px 0 28px rgba(8, 20, 15, 0.28);
+  overflow-y: auto; overflow-x: hidden;
+  z-index: 20;
+  transition: width 0.25s ease, min-width 0.25s ease, padding 0.25s ease;
+}
+
+/* Encabezado: identidad de La Nutria + botón de hamburguesa en la misma fila */
+.sidebar__encabezado {
+  position: relative;
+  display: flex; align-items: center; gap: var(--e2);
+  padding: 0 0 var(--e4); margin-bottom: var(--e1);
+  border-bottom: 1px solid var(--borde);
+}
+.sidebar__marca { flex: 1; min-width: 0; display: flex; align-items: center; gap: 10px; padding: var(--e1); text-decoration: none; position: relative; border-radius: 14px; }
+.sidebar__marca:hover .sidebar__logo-img { border-color: var(--beige); }
+.sidebar__boton-menu { width: 36px; height: 36px; border-radius: 10px; }
+.sidebar__boton-menu svg { width: 18px; height: 18px; }
+.sidebar__logo-img {
+  width: 44px; height: 44px; flex-shrink: 0;
+  object-fit: cover; border-radius: 14px;
+  border: 1px solid var(--borde-fuerte);
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.25);
+  background: var(--superficie-solida);
+}
+.sidebar__nombre { min-width: 0; font-size: var(--fs-md); font-weight: 700; color: var(--blanco); line-height: 1.15; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; animation: aparecer-texto 0.25s ease; }
+@keyframes aparecer-texto { from { opacity: 0; } to { opacity: 1; } }
+.sidebar__nombre small { display: block; font-size: 0.6875rem; font-weight: 500; color: var(--beige); }
+.sidebar h2 { display: none; }
+.sidebar nav { display: flex; flex-direction: column; gap: 2px; }
+.sidebar__seccion { margin: var(--e4) var(--e2) var(--e1); font-size: 0.6875rem; font-weight: 600; letter-spacing: 0.06em; text-transform: uppercase; color: var(--beige); white-space: nowrap; }
+
+.menu-item {
+  position: relative;
+  display: flex; align-items: center; gap: var(--e3);
+  min-height: 40px; padding: 0 var(--e3);
+  color: var(--texto-2); text-decoration: none; font-size: var(--fs-base); font-weight: 500;
+  border: 1px solid transparent; border-radius: 12px;
+  transition: background 0.2s ease, border-color 0.2s ease, color 0.2s ease;
+}
+.menu-item svg { width: 18px; height: 18px; color: var(--beige); flex-shrink: 0; }
+.menu-item__texto { white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.menu-item__texto { animation: aparecer-texto 0.25s ease; }
+.menu-item:hover { background: rgba(143, 169, 143, 0.14); border-color: var(--borde); color: var(--blanco); }
+.menu-item.active { background: rgba(79, 122, 90, 0.55); border-color: rgba(218, 204, 175, 0.38); color: var(--blanco); font-weight: 600; box-shadow: inset 3px 0 0 var(--beige); }
+.menu-item.active svg { color: var(--blanco); }
+
+.sidebar__usuario { margin-top: auto; padding: var(--e3) var(--e2) 0; border-top: 1px solid var(--borde); font-size: var(--fs-xs); color: var(--beige); display: flex; align-items: center; gap: var(--e2); position: relative; }
+.sidebar__usuario strong { display: block; color: var(--blanco); font-size: var(--fs-sm); }
+.sidebar__usuario-iniciales { width: 32px; height: 32px; flex-shrink: 0; border-radius: 50%; display: grid; place-items: center; background: rgba(143, 169, 143, 0.22); border: 1px solid var(--borde); color: var(--blanco); font-weight: 700; font-size: var(--fs-xs); }
+.sidebar__usuario-texto { min-width: 0; overflow: hidden; }
+
+/* ---------- Menú contraído: barra estrecha ---------- */
+.sidebar--colapsado { width: 76px; min-width: 76px; padding: var(--e4) var(--e2); overflow: visible; }
+.sidebar--colapsado .sidebar__encabezado { justify-content: center; }
+.sidebar--colapsado .sidebar__marca { flex: 0 0 auto; justify-content: center; }
+/* Contraído: el encabezado muestra solo la imagen; el botón para expandir queda en el borde */
+.sidebar--colapsado .sidebar__boton-menu {
+  position: absolute; right: -24px; top: 11px;
+  width: 30px; height: 30px; border-radius: 50%;
+  background: var(--superficie-solida); border-color: var(--borde-fuerte);
+  box-shadow: 0 4px 12px rgba(8, 20, 15, 0.35);
+  z-index: 2;
+}
+.sidebar--colapsado .sidebar__boton-menu svg { width: 16px; height: 16px; }
+.sidebar--colapsado .sidebar__boton-menu:hover { background: var(--verde-natural); color: var(--blanco); }
+.sidebar--colapsado .sidebar__nombre,
+.sidebar--colapsado .menu-item__texto,
+.sidebar--colapsado .sidebar__usuario-texto { display: none; }
+.sidebar--colapsado .sidebar__seccion { height: 1px; margin: var(--e3) var(--e2); padding: 0; overflow: hidden; color: transparent; background: var(--borde); }
+.sidebar--colapsado .menu-item { justify-content: center; padding: 0; min-height: 44px; }
+.sidebar--colapsado .sidebar__usuario { justify-content: center; padding-left: 0; padding-right: 0; }
+
+/* Tooltips con el nombre de la sección (solo contraído; también con teclado) */
+.sidebar--colapsado [data-tooltip]:hover::after,
+.sidebar--colapsado [data-tooltip]:focus-visible::after {
+  content: attr(data-tooltip);
+  position: absolute; left: calc(100% + 14px); top: 50%; transform: translateY(-50%);
+  padding: 6px 10px; white-space: nowrap;
+  font-size: var(--fs-sm); font-weight: 600; color: var(--blanco);
+  background: var(--superficie-solida); border: 1px solid var(--borde-fuerte); border-radius: 8px;
+  box-shadow: var(--sombra-md); pointer-events: none; z-index: 50;
+}
+/* La imagen no muestra tooltip: el botón de expandir está a su lado y tiene su propio título */
+.sidebar--colapsado .sidebar__marca[data-tooltip]:hover::after,
+.sidebar--colapsado .sidebar__marca[data-tooltip]:focus-visible::after { content: none; }
+
+/* ---------- Área principal (se ajusta sola al ancho del menú) ---------- */
+.main-area { flex: 1; min-width: 0; min-height: 100vh; display: flex; flex-direction: column; }
+.content { width: 100%; max-width: 1440px; min-width: 0; padding: var(--e5) var(--e6) var(--e7); margin: 0 auto; }
+.content h1 { margin: 0 0 var(--e5); font-size: var(--fs-xl); color: var(--blanco); }
+.content > p { max-width: 70ch; color: var(--texto-2); }
+
+/* Tarjetas KPI del dashboard (componente Card) */
+.cards-grid { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: var(--e4); width: 100%; margin-bottom: var(--e5); }
+.dashboard-loader { min-height: 300px; display: flex; align-items: center; justify-content: center; }
+
+@media (max-width: 1100px) {
+  .cards-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .content { padding: var(--e5) var(--e4) var(--e6); }
+}
+
+/* ---------- Móvil: el menú es un panel deslizable ---------- */
+@media (max-width: 860px) {
+  .sidebar, .sidebar--colapsado {
+    position: fixed; left: 0; top: 0; bottom: 0;
+    width: 272px; min-width: 272px; padding: var(--e4) var(--e3);
+    transform: translateX(-105%); transition: transform 0.25s ease;
+    background: rgba(20, 43, 34, 0.97);
+  }
+  .dashboard-layout--menu-abierto .sidebar { transform: none; }
+  .dashboard-layout--menu-abierto::after { content: ""; position: fixed; inset: 0; background: var(--velo); z-index: 15; }
+}
+
+@media (max-width: 640px) {
+  .cards-grid { grid-template-columns: minmax(0, 1fr); }
+  .content { padding: var(--e4) var(--e4) var(--e6); }
+}

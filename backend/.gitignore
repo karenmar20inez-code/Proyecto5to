@@ -1,0 +1,21 @@
+# Variables de entorno (contraseñas, URI de MongoDB Atlas)
+.env
+.env.*
+!.env.example
+
+# Dependencias (se reinstalan con npm install)
+node_modules/
+
+# Registros y temporales
+npm-debug.log*
+logs/
+*.log
+coverage/
+
+# Sistema operativo y editores
+.DS_Store
+Thumbs.db
+.vscode/
+
+# Respaldos (contienen datos clínicos cifrados)
+respaldos/

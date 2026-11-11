@@ -1,0 +1,34 @@
+/* Tabla de usuarios del sistema y gráficas de ejemplo (tema clínico claro) */
+.dashboard-estadisticas { width: 100%; padding-bottom: var(--e5); }
+.graficas-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: var(--e4); }
+
+.grafica-dashboard, .tabla-empleados {
+  min-width: 0; padding: var(--e5);
+  background: var(--superficie); border: 1px solid var(--borde); border-radius: var(--radio-lg); box-shadow: var(--sombra);
+}
+.grafica-dashboard h2, .tabla-empleados-header h2 { margin: 0; font-size: var(--fs-md); color: var(--texto); }
+.grafica-descripcion, .tabla-empleados-header p { margin: var(--e1) 0 var(--e4); font-size: var(--fs-sm); color: var(--texto-3); }
+.grafica-contenedor { position: relative; width: 100%; height: 260px; }
+
+.tabla-empleados { margin-top: var(--e4); }
+.tabla-empleados-header { display: flex; justify-content: space-between; align-items: center; gap: var(--e4); margin-bottom: var(--e4); }
+.tabla-empleados-header p { margin-bottom: 0; }
+.total-empleados { padding: 2px var(--e2); background: var(--azul-50); border: 1px solid var(--azul-100); color: var(--azul-700); border-radius: 999px; font-size: var(--fs-xs); font-weight: 600; white-space: nowrap; }
+.tabla-empleados .buscador-empleados { max-width: 420px; margin-bottom: var(--e4); }
+
+.tabla-usuarios { width: 100%; border-collapse: collapse; text-align: left; white-space: nowrap; font-size: var(--fs-sm); }
+.tabla-usuarios th { padding: var(--e2) var(--e3); background: var(--superficie-2); color: var(--texto-3); font-size: var(--fs-xs); font-weight: 600; text-transform: uppercase; letter-spacing: 0.03em; border-bottom: 1px solid var(--borde); }
+.tabla-usuarios td { padding: var(--e3); color: var(--texto-2); border-bottom: 1px solid var(--borde); }
+.tabla-usuarios tbody tr:hover { background: var(--superficie-2); }
+.id-empleado { color: var(--azul) !important; font-weight: 600; }
+.estado-activo, .estado-inactivo { display: inline-block; padding: 2px var(--e2); border-radius: 999px; font-size: var(--fs-xs); font-weight: 600; }
+.estado-activo { background: var(--exito-50); color: var(--exito); }
+.estado-inactivo { background: var(--peligro-50); color: var(--peligro); }
+.sin-resultados { padding: var(--e6) !important; text-align: center; color: var(--texto-3) !important; }
+.sin-resultados svg { display: block; margin: 0 auto var(--e2); }
+
+@media (max-width: 900px) { .graficas-grid { grid-template-columns: minmax(0, 1fr); } }
+@media (max-width: 600px) {
+  .grafica-dashboard, .tabla-empleados { padding: var(--e4); }
+  .tabla-empleados-header { align-items: flex-start; flex-direction: column; }
+}

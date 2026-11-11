@@ -1,0 +1,171 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* ==========================================================
+   LA NUTRIA · SISTEMA DE DISEÑO · VERDE NATURAL GLASSMORPHIC
+   - Verde oscuro #1F3D31: fondo, navegación e identidad
+   - Verde salvia #8FA98F: tinte de superficies secundarias y tarjetas
+   - Verde natural #4F7A5A: botones y elementos interactivos
+   - Beige #DACCAF: bordes, iconos, textos secundarios y acentos
+   - Blanco #FFFFFF: textos principales
+   - Vidrio sutil: tarjetas con tinte salvia poco transparente, desenfoque
+     moderado y bordes beige translúcidos (la lectura es prioritaria)
+   - Contrastes (WCAG 2.2 AA) sobre una tarjeta salvia ≈ #2F4C3E:
+     blanco 9.4:1 · beige 5.9:1 · blanco sobre botón verde natural 4.9:1
+   - Tipografía Inter · espaciado en múltiplos de 8 px
+========================================================== */
+
+:root {
+  /* Paleta de marca */
+  --verde-noche: #142B22;
+  --verde-oscuro: #1F3D31;
+  --verde-salvia: #8FA98F;
+  --verde-natural: #4F7A5A;
+  --verde-natural-hover: #436B4D;
+  --verde: var(--verde-oscuro);
+  --verde-claro: var(--verde-natural);
+  --beige: #DACCAF;
+  --blanco: #FFFFFF;
+
+  /* Superficies (vidrio con tinte salvia sobre el fondo verde oscuro) */
+  --fondo: #1F3D31;
+  --superficie: rgba(143, 169, 143, 0.14);
+  --superficie-2: rgba(143, 169, 143, 0.09);
+  --superficie-3: rgba(143, 169, 143, 0.20);
+  --superficie-solida: #24443A;          /* menús, tooltips y capas flotantes */
+  --vidrio-navegacion: rgba(20, 43, 34, 0.80);   /* menú lateral */
+  --vidrio-barra: rgba(24, 50, 40, 0.74);        /* barra superior y pestañas fijas */
+  --vidrio-modal: rgba(33, 62, 50, 0.92);        /* ventanas modales */
+  --velo: rgba(10, 22, 17, 0.58);                /* fondo oscurecido tras modales y menú móvil */
+  --borde: rgba(218, 204, 175, 0.18);
+  --borde-fuerte: rgba(218, 204, 175, 0.45);
+  --vidrio-blur: blur(14px) saturate(115%);
+
+  /* Texto (sobre verde) */
+  --texto: #FFFFFF;
+  --texto-2: #F2ECDF;
+  --texto-3: #DACCAF;
+
+  /* Acento de navegación e información (nombres históricos: --azul*) */
+  --azul: #FFFFFF;
+  --azul-700: #FFFFFF;
+  --azul-50: rgba(255, 255, 255, 0.14);
+  --azul-100: rgba(255, 255, 255, 0.30);
+  --azul-rgb: 255, 255, 255;
+
+  /* Estados (tonos claros legibles sobre verde) */
+  --exito: #A7E8C0;
+  --exito-50: rgba(167, 232, 192, 0.16);
+  --aviso: #F6CD8A;
+  --aviso-50: rgba(246, 205, 138, 0.16);
+  --aviso-borde: rgba(246, 205, 138, 0.55);
+  --peligro: #FFB8AE;
+  --peligro-50: rgba(255, 184, 174, 0.16);
+  --peligro-borde: rgba(255, 184, 174, 0.55);
+
+  /* Marca */
+  --marca: var(--verde-oscuro);
+  --marca-arena: #DACCAF;
+
+  /* Tipografía */
+  --font: 'Inter', system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+  --fs-xs: 0.75rem;   /* 12 */
+  --fs-sm: 0.8125rem; /* 13 */
+  --fs-base: 0.875rem;/* 14 */
+  --fs-md: 1rem;      /* 16 */
+  --fs-lg: 1.25rem;   /* 20 */
+  --fs-xl: 1.5rem;    /* 24 */
+  --fs-2xl: 1.875rem; /* 30 */
+  --lh: 1.5;
+
+  /* Espaciado (8 pt) */
+  --e1: 4px; --e2: 8px; --e3: 12px; --e4: 16px; --e5: 24px; --e6: 32px; --e7: 40px; --e8: 48px;
+
+  --radio-sm: 6px;
+  --radio: 8px;
+  --radio-lg: 12px;
+  --sombra: 0 8px 24px rgba(8, 20, 15, 0.22), inset 0 1px 0 rgba(255, 255, 255, 0.07);
+  --sombra-md: 0 14px 36px rgba(8, 20, 15, 0.32);
+  --foco: 0 0 0 3px rgba(var(--azul-rgb), 0.35);
+
+  /* ---- Alias de tokens anteriores (compatibilidad con pantallas existentes) ---- */
+  --esp-xs: var(--e1); --esp-sm: var(--e2); --esp-md: var(--e4); --esp-lg: var(--e5); --esp-xl: var(--e6);
+  --fs-pequeno: var(--fs-xs); --fs-texto: var(--fs-base); --fs-subtitulo-sm: var(--fs-md);
+  --fs-subtitulo: var(--fs-lg); --fs-display: var(--fs-xl); --fs-titulo: var(--fs-2xl);
+  --lh-texto: var(--lh); --lh-titulo: 1.25;
+  --color-texto: var(--texto-2); --color-texto-suave: var(--texto-3); --color-titulo: var(--texto);
+  --acento: var(--azul); --acento-rgb: var(--azul-rgb);
+  --arena: var(--beige); --arena-rgb: 218, 204, 175;
+  --verde-950: var(--texto); --verde-900: var(--texto); --verde-800: var(--verde-oscuro); --verde-700: var(--azul-700);
+  --verde-600: var(--azul); --verde-500: var(--azul); --verde-300: var(--exito);
+  --glass-bg: var(--superficie); --glass-bg-verde: var(--vidrio-barra);
+  --glass-borde: 1px solid var(--borde); --glass-borde-fuerte: var(--borde-fuerte);
+  --glass-blur: var(--vidrio-blur); --glass-sombra: var(--sombra); --glass-sombra-hover: var(--sombra-md);
+  --font-titulo: var(--font); --font-texto: var(--font);
+}
+
+* { box-sizing: border-box; }
+
+html { -webkit-text-size-adjust: 100%; }
+
+body {
+  margin: 0;
+  font-family: var(--font);
+  font-size: var(--fs-base);
+  line-height: var(--lh);
+  color: var(--texto-2);
+  background-color: var(--fondo);
+  /* Destellos beige y salvia, discretos, para que el vidrio se aprecie */
+  background-image:
+    radial-gradient(circle at 12% 10%, rgba(218, 204, 175, 0.14), transparent 34%),
+    radial-gradient(circle at 88% 16%, rgba(143, 169, 143, 0.24), transparent 36%),
+    radial-gradient(circle at 70% 92%, rgba(218, 204, 175, 0.08), transparent 38%),
+    linear-gradient(140deg, #142B22 0%, #1F3D31 50%, #19352A 100%);
+  background-attachment: fixed;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+h1, h2, h3, h4 {
+  font-family: var(--font);
+  color: var(--texto);
+  line-height: 1.25;
+  margin: 0;
+  font-weight: 600;
+  letter-spacing: -0.01em;
+}
+h1 { font-size: var(--fs-xl); }
+h2 { font-size: var(--fs-md); }
+h3 { font-size: var(--fs-base); }
+
+p { margin: 0; }
+small { font-size: var(--fs-xs); }
+a { color: var(--azul); }
+
+/* Foco visible accesible para teclado */
+:focus-visible {
+  outline: 2px solid var(--beige);
+  outline-offset: 2px;
+}
+
+hr { border: 0; height: 1px; margin: var(--e5) 0; background: var(--borde); }
+
+/* Solo para lectores de pantalla */
+.sr-only {
+  position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px;
+  overflow: hidden; clip: rect(0, 0, 0, 0); white-space: nowrap; border: 0;
+}
+
+/* Respeto a la preferencia de movimiento reducido */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { animation-duration: 0.01ms !important; transition-duration: 0.01ms !important; }
+}
+
+code { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; }
+
+/* Impresión de documentos clínicos */
+@media print {
+  body { background: #fff; color: #111; }
+  .no-imprimir { display: none !important; }
+}

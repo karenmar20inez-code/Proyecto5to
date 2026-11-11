@@ -1,0 +1,24 @@
+.layout {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  color: var(--color-texto);
+}
+
+.layout-body {
+  display: flex;
+  flex: 1;
+  min-height: 0;
+}
+
+.layout-content {
+  flex: 1;
+  overflow-y: auto;
+  padding: var(--esp-lg);
+}
+
+.page-title {
+  font-size: var(--fs-titulo);
+  margin: 0 0 var(--esp-md);
+  color: var(--acento);
+}

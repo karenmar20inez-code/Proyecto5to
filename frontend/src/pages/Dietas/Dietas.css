@@ -1,0 +1,12 @@
+.comidas-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: var(--e4); }
+.comida { display: flex; flex-direction: column; padding: var(--e4); background: var(--superficie-2); border: 1px solid var(--borde); border-radius: var(--radio); }
+.comida__tiempo { font-size: var(--fs-xs); font-weight: 600; letter-spacing: 0.04em; text-transform: uppercase; color: var(--azul); }
+.comida h3 { margin: var(--e1) 0 var(--e3); font-size: var(--fs-base); color: var(--texto); }
+.comida ul { margin: 0; padding: 0; list-style: none; }
+.comida li { display: flex; justify-content: space-between; gap: var(--e2); padding: 6px 0; font-size: var(--fs-sm); border-bottom: 1px dashed var(--borde); }
+.comida li:last-child { border-bottom: 0; }
+.comida li span:last-child { color: var(--texto); font-variant-numeric: tabular-nums; text-align: right; white-space: nowrap; }
+.comida--pendiente { justify-content: center; border-style: dashed; color: var(--texto-3); }
+.asignados { margin: 0; padding: 0; list-style: none; }
+.asignados li { display: flex; align-items: center; justify-content: space-between; gap: var(--e2); padding: var(--e2) 0; border-bottom: 1px solid var(--borde); }
+.asignar { display: flex; gap: var(--e2); margin-top: var(--e4); }

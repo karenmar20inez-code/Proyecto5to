@@ -1,0 +1,20 @@
+.tabla-cumplimiento th small { display: block; font-weight: 400; letter-spacing: 0; text-transform: none; color: var(--texto-3); }
+.tabla-cumplimiento th, .tabla-cumplimiento td { text-align: center; }
+.tabla-cumplimiento th:first-child, .tabla-cumplimiento td:first-child { text-align: left; white-space: nowrap; }
+.tabla-cumplimiento tfoot td { padding-top: var(--e4); font-size: var(--fs-xs); color: var(--texto-3); border-bottom: 0; }
+.sin-plan { color: var(--borde-fuerte) !important; }
+
+.marca {
+  display: inline-grid; place-items: center;
+  width: 32px; height: 32px;
+  font-size: var(--fs-base); font-style: normal; font-weight: 700;
+  border-radius: 50%; border: 1px solid var(--borde-fuerte);
+  background: var(--superficie); color: var(--texto-3); cursor: pointer;
+}
+button.marca:hover { border-color: var(--azul); }
+.marca--cumplio { background: var(--exito-50); border-color: var(--exito); color: var(--exito); }
+.marca--parcial { background: var(--aviso-50); border-color: var(--aviso-borde); color: var(--aviso); }
+.marca--no { background: var(--peligro-50); border-color: var(--peligro-borde); color: var(--peligro); }
+.leyenda { display: flex; flex-wrap: wrap; gap: var(--e4); font-size: var(--fs-xs); }
+.leyenda span { display: inline-flex; align-items: center; gap: var(--e1); }
+.leyenda .marca { width: 24px; height: 24px; font-size: var(--fs-xs); cursor: default; }

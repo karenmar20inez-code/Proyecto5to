@@ -1,0 +1,91 @@
+/* BARRA SUPERIOR */
+.topbar {
+  position: sticky; top: 0; z-index: 10;
+  min-height: 60px;
+  padding: var(--e2) var(--e6);
+  display: flex; align-items: center; gap: var(--e4);
+  background: var(--vidrio-barra);
+  backdrop-filter: var(--vidrio-blur);
+  -webkit-backdrop-filter: var(--vidrio-blur);
+  border-bottom: 1px solid var(--borde);
+}
+
+/* Botón de hamburguesa: abre/cierra el menú lateral */
+.boton-menu {
+  display: inline-flex; align-items: center; justify-content: center; flex-shrink: 0;
+  width: 40px; height: 40px; padding: 0;
+  color: var(--beige); background: rgba(143, 169, 143, 0.12);
+  border: 1px solid var(--borde); border-radius: 12px; cursor: pointer;
+  transition: background 0.2s ease, color 0.2s ease, border-color 0.2s ease;
+}
+.boton-menu:hover { background: rgba(143, 169, 143, 0.24); color: var(--blanco); border-color: var(--borde-fuerte); }
+.boton-menu svg { width: 20px; height: 20px; }
+
+.topbar__buscador {
+  position: relative;
+  flex: 1; max-width: 440px; height: 38px;
+  padding: 0 var(--e3);
+  display: flex; align-items: center; gap: var(--e2);
+  background: rgba(0, 0, 0, 0.18);
+  border: 1px solid var(--borde);
+  border-radius: 12px;
+  color: var(--texto-3);
+}
+.topbar__buscador:focus-within { border-color: var(--beige); box-shadow: 0 0 0 3px rgba(218, 204, 175, 0.3); }
+.topbar__buscador input { width: 100%; background: transparent; border: none; outline: none; color: var(--texto); font: var(--fs-base) var(--font); }
+.topbar__resultados {
+  position: absolute; top: calc(100% + 4px); left: 0; right: 0;
+  margin: 0; padding: var(--e1); list-style: none;
+  background: var(--superficie); border: 1px solid var(--borde); border-radius: var(--radio); box-shadow: var(--sombra-md);
+}
+.topbar__resultados a, .topbar__resultados span { display: block; padding: var(--e2) var(--e3); border-radius: var(--radio-sm); color: var(--texto); text-decoration: none; font-size: var(--fs-sm); }
+.topbar__resultados a:hover, .topbar__resultados a:focus { background: rgba(255, 255, 255, 0.10); }
+.topbar__resultados small { color: var(--texto-3); margin-left: var(--e2); }
+
+.topbar__acciones { margin-left: auto; display: flex; align-items: center; gap: var(--e2); position: relative; }
+
+.topbar__notificaciones, .topbar__avatar {
+  display: flex; align-items: center; justify-content: center;
+  cursor: pointer; border-radius: 50%;
+}
+.topbar__notificaciones {
+  position: relative; width: 38px; height: 38px;
+  color: var(--texto-2); background: transparent; border: 1px solid var(--borde); text-decoration: none;
+}
+.topbar__notificaciones:hover { background: var(--superficie-2); }
+.topbar__contador {
+  position: absolute; top: -4px; right: -4px;
+  min-width: 18px; height: 18px; padding: 0 4px;
+  display: grid; place-items: center;
+  background: var(--peligro); color: #fff; border-radius: 999px; font-size: 0.6875rem; font-weight: 700;
+}
+.topbar__avatar {
+  width: 38px; height: 38px;
+  background: var(--azul-50); border: 1px solid var(--azul-100); color: var(--azul-700);
+  font-size: var(--fs-sm); font-weight: 700;
+}
+
+.topbar__dropdown {
+  position: absolute; top: calc(100% + 8px); right: 0;
+  width: 260px; padding: var(--e2);
+  display: flex; flex-direction: column; gap: 2px;
+  background: var(--superficie); border: 1px solid var(--borde); border-radius: var(--radio-lg); box-shadow: var(--sombra-md);
+  z-index: 102;
+}
+.topbar__cuenta { display: flex; flex-direction: column; gap: 2px; padding: var(--e2) var(--e3) var(--e3); border-bottom: 1px solid var(--borde); margin-bottom: var(--e1); }
+.topbar__cuenta strong { color: var(--texto); font-size: var(--fs-base); }
+.topbar__cuenta span { color: var(--texto-3); font-size: var(--fs-xs); }
+.topbar__opcion {
+  display: flex; align-items: center; gap: var(--e2);
+  padding: var(--e2) var(--e3);
+  background: transparent; border: none; border-radius: var(--radio-sm);
+  color: var(--texto-2); font: var(--fs-base) var(--font); text-decoration: none; text-align: left; cursor: pointer;
+}
+.topbar__opcion:hover { background: var(--superficie-2); color: var(--texto); }
+.topbar__opcion svg { width: 16px; height: 16px; color: var(--texto-3); }
+.topbar__salir, .topbar__salir svg { color: var(--peligro); }
+
+@media (max-width: 860px) { .topbar { padding: var(--e2) var(--e4); } }
+@media (max-width: 520px) { .topbar__buscador { max-width: none; } }
+
+.cards-grid, .dashboard-estadisticas { position: relative; z-index: 1; }

@@ -1,0 +1,12 @@
+/* TARJETA KPI */
+.card-kpi {
+  min-width: 0;
+  padding: var(--e4) var(--e5);
+  background: var(--superficie);
+  border: 1px solid var(--borde);
+  border-radius: var(--radio-lg);
+  box-shadow: var(--sombra);
+}
+.card-kpi h3 { margin: 0; font-size: var(--fs-xs); font-weight: 600; letter-spacing: 0.04em; color: var(--texto-3); }
+.card-valor { margin: var(--e2) 0 var(--e1); font-size: var(--fs-2xl); font-weight: 600; line-height: 1.2; color: var(--texto); font-variant-numeric: tabular-nums; }
+.card-descripcion { margin: 0; font-size: var(--fs-sm); line-height: var(--lh); color: var(--texto-3); }
