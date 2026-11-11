@@ -1,51 +1,42 @@
 import { createContext, useCallback, useContext, useEffect, useMemo, useState } from 'react';
 import { comidasEvaluables } from '../data/dietas';
-import { pacientesApi, adherenciaApi, medicionesApi } from '../services/api';
+import { pacientesApi, adherenciaApi, medicionesApi, dietasApi } from '../services/api';
 
 /* ==========================================
    ESTADO GLOBAL DEL CONSULTORIO
-   - Pacientes, mediciones y adherencia: MongoDB Atlas vía API
-   - Antecedentes: localStorage (ligados al _id del paciente)
+   - Pacientes, mediciones, adherencia y catálogo de dietas: MongoDB Atlas vía API
+   - Antecedentes: MongoDB vía API (pestaña Historia del expediente,
+     versionados y cifrados). Ningún dato clínico se guarda en el navegador.
 ========================================== */
-
-const CLAVE = 'la-nutria:datos:v2';
-
-const DATOS_INICIALES = { antecedentes: {} };
-
-function leer() {
-  try {
-    const crudo = window.localStorage.getItem(CLAVE);
-    const guardado = crudo ? JSON.parse(crudo) : {};
-    return { antecedentes: guardado.antecedentes || {} };
-  } catch {
-    return DATOS_INICIALES;
-  }
-}
 
 /* El frontend usa `id`; Mongo devuelve `_id` */
 const normalizar = (p) => ({ ...p, id: p._id });
-
-function guardar(datos) {
-  try {
-    window.localStorage.setItem(CLAVE, JSON.stringify(datos));
-  } catch {
-    /* almacenamiento no disponible: se trabaja solo en memoria */
-  }
-}
 
 const llaveCumplimiento = (r) => `${r.pacienteId}|${r.dietaId}|${r.fecha}|${r.tiempo}`;
 
 const NutriContext = createContext(null);
 
 export function NutriProvider({ children }) {
-  const [datos, setDatos] = useState(leer);
   const [pacientes, setPacientes] = useState([]);
   const [cargandoPacientes, setCargandoPacientes] = useState(true);
   const [errorPacientes, setErrorPacientes] = useState('');
   const [cumplimiento, setCumplimiento] = useState({});
   const [ultimasMediciones, setUltimasMediciones] = useState({});
+  const [dietas, setDietas] = useState([]);
+  const [cargandoDietas, setCargandoDietas] = useState(true);
+  const [errorDietas, setErrorDietas] = useState('');
 
-  useEffect(() => guardar(datos), [datos]);
+  /* Catálogo de dietas activas (MongoDB). Se usa en Pacientes, Dietas, Cumplimiento y Plan nutricional. */
+  const recargarDietas = useCallback(async () => {
+    try {
+      setDietas(await dietasApi.listar());
+      setErrorDietas('');
+    } catch (error) {
+      setErrorDietas(error.message);
+    } finally {
+      setCargandoDietas(false);
+    }
+  }, []);
 
   /* Vuelve a pedir la lista al servidor (se llama tras cada cambio) */
   const recargarPacientes = useCallback(async () => {
@@ -83,12 +74,21 @@ export function NutriProvider({ children }) {
     recargarPacientes();
     recargarCumplimiento();
     recargarMediciones();
-  }, [recargarPacientes, recargarCumplimiento, recargarMediciones]);
+    recargarDietas();
+  }, [recargarPacientes, recargarCumplimiento, recargarMediciones, recargarDietas]);
 
   const acciones = useMemo(() => ({
     recargarPacientes,
     recargarCumplimiento,
     recargarMediciones,
+    recargarDietas,
+
+    /* Crea (sin clave) o actualiza (con clave) una dieta y refresca el catálogo */
+    async guardarDieta(clave, datos) {
+      const guardada = clave ? await dietasApi.actualizar(clave, datos) : await dietasApi.crear(datos);
+      await recargarDietas();
+      return guardada;
+    },
 
     async agregarPaciente(paciente) {
       const creado = await pacientesApi.crear(paciente);
@@ -104,17 +104,7 @@ export function NutriProvider({ children }) {
 
     async eliminarPaciente(id) {
       await pacientesApi.eliminar(id);
-      // Limpia los antecedentes locales; el historial clínico del servidor se conserva
-      setDatos((d) => {
-        const antecedentes = { ...d.antecedentes };
-        delete antecedentes[id];
-        return { ...d, antecedentes };
-      });
       await recargarPacientes();
-    },
-
-    guardarAntecedentes(pacienteId, antecedentes) {
-      setDatos((d) => ({ ...d, antecedentes: { ...d.antecedentes, [pacienteId]: antecedentes } }));
     },
 
     /* Actualización optimista: se refleja al instante y se revierte si el servidor falla */
@@ -140,13 +130,17 @@ export function NutriProvider({ children }) {
         window.alert(error.message);
       }
     },
-  }), [recargarPacientes, recargarCumplimiento, recargarMediciones]);
+  }), [recargarPacientes, recargarCumplimiento, recargarMediciones, recargarDietas]);
+
+  /* Busca una dieta del catálogo por su clave (la que guarda el paciente en dietaId) */
+  const buscarDieta = useCallback((id) => (id ? dietas.find((d) => d.id === id) || null : null), [dietas]);
 
   const valor = useMemo(
     () => ({
-      ...datos, pacientes, cargandoPacientes, errorPacientes, cumplimiento, ultimasMediciones, ...acciones,
+      pacientes, cargandoPacientes, errorPacientes, cumplimiento, ultimasMediciones,
+      dietas, cargandoDietas, errorDietas, buscarDieta, ...acciones,
     }),
-    [datos, pacientes, cargandoPacientes, errorPacientes, cumplimiento, ultimasMediciones, acciones]
+    [pacientes, cargandoPacientes, errorPacientes, cumplimiento, ultimasMediciones, dietas, cargandoDietas, errorDietas, buscarDieta, acciones]
   );
 
   return <NutriContext.Provider value={valor}>{children}</NutriContext.Provider>;

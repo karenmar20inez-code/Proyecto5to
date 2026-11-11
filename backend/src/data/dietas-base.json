@@ -1,0 +1,659 @@
+[
+  {
+    "clave": "semana-2",
+    "nombre": "Dieta semana 2",
+    "inicio": "2026-11-02",
+    "fin": "2026-11-08",
+    "nota": "Puedes usar una cucharadita de mayonesa o sal y limón.",
+    "dias": [
+      {
+        "dia": "Lunes",
+        "fecha": "2026-11-02",
+        "comidas": [
+          {
+            "tiempo": "Desayuno",
+            "platillo": "Omelette con espinacas y aguacate",
+            "ingredientes": [
+              {
+                "alimento": "Huevo",
+                "cantidad": "4 piezas (132 g)"
+              },
+              {
+                "alimento": "Espinacas",
+                "cantidad": "½ taza (15 g)"
+              },
+              {
+                "alimento": "Jitomate",
+                "cantidad": "1 rebanada (10 g)"
+              },
+              {
+                "alimento": "Pan integral",
+                "cantidad": "2 piezas (70 g)"
+              },
+              {
+                "alimento": "Aguacate",
+                "cantidad": "⅛ pieza (23.5 g)"
+              }
+            ]
+          },
+          {
+            "tiempo": "Medio día",
+            "platillo": "Fresas con yogur y granola",
+            "ingredientes": [
+              {
+                "alimento": "Yogur sin azúcar",
+                "cantidad": "1 taza (240 ml)"
+              },
+              {
+                "alimento": "Granola",
+                "cantidad": "1 cucharada (10.3 g)"
+              },
+              {
+                "alimento": "Fresas",
+                "cantidad": "7 piezas (84 g)"
+              }
+            ]
+          },
+          {
+            "tiempo": "Comida",
+            "platillo": "Sopa de lentejas y chayote relleno con queso y verduras",
+            "ingredientes": [
+              {
+                "alimento": "Lentejas cocidas",
+                "cantidad": "1 taza (180 g)"
+              },
+              {
+                "alimento": "Chayote",
+                "cantidad": "1 taza (120 g)"
+              },
+              {
+                "alimento": "Queso panela",
+                "cantidad": "1 rebanada (40 g)"
+              },
+              {
+                "alimento": "Tomate rojo",
+                "cantidad": "10 g"
+              },
+              {
+                "alimento": "Cebolla blanca",
+                "cantidad": "5 g"
+              },
+              {
+                "alimento": "Tortilla de maíz",
+                "cantidad": "3 piezas (60 g)"
+              }
+            ]
+          },
+          {
+            "tiempo": "Media tarde",
+            "platillo": "Avena con leche y plátano",
+            "ingredientes": [
+              {
+                "alimento": "Plátano",
+                "cantidad": "1 pieza (120 g)"
+              },
+              {
+                "alimento": "Avena cruda",
+                "cantidad": "¼ taza (20 g)"
+              },
+              {
+                "alimento": "Canela",
+                "cantidad": ""
+              },
+              {
+                "alimento": "Leche descremada",
+                "cantidad": "½ taza (100 ml)"
+              }
+            ]
+          },
+          {
+            "tiempo": "Cena",
+            "platillo": "Molletes con pico de gallo",
+            "ingredientes": [
+              {
+                "alimento": "Queso panela",
+                "cantidad": "2 rebanadas (80 g)"
+              },
+              {
+                "alimento": "Pan bolillo sin migajón",
+                "cantidad": "1 pieza (60 g)"
+              },
+              {
+                "alimento": "Frijoles bayos refritos",
+                "cantidad": "½ taza (35 g)"
+              },
+              {
+                "alimento": "Jitomate",
+                "cantidad": "30 g"
+              },
+              {
+                "alimento": "Cebolla blanca",
+                "cantidad": "10 g"
+              },
+              {
+                "alimento": "Chile serrano",
+                "cantidad": "5 g"
+              },
+              {
+                "alimento": "Cilantro",
+                "cantidad": ""
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "dia": "Martes",
+        "fecha": "2026-11-03",
+        "comidas": [
+          {
+            "tiempo": "Al despertar",
+            "platillo": "Agua",
+            "ingredientes": [
+              {
+                "alimento": "Agua",
+                "cantidad": "300 ml"
+              }
+            ]
+          },
+          {
+            "tiempo": "Desayuno",
+            "platillo": "Huevo con chorizo",
+            "ingredientes": [
+              {
+                "alimento": "Huevo",
+                "cantidad": "2 piezas (100 g)"
+              },
+              {
+                "alimento": "Chorizo de cerdo",
+                "cantidad": "15 g"
+              },
+              {
+                "alimento": "Chile serrano",
+                "cantidad": "40 g"
+              },
+              {
+                "alimento": "Tortilla de maíz",
+                "cantidad": "1 pieza (30 g)"
+              },
+              {
+                "alimento": "Aceite de canola",
+                "cantidad": "½ cucharadita (2.5 ml)"
+              }
+            ]
+          },
+          {
+            "tiempo": "Medio día",
+            "platillo": "Yogur con fruta",
+            "ingredientes": [
+              {
+                "alimento": "Yogur natural sin azúcar",
+                "cantidad": "½ taza (180 g)"
+              },
+              {
+                "alimento": "Manzana",
+                "cantidad": "1 pieza (100 g)"
+              },
+              {
+                "alimento": "Avena cruda",
+                "cantidad": "¼ taza (20 g)"
+              }
+            ]
+          },
+          {
+            "tiempo": "Comida",
+            "platillo": "Arroz blanco con pollo",
+            "ingredientes": [
+              {
+                "alimento": "Pollo a la plancha",
+                "cantidad": "120 g"
+              },
+              {
+                "alimento": "Arroz al vapor",
+                "cantidad": "½ taza (94 g)"
+              },
+              {
+                "alimento": "Brócoli cocido",
+                "cantidad": "½ taza (92 g)"
+              },
+              {
+                "alimento": "Aceite de oliva",
+                "cantidad": "½ cucharadita (2.5 ml)"
+              },
+              {
+                "alimento": "Pimiento rojo o verde",
+                "cantidad": "¼ taza (50 g)"
+              },
+              {
+                "alimento": "Frijoles cocidos",
+                "cantidad": "1 taza (180 g)"
+              }
+            ]
+          },
+          {
+            "tiempo": "Media tarde",
+            "platillo": "Fresas con yogur",
+            "ingredientes": [
+              {
+                "alimento": "Fresas",
+                "cantidad": "5 piezas (100 g)"
+              },
+              {
+                "alimento": "Mora",
+                "cantidad": "½ taza (75 g)"
+              },
+              {
+                "alimento": "Yogur griego sin azúcar",
+                "cantidad": "1 pieza (145 ml)"
+              },
+              {
+                "alimento": "Galletas Marías",
+                "cantidad": "5 piezas"
+              }
+            ]
+          },
+          {
+            "tiempo": "Cena",
+            "platillo": "Quesadilla con espinaca",
+            "ingredientes": [
+              {
+                "alimento": "Tortilla de maíz",
+                "cantidad": "1 pieza (30 g)"
+              },
+              {
+                "alimento": "Queso Oaxaca bajo en grasa",
+                "cantidad": "3 rebanadas (90 g)"
+              },
+              {
+                "alimento": "Espinaca",
+                "cantidad": "2 tazas (120 g)"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "dia": "Miércoles",
+        "fecha": "2026-11-04",
+        "comidas": [
+          {
+            "tiempo": "Al despertar",
+            "platillo": "Agua",
+            "ingredientes": [
+              {
+                "alimento": "Agua",
+                "cantidad": "300 ml"
+              }
+            ]
+          },
+          {
+            "tiempo": "Desayuno",
+            "platillo": "Chilaquiles con huevo",
+            "ingredientes": [
+              {
+                "alimento": "Salsa de tomate",
+                "cantidad": "70 g"
+              },
+              {
+                "alimento": "Tortilla de maíz",
+                "cantidad": "2 piezas (60 g)"
+              },
+              {
+                "alimento": "Crema agria",
+                "cantidad": "1 cucharada"
+              },
+              {
+                "alimento": "Cebolla morada",
+                "cantidad": "10 g"
+              },
+              {
+                "alimento": "Aceite de canola",
+                "cantidad": "½ cucharadita (2.5 ml)"
+              },
+              {
+                "alimento": "Cilantro",
+                "cantidad": "1 g"
+              },
+              {
+                "alimento": "Huevo",
+                "cantidad": "2 piezas (100 g)"
+              }
+            ]
+          },
+          {
+            "tiempo": "Medio día",
+            "platillo": "Licuado de plátano",
+            "ingredientes": [
+              {
+                "alimento": "Leche semidescremada",
+                "cantidad": "240 ml"
+              },
+              {
+                "alimento": "Plátano",
+                "cantidad": "½ pieza"
+              },
+              {
+                "alimento": "Galletas Marías",
+                "cantidad": "5 piezas (20 g)"
+              }
+            ]
+          },
+          {
+            "tiempo": "Comida",
+            "platillo": "Alambre de res",
+            "ingredientes": [
+              {
+                "alimento": "Carne de res",
+                "cantidad": "120 g"
+              },
+              {
+                "alimento": "Pimiento rojo o verde",
+                "cantidad": "¼ taza (45 g)"
+              },
+              {
+                "alimento": "Cebolla blanca",
+                "cantidad": "27 g"
+              },
+              {
+                "alimento": "Zanahoria",
+                "cantidad": "¼ taza (40 g)"
+              },
+              {
+                "alimento": "Tortilla de maíz",
+                "cantidad": "2 piezas (60 g)"
+              },
+              {
+                "alimento": "Frijoles cocidos",
+                "cantidad": "1 taza (180 g)"
+              },
+              {
+                "alimento": "Aceite de canola",
+                "cantidad": "½ cucharadita (2.5 ml)"
+              }
+            ]
+          },
+          {
+            "tiempo": "Media tarde",
+            "platillo": "Yogur natural con avena y manzana",
+            "ingredientes": [
+              {
+                "alimento": "Yogur natural sin azúcar",
+                "cantidad": "½ taza"
+              },
+              {
+                "alimento": "Avena cruda",
+                "cantidad": "¼ taza (20 g)"
+              },
+              {
+                "alimento": "Manzana",
+                "cantidad": "1 pieza (100 g)"
+              }
+            ]
+          },
+          {
+            "tiempo": "Cena",
+            "platillo": "Calabacitas con queso a la mexicana",
+            "ingredientes": [
+              {
+                "alimento": "Calabacita italiana",
+                "cantidad": "1 pieza (110 g)"
+              },
+              {
+                "alimento": "Queso fresco",
+                "cantidad": "3 rebanadas (120 g)"
+              },
+              {
+                "alimento": "Cebolla blanca",
+                "cantidad": "10 g"
+              },
+              {
+                "alimento": "Tomate rojo",
+                "cantidad": "10 g"
+              },
+              {
+                "alimento": "Tortilla de maíz",
+                "cantidad": "1 pieza (30 g)"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "dia": "Jueves",
+        "fecha": "2026-11-05",
+        "comidas": [
+          {
+            "tiempo": "Desayuno",
+            "platillo": "Huevo con ejotes a la mexicana",
+            "ingredientes": [
+              {
+                "alimento": "Huevo",
+                "cantidad": "2 piezas (100 g)"
+              },
+              {
+                "alimento": "Ejotes cocidos",
+                "cantidad": "½ taza (65 g)"
+              },
+              {
+                "alimento": "Cebolla blanca",
+                "cantidad": "10 g"
+              },
+              {
+                "alimento": "Tomate rojo",
+                "cantidad": "10 g"
+              },
+              {
+                "alimento": "Aceite en aerosol",
+                "cantidad": "5 ml"
+              },
+              {
+                "alimento": "Frijoles refritos",
+                "cantidad": "⅓ taza (40 g)"
+              },
+              {
+                "alimento": "Sanissimo",
+                "cantidad": "3 piezas"
+              }
+            ]
+          },
+          {
+            "tiempo": "Medio día",
+            "platillo": "Licuado de fresa",
+            "ingredientes": [
+              {
+                "alimento": "Leche semidescremada",
+                "cantidad": "240 ml"
+              },
+              {
+                "alimento": "Fresas",
+                "cantidad": "4 piezas (50 g)"
+              },
+              {
+                "alimento": "Azúcar",
+                "cantidad": "½ cucharadita (2 g)"
+              }
+            ]
+          },
+          {
+            "tiempo": "Comida",
+            "platillo": "Fajitas de pollo con morrón",
+            "ingredientes": [
+              {
+                "alimento": "Pechuga de pollo asada",
+                "cantidad": "120 g"
+              },
+              {
+                "alimento": "Pimiento rojo o verde",
+                "cantidad": "¼ taza (45 g)"
+              },
+              {
+                "alimento": "Cebolla picada",
+                "cantidad": "2 cucharadas (10 g)"
+              },
+              {
+                "alimento": "Arroz blanco cocido",
+                "cantidad": "½ taza (100 g)"
+              },
+              {
+                "alimento": "Sanissimo",
+                "cantidad": "2 piezas"
+              }
+            ]
+          },
+          {
+            "tiempo": "Media tarde",
+            "platillo": "Verduras cocidas",
+            "ingredientes": [
+              {
+                "alimento": "Calabacita italiana",
+                "cantidad": "½ pieza (55 g)"
+              },
+              {
+                "alimento": "Chayote",
+                "cantidad": "½ taza (60 g)"
+              },
+              {
+                "alimento": "Papa amarilla",
+                "cantidad": "50 g"
+              }
+            ]
+          },
+          {
+            "tiempo": "Cena",
+            "platillo": "Atún con ensalada de verduras",
+            "ingredientes": [
+              {
+                "alimento": "Atún",
+                "cantidad": "2 latas (180 g)"
+              },
+              {
+                "alimento": "Chícharo",
+                "cantidad": "10 g"
+              },
+              {
+                "alimento": "Elote",
+                "cantidad": "10 g"
+              },
+              {
+                "alimento": "Papa",
+                "cantidad": "10 g"
+              },
+              {
+                "alimento": "Zanahoria",
+                "cantidad": "10 g"
+              },
+              {
+                "alimento": "Sanissimo",
+                "cantidad": "3 piezas"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "dia": "Viernes",
+        "fecha": "2026-11-06",
+        "comidas": [
+          {
+            "tiempo": "Desayuno",
+            "platillo": "Huevo con ejotes a la mexicana",
+            "ingredientes": [
+              {
+                "alimento": "Huevo",
+                "cantidad": "2 piezas (100 g)"
+              },
+              {
+                "alimento": "Ejotes cocidos",
+                "cantidad": "½ taza (65 g)"
+              },
+              {
+                "alimento": "Cebolla",
+                "cantidad": "10 g"
+              },
+              {
+                "alimento": "Tomate rojo",
+                "cantidad": "10 g"
+              },
+              {
+                "alimento": "Aceite de canola",
+                "cantidad": "½ cucharadita"
+              },
+              {
+                "alimento": "Tortilla de maíz",
+                "cantidad": "3 piezas (60 g)"
+              }
+            ]
+          },
+          {
+            "tiempo": "Medio día",
+            "platillo": "Plátano con yogur",
+            "ingredientes": [
+              {
+                "alimento": "Plátano",
+                "cantidad": "1 pieza (120 g)"
+              },
+              {
+                "alimento": "Yogur natural de leche descremada",
+                "cantidad": "200 ml"
+              }
+            ]
+          },
+          {
+            "tiempo": "Comida",
+            "platillo": "Ejotes a la mexicana con pollo",
+            "ingredientes": [
+              {
+                "alimento": "Pollo deshebrado",
+                "cantidad": "1½ tazas (225 g)"
+              },
+              {
+                "alimento": "Ejotes crudos",
+                "cantidad": "½ taza"
+              },
+              {
+                "alimento": "Cebolla",
+                "cantidad": "3 g"
+              },
+              {
+                "alimento": "Aceite",
+                "cantidad": "1 cucharadita (5 ml)"
+              },
+              {
+                "alimento": "Arroz blanco cocido",
+                "cantidad": "1 taza (200 g)"
+              }
+            ]
+          },
+          {
+            "tiempo": "Media tarde",
+            "platillo": "Melón",
+            "ingredientes": [
+              {
+                "alimento": "Melón",
+                "cantidad": "1 taza (150 g)"
+              }
+            ]
+          },
+          {
+            "tiempo": "Cena",
+            "platillo": null,
+            "pendiente": "No se alcanzó a distinguir en la fotografía del plan.",
+            "ingredientes": []
+          }
+        ]
+      },
+      {
+        "dia": "Sábado",
+        "fecha": "2026-11-07",
+        "comidas": [],
+        "pendiente": "Sin alimentos registrados en el plan."
+      },
+      {
+        "dia": "Domingo",
+        "fecha": "2026-11-08",
+        "comidas": [],
+        "pendiente": "Sin alimentos registrados en el plan."
+      }
+    ]
+  }
+]

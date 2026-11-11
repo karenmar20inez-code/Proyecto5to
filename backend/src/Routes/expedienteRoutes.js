@@ -19,6 +19,7 @@ const laboratorio = require('../Controllers/laboratorioController');
 const planeacion = require('../Controllers/planeacionController');
 const alerta = require('../Controllers/alertaController');
 const catalogo = require('../Controllers/catalogoController');
+const dieta = require('../Controllers/dietaController');
 const listados = require('../Controllers/listadosController');
 const Auditoria = require('../Models/Auditoria');
 const { controlador, exigirId } = require('../Services/http');
@@ -124,6 +125,13 @@ const catalogos = express.Router();
 catalogos.get('/', catalogo.sistemas);
 catalogos.get('/:sistema', catalogo.buscar);
 
+/* /api/dietas · catálogo de menús semanales (leer: cualquier sesión; editar: personal clínico) */
+const dietas = express.Router();
+dietas.get('/', dieta.listar);
+dietas.get('/:clave', dieta.obtener);
+dietas.post('/', exigirPermiso('clinico:escribir'), dieta.crear);
+dietas.put('/:clave', exigirPermiso('clinico:escribir'), dieta.actualizar);
+
 /* /api/fhir (solo lectura) */
 const fhirRouter = express.Router();
 fhirRouter.get('/Patient/:pacienteId', accesoPaciente, expediente.fhirPaciente);
@@ -151,5 +159,5 @@ auditoria.get('/', exigirPermiso('administracion'), controlador(async (req, res)
 module.exports = {
   citasPaciente, expedientePaciente, mediciones, evaluaciones, citas, adherencias,
   calculos: calculosRouter, estadisticas: estadisticasRouter, antecedentes, consultas, laboratorios,
-  diagnosticos, objetivos, planes, consentimientos, alertas, catalogos, fhir: fhirRouter, reportes, auditoria, expedientes,
+  diagnosticos, objetivos, planes, consentimientos, alertas, catalogos, dietas, fhir: fhirRouter, reportes, auditoria, expedientes,
 };

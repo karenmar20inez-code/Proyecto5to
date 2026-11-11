@@ -10,3 +10,28 @@
 .asignados { margin: 0; padding: 0; list-style: none; }
 .asignados li { display: flex; align-items: center; justify-content: space-between; gap: var(--e2); padding: var(--e2) 0; border-bottom: 1px solid var(--borde); }
 .asignar { display: flex; gap: var(--e2); margin-top: var(--e4); }
+
+/* ---------- Editor de dietas (modal) ---------- */
+.editor-dieta__dia { display: flex; flex-direction: column; gap: var(--e3); }
+.editor-dieta__comida { margin: 0; padding: var(--e3) var(--e4) var(--e4); min-width: 0; background: rgba(143, 169, 143, 0.08); border: 1px solid var(--borde); border-radius: 12px; }
+.editor-dieta__fila { display: grid; grid-template-columns: minmax(120px, 0.6fr) minmax(0, 1.4fr) auto; gap: var(--e3); align-items: end; }
+.editor-dieta__quitar { min-height: 40px; }
+.editor-dieta__ingredientes { display: flex; flex-direction: column; gap: var(--e2); margin-top: var(--e3); }
+.editor-dieta__ingrediente { display: grid; grid-template-columns: minmax(0, 1.3fr) minmax(0, 1fr) auto; gap: var(--e2); }
+.editor-dieta__ingrediente input {
+  width: 100%; min-height: 36px; padding: 0 var(--e3); font: var(--fs-sm) var(--font); color: var(--texto);
+  background: rgba(0, 0, 0, 0.18); border: 1px solid rgba(255, 255, 255, 0.24); border-radius: var(--radio); outline: none;
+}
+.editor-dieta__ingrediente input::placeholder { color: rgba(242, 236, 223, 0.55); }
+.editor-dieta__ingrediente input:focus { border-color: var(--beige); box-shadow: 0 0 0 3px rgba(218, 204, 175, 0.28); }
+.editor-dieta__ingredientes > .boton { align-self: flex-start; }
+.editor-dieta__acciones-dia { display: flex; flex-wrap: wrap; gap: var(--e2); }
+.editor-dieta__archivar, .editor-dieta__confirmar { margin-right: auto; }
+.editor-dieta__confirmar { display: inline-flex; flex-wrap: wrap; align-items: center; gap: var(--e2); font-size: var(--fs-sm); color: var(--peligro); }
+@media (max-width: 640px) {
+  .editor-dieta__fila { grid-template-columns: minmax(0, 1fr) auto; }
+  .editor-dieta__fila .campo:nth-child(2) { grid-column: 1 / -1; grid-row: 2; }
+  .editor-dieta__ingrediente { grid-template-columns: minmax(0, 1fr) minmax(0, 0.8fr) auto; }
+}
+.encabezado-acciones .selector { width: auto; min-width: 200px; max-width: 280px; }
+@media (max-width: 640px) { .encabezado-acciones .selector { max-width: none; width: 100%; } }

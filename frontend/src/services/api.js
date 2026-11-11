@@ -87,6 +87,14 @@ export const pacientesApi = {
   eliminar: (id) => del(`/pacientes/${id}`),
 };
 
+/* Catálogo de dietas (menús semanales) guardado en MongoDB */
+export const dietasApi = {
+  listar: (params) => get('/dietas', params),
+  obtener: (clave) => get(`/dietas/${encodeURIComponent(clave)}`),
+  crear: (dieta) => post('/dietas', dieta),
+  actualizar: (clave, cambios) => put(`/dietas/${encodeURIComponent(clave)}`, cambios),
+};
+
 export const expedienteApi = {
   listar: () => get('/expedientes'),
   ficha: (pacienteId) => get(`/pacientes/${pacienteId}/expediente`),

@@ -1,17 +1,100 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
-import { FiPrinter, FiUserPlus, FiX } from 'react-icons/fi';
+import { FiPrinter, FiUserPlus, FiX, FiPlus, FiEdit2, FiRefreshCw } from 'react-icons/fi';
 import Layout from '../../components/Layout/Layout';
-import { DIETAS, comidasEvaluables } from '../../data/dietas';
+import { comidasEvaluables } from '../../data/dietas';
 import { useNutri, nombreCompleto, formatoFecha } from '../../context/NutriContext';
+import { useAuth } from '../../context/AuthContext';
+import EditorDieta from './EditorDieta';
 import './Dietas.css';
 
 function Dietas() {
-  const { pacientes, actualizarPaciente } = useNutri();
-  const [dietaId, setDietaId] = useState(DIETAS[0].id);
-  const dieta = DIETAS.find((d) => d.id === dietaId);
-  const [diaActivo, setDiaActivo] = useState(dieta.dias[0].fecha);
+  const {
+    pacientes, actualizarPaciente,
+    dietas, cargandoDietas, errorDietas, recargarDietas, guardarDieta,
+  } = useNutri();
+  const { puede } = useAuth();
+  const editable = puede('clinico:escribir');
+
+  const [dietaId, setDietaId] = useState('');
+  const [diaActivo, setDiaActivo] = useState('');
   const [porAsignar, setPorAsignar] = useState('');
+  const [editor, setEditor] = useState(null); // null cerrado · { dieta: null } nueva · { dieta } edición
+
+  const dieta = dietas.find((d) => d.id === dietaId) || dietas[0] || null;
+
+  /* Al cambiar de dieta, se vuelve al primer día */
+  useEffect(() => { setDiaActivo(dieta?.dias[0]?.fecha || ''); }, [dieta?.id]); // eslint-disable-line react-hooks/exhaustive-deps
+
+  /* La asignación se guarda en el paciente (API) */
+  const cambiarDieta = (id, nuevaDietaId) =>
+    actualizarPaciente(id, { dietaId: nuevaDietaId }).catch((error) => window.alert(error.message));
+
+  const asignar = async () => {
+    if (!porAsignar || !dieta) return;
+    await cambiarDieta(porAsignar, dieta.id);
+    setPorAsignar('');
+  };
+
+  const guardar = async (datos) => {
+    const guardada = await guardarDieta(editor.dieta?.id, datos);
+    setDietaId(guardada.id);
+    setEditor(null);
+  };
+
+  const archivar = async () => {
+    await guardarDieta(editor.dieta.id, { activa: false });
+    setDietaId('');
+    setEditor(null);
+  };
+
+  const acciones = (
+    <>
+      {dietas.length > 1 && (
+        <select className="selector" value={dieta?.id || ''} onChange={(e) => setDietaId(e.target.value)} aria-label="Dieta">
+          {dietas.map((d) => <option key={d.id} value={d.id}>{d.nombre}</option>)}
+        </select>
+      )}
+      {editable && dieta && (
+        <button className="boton boton--secundario" onClick={() => setEditor({ dieta })}>
+          <FiEdit2 /> Editar dieta
+        </button>
+      )}
+      {editable && (
+        <button className="boton boton--primario" onClick={() => setEditor({ dieta: null })}>
+          <FiPlus /> Nueva dieta
+        </button>
+      )}
+      {dieta && (
+        <button className="boton boton--secundario" onClick={() => window.print()}>
+          <FiPrinter /> Imprimir
+        </button>
+      )}
+    </>
+  );
+
+  const editorModal = (
+    <EditorDieta abierto={!!editor} dieta={editor?.dieta || null} onGuardar={guardar}
+      onArchivar={editor?.dieta ? archivar : undefined} onCerrar={() => setEditor(null)} />
+  );
+
+  if (!dieta) {
+    return (
+      <Layout titulo="Dietas" acciones={acciones}>
+        <section className="panel">
+          {cargandoDietas ? <p className="vacio">Cargando dietas…</p> : errorDietas ? (
+            <p className="vacio">
+              {errorDietas}{' '}
+              <button className="boton boton--secundario boton--chico" onClick={recargarDietas}><FiRefreshCw /> Reintentar</button>
+            </p>
+          ) : (
+            <p className="vacio">Aún no hay dietas en el catálogo.{editable && ' Crea la primera con “Nueva dieta”.'}</p>
+          )}
+        </section>
+        {editorModal}
+      </Layout>
+    );
+  }
 
   const dia = dieta.dias.find((d) => d.fecha === diaActivo) || dieta.dias[0];
   const asignados = pacientes.filter((p) => p.dietaId === dieta.id);
@@ -19,33 +102,13 @@ function Dietas() {
 
   const totalComidas = dieta.dias.reduce((t, d) => t + comidasEvaluables(d).length, 0);
   const diasConPlan = dieta.dias.filter((d) => comidasEvaluables(d).length).length;
-
-  /* La asignación se guarda en el paciente (API) */
-  const cambiarDieta = (id, dietaId) =>
-    actualizarPaciente(id, { dietaId }).catch((error) => window.alert(error.message));
-
-  const asignar = async () => {
-    if (!porAsignar) return;
-    await cambiarDieta(porAsignar, dieta.id);
-    setPorAsignar('');
-  };
+  /* Qué falta por completar (días vacíos y comidas sin definir) */
+  const diasVacios = dieta.dias.filter((d) => !comidasEvaluables(d).length).map((d) => d.dia.toLowerCase());
+  const comidasPendientes = dieta.dias.flatMap((d) => d.comidas.filter((c) => !c.platillo).map((c) => `${c.tiempo.toLowerCase()} del ${d.dia.toLowerCase()}`));
+  const faltantes = [...diasVacios, ...comidasPendientes];
 
   return (
-    <Layout
-      titulo="Dietas"
-      acciones={
-        <>
-          {DIETAS.length > 1 && (
-            <select className="selector" value={dietaId} onChange={(e) => setDietaId(e.target.value)}>
-              {DIETAS.map((d) => <option key={d.id} value={d.id}>{d.nombre}</option>)}
-            </select>
-          )}
-          <button className="boton boton--secundario" onClick={() => window.print()}>
-            <FiPrinter /> Imprimir
-          </button>
-        </>
-      }
-    >
+    <Layout titulo="Dietas" acciones={acciones}>
       <div className="rejilla-aurea">
         {/* PLAN DEL DÍA */}
         <section className="panel">
@@ -76,17 +139,17 @@ function Dietas() {
           </div>
 
           {dia.comidas.length === 0 ? (
-            <div className="comida comida--pendiente vacio">{dia.pendiente}</div>
+            <div className="comida comida--pendiente vacio">{dia.pendiente || 'Sin alimentos registrados en el plan.'}</div>
           ) : (
             <div className="comidas-grid">
-              {dia.comidas.map((c) =>
+              {dia.comidas.map((c, n) =>
                 c.platillo ? (
-                  <article key={c.tiempo} className="comida">
+                  <article key={`${c.tiempo}-${n}`} className="comida">
                     <span className="comida__tiempo">{c.tiempo}</span>
                     <h3>{c.platillo}</h3>
                     <ul>
-                      {c.ingredientes.map((ing, n) => (
-                        <li key={n}>
+                      {c.ingredientes.map((ing, k) => (
+                        <li key={k}>
                           <span>{ing.alimento}</span>
                           <span>{ing.cantidad || 'Al gusto'}</span>
                         </li>
@@ -94,9 +157,9 @@ function Dietas() {
                     </ul>
                   </article>
                 ) : (
-                  <article key={c.tiempo} className="comida comida--pendiente">
+                  <article key={`${c.tiempo}-${n}`} className="comida comida--pendiente">
                     <span className="comida__tiempo">{c.tiempo}</span>
-                    <p style={{ margin: 'var(--esp-sm) 0 0' }}>{c.pendiente}</p>
+                    <p style={{ margin: 'var(--esp-sm) 0 0' }}>{c.pendiente || 'Por definir.'}</p>
                   </article>
                 )
               )}
@@ -117,10 +180,9 @@ function Dietas() {
               <dt>Comidas del día</dt><dd>{comidasEvaluables(dia).length}</dd>
               <dt>Pacientes</dt><dd>{asignados.length}</dd>
             </dl>
-            {diasConPlan < dieta.dias.length && (
+            {faltantes.length > 0 && (
               <p className="aviso">
-                Faltan alimentos para sábado, domingo y la cena del viernes. Complétalos antes
-                de entregar el plan.
+                Faltan alimentos en: {faltantes.join(', ')}. Complétalos antes de entregar el plan.
               </p>
             )}
           </section>
@@ -170,6 +232,7 @@ function Dietas() {
           </section>
         </div>
       </div>
+      {editorModal}
     </Layout>
   );
 }

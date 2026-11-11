@@ -66,6 +66,7 @@ app.use('/api/planes', expediente.planes);
 app.use('/api/consentimientos', expediente.consentimientos);
 app.use('/api/alertas', expediente.alertas);
 app.use('/api/catalogos', expediente.catalogos);
+app.use('/api/dietas', expediente.dietas);
 app.use('/api/fhir', expediente.fhir);
 app.use('/api/reportes', expediente.reportes);
 app.use('/api/auditoria', expediente.auditoria);

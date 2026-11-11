@@ -2,7 +2,6 @@ import { Link } from 'react-router-dom';
 import Layout from '../../components/Layout/Layout';
 import SelectorPaciente, { usePacienteSeleccionado } from '../../components/SelectorPaciente/SelectorPaciente';
 import { useNutri, resumenCumplimiento, formatoFecha, nombreCompleto } from '../../context/NutriContext';
-import { buscarDieta } from '../../data/dietas';
 import './Cumplimiento.css';
 
 const TIEMPOS = ['Al despertar', 'Desayuno', 'Medio día', 'Comida', 'Media tarde', 'Cena'];
@@ -15,7 +14,7 @@ const TEXTO = { cumplio: 'Cumplió', parcial: 'Parcial', no: 'No cumplió', '': 
 const tono = (pct) => (pct == null ? '' : pct >= 80 ? 'ok' : pct >= 50 ? 'medio' : 'no');
 
 function Cumplimiento() {
-  const { cumplimiento, marcarCumplimiento } = useNutri();
+  const { cumplimiento, marcarCumplimiento, buscarDieta } = useNutri();
   const [paciente, seleccionar] = usePacienteSeleccionado();
   const dieta = paciente ? buscarDieta(paciente.dietaId) : null;
 

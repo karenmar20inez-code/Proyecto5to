@@ -13,7 +13,6 @@ import {
   formatoFecha,
   ESTADOS_PACIENTE,
 } from '../../context/NutriContext';
-import { DIETAS, buscarDieta } from '../../data/dietas';
 import { useAuth } from '../../context/AuthContext';
 import { usuariosApi } from '../../services/api';
 
@@ -52,6 +51,7 @@ function Pacientes() {
     pacientes, ultimasMediciones, cumplimiento,
     cargandoPacientes, errorPacientes, recargarPacientes,
     agregarPaciente, actualizarPaciente, eliminarPaciente,
+    dietas, buscarDieta,
   } = useNutri();
   const { usuario, puede } = useAuth();
   const [profesionales, setProfesionales] = useState([]);
@@ -402,7 +402,8 @@ function Pacientes() {
               <label htmlFor="dietaId">Dieta asignada</label>
               <select id="dietaId" name="dietaId" value={form.dietaId} onChange={cambiar}>
                 <option value="">Sin asignar</option>
-                {DIETAS.map((d) => <option key={d.id} value={d.id}>{d.nombre}</option>)}
+                {dietas.map((d) => <option key={d.id} value={d.id}>{d.nombre}</option>)}
+                {form.dietaId && !buscarDieta(form.dietaId) && <option value={form.dietaId}>{form.dietaId} (archivada)</option>}
               </select>
             </div>
 

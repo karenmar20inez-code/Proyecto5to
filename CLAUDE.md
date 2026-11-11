@@ -18,6 +18,15 @@ evaluaciones, dietas, cumplimiento, laboratorio, agenda, alertas y reportes.
 - Pruebas: `npm test --prefix backend` (runner nativo `node --test`).
 - Compilación: `npm run build --prefix frontend`.
 - Verificación completa: `/verificar-nutria`.
+- Respaldo cifrado: `npm run respaldo --prefix backend` (conserva 30 en `backend/respaldos/`, ignorada por git).
+  Comprobar uno sin restaurar: `node backend/scripts/respaldo.js --verificar <archivo>`.
+  Programado a diario con `backend/scripts/respaldo-programado.cmd` (Programador de tareas de Windows).
+
+## Datos
+
+- Todo dato clínico vive en MongoDB; nada clínico se guarda en el navegador.
+- El catálogo de dietas está en la colección `dietas` (API `/api/dietas`). `clave` (p. ej. `semana-2`) es lo que
+  guardan `Paciente.dietaId`, `PlanNutricional.dietaId` y `Adherencia.dietaId`: nunca la cambies. Las dietas se archivan, no se borran.
 
 ## Reglas obligatorias
 

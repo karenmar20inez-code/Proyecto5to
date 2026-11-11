@@ -8,18 +8,16 @@ import { GraficaMacros } from '../../../components/Graficas/GraficasClinicas';
 import { planeacionApi, prescripcionesApi, estadisticasApi, consultasApi } from '../../../services/api';
 import { formatoFecha, fechaISO, useNutri } from '../../../context/NutriContext';
 import { useAuth } from '../../../context/AuthContext';
-import { DIETAS } from '../../../data/dietas';
+import { alimentosDeDieta } from '../../../data/dietas';
 
 const fecha = (f) => (f ? formatoFecha(fechaISO(f)) : '—');
 const ESTADOS = { borrador: ['Borrador', 'aviso'], vigente: ['Vigente', 'ok'], finalizado: ['Finalizado', ''], reemplazado: ['Reemplazado', ''] };
 
 /* Alimentos de un menú del catálogo (para revisar alergias en el servidor) */
-const alimentosDe = (dietaId) => {
-  const d = DIETAS.find((x) => x.id === dietaId);
-  return d ? [...new Set(d.dias.flatMap((dia) => dia.comidas.flatMap((c) => c.ingredientes.map((i) => i.alimento))))] : [];
-};
 
 function FormPlan({ pacienteId, objetivos, onGuardar, onCancelar }) {
+  const { dietas, buscarDieta } = useNutri();
+  const alimentosDe = (dietaId) => alimentosDeDieta(buscarDieta(dietaId));
   const [f, setF] = useState({ nombre: '', inicio: new Date().toISOString().slice(0, 10), fin: '', objetivoIds: objetivos.map((o) => o._id), dietaId: '', recomendaciones: '', consultaId: '' });
   const [consultas, setConsultas] = useState([]);
   const [error, setError] = useState('');
@@ -42,7 +40,7 @@ function FormPlan({ pacienteId, objetivos, onGuardar, onCancelar }) {
       <div className="campo"><label htmlFor="pl-inicio">Inicio *</label><input type="date" {...c('inicio')} required /></div>
       <div className="campo"><label htmlFor="pl-fin">Fin</label><input type="date" {...c('fin')} min={f.inicio} /></div>
       <div className="campo"><label htmlFor="pl-dietaId">Menú</label>
-        <select {...c('dietaId')}><option value="">Sin menú del catálogo</option>{DIETAS.map((d) => <option key={d.id} value={d.id}>{d.nombre}</option>)}</select>
+        <select {...c('dietaId')}><option value="">Sin menú del catálogo</option>{dietas.map((d) => <option key={d.id} value={d.id}>{d.nombre}</option>)}</select>
         {f.dietaId && <span className="campo__ayuda">{alimentosDe(f.dietaId).length} alimentos · se revisarán contra alergias registradas.</span>}</div>
       <div className="campo"><label htmlFor="pl-consultaId">Consulta</label>
         <select {...c('consultaId')}><option value="">Sin vincular</option>{consultas.map((x) => <option key={x._id} value={x._id}>{new Date(x.fecha).toLocaleDateString('es-MX')} · {x.motivo || 'Consulta'}</option>)}</select></div>
@@ -69,7 +67,7 @@ function FormPlan({ pacienteId, objetivos, onGuardar, onCancelar }) {
 
 function PlanNutricional() {
   const { pacienteId, ficha, recargar } = useFicha();
-  const { recargarPacientes } = useNutri();
+  const { recargarPacientes, buscarDieta } = useNutri();
   const { puede } = useAuth();
   const [params] = useSearchParams();
   const [planes, setPlanes] = useState(null);
@@ -108,7 +106,7 @@ function PlanNutricional() {
                     <div className="lista-registros__titulo">{p.nombre} <span className={`insignia insignia--${ESTADOS[p.estado][1]}`}>{ESTADOS[p.estado][0]}</span></div>
                     <div className="lista-registros__meta">
                       {fecha(p.vigencia?.inicio)}{p.vigencia?.fin ? ` – ${fecha(p.vigencia.fin)}` : ''} · {p.profesional} · {p.objetivoIds.length} objetivo(s)
-                      {p.dietaId && <> · menú <Link to="/dietas">{DIETAS.find((d) => d.id === p.dietaId)?.nombre || p.dietaId}</Link></>}
+                      {p.dietaId && <> · menú <Link to="/dietas">{buscarDieta(p.dietaId)?.nombre || p.dietaId}</Link></>}
                     </div>
                     {p.requerimientos?.kcal && (
                       <div className="lista-registros__meta">
