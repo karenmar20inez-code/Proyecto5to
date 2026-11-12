@@ -2,7 +2,44 @@
    LAYOUT GENERAL · menú lateral de vidrio verde + barra superior
 ========================================== */
 
-.dashboard-layout { display: flex; min-height: 100vh; color: var(--texto-2); }
+.dashboard-layout {
+  display: flex; min-height: 100vh; color: var(--texto-2);
+  /* Vidrio verde oscuro sobre la fotografía clara: deja ver las burbujas y mantiene
+     el contraste (blanco ≥ 7:1 y beige ≥ 4.5:1 aun sobre la zona más clara de la imagen). */
+  --superficie: rgba(24, 50, 40, 0.58);
+  --superficie-2: rgba(24, 50, 40, 0.40);
+  --superficie-3: rgba(24, 50, 40, 0.68);
+}
+
+/* Fondo general tras iniciar sesión: Assets/Picture/paleta.jpeg (no se usa en el Login).
+   Capa fija a pantalla completa compartida por todas las secciones (todas usan Layout):
+   no se desplaza ni cambia de posición al navegar, y el navegador reutiliza la imagen ya cargada. */
+.dashboard-layout::before {
+  content: "";
+  position: fixed; inset: 0; z-index: -1;
+  pointer-events: none;
+  background-color: var(--fondo);
+  background-image:
+    /* Velo más denso arriba (título y subtítulo van directo sobre la imagen) y más ligero abajo */
+    linear-gradient(180deg, rgba(20, 43, 34, 0.74) 0px, rgba(20, 43, 34, 0.56) 200px, rgba(20, 43, 34, 0.50) 60%, rgba(16, 36, 28, 0.58) 100%),
+    url('../../Assets/Picture/paleta.jpeg');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+}
+
+/* Superficies de cristal sobre la imagen: brillo salvia sutil y borde beige translúcido */
+.dashboard-layout .panel,
+.dashboard-layout .kpi,
+.dashboard-layout .card-kpi,
+.dashboard-layout .grafica-dashboard,
+.dashboard-layout .tabla-empleados {
+  background-image: linear-gradient(160deg, rgba(143, 169, 143, 0.14), rgba(143, 169, 143, 0) 55%);
+  border-color: rgba(218, 204, 175, 0.22);
+  box-shadow: 0 10px 30px rgba(8, 20, 15, 0.28), inset 0 1px 0 rgba(255, 255, 255, 0.08);
+}
+/* El subtítulo de página va directo sobre la imagen: tono más claro para conservar el contraste */
+.dashboard-layout .encabezado-pagina__sub { color: var(--texto-2); }
 
 /* ---------- Menú lateral ---------- */
 .sidebar {
@@ -39,8 +76,7 @@
   box-shadow: 0 4px 14px rgba(0, 0, 0, 0.25);
   background: var(--superficie-solida);
 }
-.sidebar__nombre { min-width: 0; font-size: var(--fs-md); font-weight: 700; color: var(--blanco); line-height: 1.15; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; animation: aparecer-texto 0.25s ease; }
-@keyframes aparecer-texto { from { opacity: 0; } to { opacity: 1; } }
+.sidebar__nombre { min-width: 0; font-size: var(--fs-md); font-weight: 700; color: var(--blanco); line-height: 1.15; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
 .sidebar__nombre small { display: block; font-size: 0.6875rem; font-weight: 500; color: var(--beige); }
 .sidebar h2 { display: none; }
 .sidebar nav { display: flex; flex-direction: column; gap: 2px; }
@@ -56,7 +92,6 @@
 }
 .menu-item svg { width: 18px; height: 18px; color: var(--beige); flex-shrink: 0; }
 .menu-item__texto { white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-.menu-item__texto { animation: aparecer-texto 0.25s ease; }
 .menu-item:hover { background: rgba(143, 169, 143, 0.14); border-color: var(--borde); color: var(--blanco); }
 .menu-item.active { background: rgba(79, 122, 90, 0.55); border-color: rgba(218, 204, 175, 0.38); color: var(--blanco); font-weight: 600; box-shadow: inset 3px 0 0 var(--beige); }
 .menu-item.active svg { color: var(--blanco); }
