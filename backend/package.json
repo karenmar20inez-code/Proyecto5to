@@ -12,7 +12,8 @@
     "migrar": "node scripts/migrar-expedientes.js",
     "respaldo": "node scripts/respaldo.js",
     "restaurar": "node scripts/respaldo.js",
-    "importar-catalogo": "node scripts/importar-catalogo.js"
+    "importar-catalogo": "node scripts/importar-catalogo.js",
+    "migrar-roles": "node scripts/migrar-roles.js"
   },
   "keywords": [],
   "author": "",

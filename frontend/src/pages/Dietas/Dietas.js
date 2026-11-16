@@ -14,7 +14,8 @@ function Dietas() {
     dietas, cargandoDietas, errorDietas, recargarDietas, guardarDieta,
   } = useNutri();
   const { puede } = useAuth();
-  const editable = puede('clinico:escribir');
+  const editable = puede('dietas:escribir');
+  const veePacientes = puede('pacientes:leer'); // los docentes consultan el plan sin datos de pacientes
 
   const [dietaId, setDietaId] = useState('');
   const [diaActivo, setDiaActivo] = useState('');
@@ -187,6 +188,7 @@ function Dietas() {
             )}
           </section>
 
+          {veePacientes && (
           <section className="panel">
             <h2>Pacientes asignados</h2>
             <p className="panel-descripcion">Quién sigue este plan.</p>
@@ -230,6 +232,7 @@ function Dietas() {
               </div>
             )}
           </section>
+          )}
         </div>
       </div>
       {editorModal}

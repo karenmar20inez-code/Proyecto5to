@@ -89,3 +89,4 @@
 @media (max-width: 520px) { .topbar__buscador { max-width: none; } }
 
 .cards-grid, .dashboard-estadisticas { position: relative; z-index: 1; }
+.topbar__espacio { flex: 1; }

@@ -1,15 +1,15 @@
 const Paciente = require('../Models/Paciente');
 const Cita = require('../Models/Cita');
 const { registrarAuditoria } = require('../Services/auditoria');
-const { pacientesAccesibles } = require('../Services/seguridad/middleware');
+const { pacientesIdentificables } = require('../Services/seguridad/middleware');
 const { tienePermiso } = require('../Services/seguridad/permisos');
 
-/* Agenda: administrador y asistente ven todo; el nutriólogo, solo sus expedientes */
+/* Agenda: personal administrativo y superusuario ven todo; el personal clínico, solo sus expedientes */
 async function exigirAgenda(req, pacienteId, escribir = false) {
   if (!tienePermiso(req.usuario, escribir ? 'agenda:escribir' : 'agenda:leer')) throw new ErrorHttp(403, 'Sin permiso de agenda');
-  if (req.usuario.rol !== 'nutriologo' || !pacienteId) return;
-  const ids = await pacientesAccesibles(req.usuario);
-  if (!ids.some((x) => String(x) === String(pacienteId))) throw new ErrorHttp(403, 'No tienes acceso a este paciente');
+  if (!pacienteId) return;
+  const ids = await pacientesIdentificables(req.usuario);
+  if (ids && !ids.some((x) => String(x) === String(pacienteId))) throw new ErrorHttp(403, 'No tienes acceso a este paciente');
 }
 const { ErrorHttp, exigirId, tomarCampos, rangoFechas, controlador } = require('../Services/http');
 
@@ -20,7 +20,10 @@ const listar = controlador(async (req, res) => {
   const filtro = {};
   if (req.params.pacienteId) filtro.pacienteId = exigirId(req.params.pacienteId, 'ID de paciente');
   await exigirAgenda(req, filtro.pacienteId);
-  if (!filtro.pacienteId && req.usuario.rol === 'nutriologo') filtro.pacienteId = { $in: await pacientesAccesibles(req.usuario) };
+  if (!filtro.pacienteId) {
+    const ids = await pacientesIdentificables(req.usuario);
+    if (ids) filtro.pacienteId = { $in: ids };
+  }
   const rango = rangoFechas(req.query);
   if (rango) filtro.fechaHora = rango;
   if (req.query.estado) {

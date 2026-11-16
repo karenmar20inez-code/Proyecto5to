@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { KeyRound } from 'lucide-react';
 import Layout from '../../components/Layout/Layout';
-import { useAuth, NOMBRES_ROL } from '../../context/AuthContext';
+import { useAuth, nombreRolCompleto } from '../../context/AuthContext';
 import { authApi } from '../../services/api';
 
 function Perfil() {
@@ -28,10 +28,10 @@ function Perfil() {
           <dl className="datos" style={{ marginTop: 'var(--e3)' }}>
             <dt>Nombre</dt><dd>{usuario?.nombre}</dd>
             <dt>Correo</dt><dd>{usuario?.correo}</dd>
-            <dt>Rol</dt><dd>{NOMBRES_ROL[usuario?.rol]}</dd>
+            <dt>Rol</dt><dd>{nombreRolCompleto(usuario)}</dd>
             <dt>Cédula profesional</dt><dd>{usuario?.cedulaProfesional || '—'}</dd>
           </dl>
-          {usuario?.debeCambiarContrasena && <p className="aviso aviso--alerta">Tu contraseña es temporal: cámbiala ahora.</p>}
+          {usuario?.debeCambiarContrasena && <p className="aviso aviso--alerta" role="alert">Tu contraseña es temporal: cámbiala para poder usar La Nutria. Después inicia sesión con la nueva.</p>}
         </section>
         <section className="panel" id="contrasena">
           <h2><KeyRound size={16} aria-hidden="true" /> Cambiar contraseña</h2>

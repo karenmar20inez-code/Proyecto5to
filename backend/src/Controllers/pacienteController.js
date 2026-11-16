@@ -4,8 +4,17 @@ const Expediente = require('../Models/Expediente');
 const Usuario = require('../Models/Usuario');
 const { edadEnFecha } = require('../Models/Paciente');
 const { registrarAuditoria } = require('../Services/auditoria');
-const { pacientesAccesibles, exigirAccesoClinico } = require('../Services/seguridad/middleware');
-const { tienePermiso } = require('../Services/seguridad/permisos');
+const { pacientesIdentificables, exigirAccesoClinico } = require('../Services/seguridad/middleware');
+const { tienePermiso, alcanceGlobal } = require('../Services/seguridad/permisos');
+
+/* Información nutricional del paciente: solo para personal con acceso clínico */
+const CAMPOS_NUTRICIONALES = ['peso', 'estatura', 'dietaId'];
+const sinNutricionales = (req, obj) => {
+  if (tienePermiso(req.usuario, 'clinico:leer')) return obj;
+  const copia = { ...obj };
+  CAMPOS_NUTRICIONALES.forEach((c) => delete copia[c]);
+  return copia;
+};
 const { ErrorHttp, exigirId, controlador } = require('../Services/http');
 
 // Solo estos campos pueden venir del cliente
@@ -39,9 +48,9 @@ const conEdad = (p, expediente) => ({
 
 async function exigirVisible(req, id) {
   exigirId(id, 'ID de paciente');
-  const ids = await pacientesAccesibles(req.usuario);
-  // asistente: identificación de todos los pacientes; nutriólogo: solo sus expedientes
-  if (req.usuario.rol === 'nutriologo' && !ids.some((x) => String(x) === String(id))) {
+  const ids = await pacientesIdentificables(req.usuario);
+  // personal administrativo: identificación de todos; personal clínico: solo sus expedientes
+  if (ids && !ids.some((x) => String(x) === String(id))) {
     throw new ErrorHttp(403, 'No tienes acceso a este paciente');
   }
 }
@@ -49,13 +58,14 @@ async function exigirVisible(req, id) {
 // GET /api/pacientes
 const obtenerPacientes = controlador(async (req, res) => {
   const filtro = {};
-  if (req.usuario.rol === 'nutriologo') filtro._id = { $in: await pacientesAccesibles(req.usuario) };
+  const ids = await pacientesIdentificables(req.usuario);
+  if (ids) filtro._id = { $in: ids };
   const [pacientes, expedientes] = await Promise.all([
     Paciente.find(filtro).sort({ fechaRegistro: -1 }).lean(),
     Expediente.find(filtro._id ? { pacienteId: filtro._id } : {}).select('pacienteId folio estado responsableId').lean(),
   ]);
   const porPaciente = new Map(expedientes.map((e) => [String(e.pacienteId), e]));
-  res.json(pacientes.map((p) => conEdad(p, porPaciente.get(String(p._id)))));
+  res.json(pacientes.map((p) => sinNutricionales(req, conEdad(p, porPaciente.get(String(p._id))))));
 });
 
 // GET /api/pacientes/:id
@@ -63,23 +73,26 @@ const obtenerPaciente = controlador(async (req, res) => {
   await exigirVisible(req, req.params.id);
   const paciente = await Paciente.findById(req.params.id).lean();
   if (!paciente) throw new ErrorHttp(404, 'Paciente no encontrado');
-  res.json(conEdad(paciente, await Expediente.findOne({ pacienteId: paciente._id }).lean()));
+  res.json(sinNutricionales(req, conEdad(paciente, await Expediente.findOne({ pacienteId: paciente._id }).lean())));
 });
 
 // POST /api/pacientes  { ...datos, responsableId?, motivoConsulta? }
 const crearPaciente = controlador(async (req, res) => {
-  const { set } = prepararDatos(req.body);
+  const { set } = prepararDatos(sinNutricionales(req, req.body || {}));
 
   let responsableId = req.body?.responsableId;
-  if (req.usuario.rol === 'nutriologo') responsableId = req.usuario._id;
+  if (req.usuario.rol === 'nutriologo') responsableId = req.usuario._id; // el nutriólogo registra pacientes para sí mismo
   if (!responsableId) throw new ErrorHttp(400, 'Indica el profesional responsable del expediente', { responsableId: 'Obligatorio' });
   exigirId(responsableId, 'ID de responsable');
   const responsable = await Usuario.findOne({ _id: responsableId, rol: 'nutriologo', activo: true }).lean();
-  if (!responsable && String(responsableId) !== String(req.usuario._id)) {
+  // El responsable siempre es un nutriólogo activo (el superusuario puede quedar como responsable de supervisión)
+  if (!responsable && !(alcanceGlobal(req.usuario) && String(responsableId) === String(req.usuario._id))) {
     throw new ErrorHttp(400, 'El responsable debe ser un nutriólogo activo', { responsableId: 'No válido' });
   }
 
-  const paciente = await Paciente.create(set);
+  // Consultorio: el de quien registra (si tiene uno) o el del nutriólogo responsable
+  const consultorioId = req.usuario.consultorioId || responsable?.consultorioId;
+  const paciente = await Paciente.create({ ...set, ...(consultorioId && { consultorioId }) });
   try {
     const expediente = await Expediente.create({
       pacienteId: paciente._id,
@@ -89,7 +102,7 @@ const crearPaciente = controlador(async (req, res) => {
       fechaIngreso: set.fechaRegistro || new Date(),
     });
     registrarAuditoria(req, { accion: 'crear', entidad: 'Paciente', entidadId: paciente._id, pacienteId: paciente._id, campos: Object.keys(set) });
-    res.status(201).json(conEdad(paciente.toObject(), expediente));
+    res.status(201).json(sinNutricionales(req, conEdad(paciente.toObject(), expediente)));
   } catch (error) {
     await Paciente.deleteOne({ _id: paciente._id }); // no dejar pacientes sin expediente
     throw error;
@@ -100,7 +113,7 @@ const crearPaciente = controlador(async (req, res) => {
 const actualizarPaciente = controlador(async (req, res) => {
   const { id } = req.params;
   await exigirVisible(req, id);
-  const { set, unset } = prepararDatos(req.body);
+  const { set, unset } = prepararDatos(sinNutricionales(req, req.body || {}));
   if (!Object.keys(set).length && !Object.keys(unset).length) throw new ErrorHttp(400, 'No se enviaron campos para actualizar');
 
   const cambios = {};

@@ -18,6 +18,7 @@ import Cumplimiento from './pages/Cumplimiento/Cumplimiento';
 import Reportes from './pages/Reportes/Reportes';
 import Configuracion from './pages/Configuracion/Configuracion';
 import Perfil from './pages/Perfil/Perfil';
+import MiEspacio from './pages/MiEspacio/MiEspacio';
 import Login from './pages/Login/Login';
 import FichaPaciente from './pages/Expediente/FichaPaciente';
 import Documento from './pages/Documento/Documento';
@@ -62,12 +63,15 @@ function ConfiguracionSegunRol() {
 }
 
 function Inicio() {
-  const { puede } = useAuth();
-  return puede('estadisticas:leer') ? <Dashboard /> : <Navigate to="/agenda" replace />;
+  const { puede, usuario } = useAuth();
+  if (usuario?.rol === 'paciente') return <Navigate to="/mi-espacio" replace />; // portal propio
+  if (puede('estadisticas:leer')) return <Dashboard />;
+  return <Navigate to={puede('agenda:leer') ? '/agenda' : '/perfil'} replace />;
 }
 
 function ContenidoApp() {
   const [cargando, setCargando] = useState(true);
+  const { usuario } = useAuth();
 
   useEffect(() => {
     const temporizador = setTimeout(() => setCargando(false), 300);
@@ -82,6 +86,16 @@ function ContenidoApp() {
     );
   }
 
+  // Contraseña temporal: solo "Mi perfil" hasta que la cambie
+  if (usuario?.debeCambiarContrasena) {
+    return (
+      <Routes>
+        <Route path="/perfil" element={<Perfil />} />
+        <Route path="*" element={<Navigate to="/perfil" replace />} />
+      </Routes>
+    );
+  }
+
   return (
     <Routes>
       <Route path="/" element={<Inicio />} />
@@ -93,7 +107,7 @@ function ContenidoApp() {
       <Route path="/expedientes" element={<Protegida permiso="clinico:leer"><Expedientes /></Protegida>} />
       <Route path="/consultas" element={<Protegida permiso="clinico:leer"><ConsultasGlobal /></Protegida>} />
       <Route path="/evaluaciones" element={<Protegida permiso="clinico:leer"><Evaluaciones /></Protegida>} />
-      <Route path="/dietas" element={<Protegida permiso="clinico:leer"><Dietas /></Protegida>} />
+      <Route path="/dietas" element={<Protegida permiso="dietas:leer"><Dietas /></Protegida>} />
       <Route path="/cumplimiento" element={<Protegida permiso="clinico:leer"><Cumplimiento /></Protegida>} />
       <Route path="/laboratorio" element={<Protegida permiso="clinico:leer"><LaboratorioGlobal /></Protegida>} />
       <Route path="/agenda" element={<Protegida permiso="agenda:leer"><Agenda /></Protegida>} />
@@ -101,6 +115,8 @@ function ContenidoApp() {
       <Route path="/reportes" element={<Protegida permiso="reportes:generar"><Reportes /></Protegida>} />
       <Route path="/administracion" element={<Protegida permiso="administracion"><Administracion /></Protegida>} />
       <Route path="/perfil" element={<Perfil />} />
+      <Route path="/mi-espacio" element={<Protegida permiso="portal:propio"><MiEspacio /></Protegida>} />
+      <Route path="/mi-espacio/:seccion" element={<Protegida permiso="portal:propio"><MiEspacio /></Protegida>} />
       <Route path="/configuracion" element={<ConfiguracionSegunRol />} />
       <Route path="/configuracion-general" element={<Configuracion />} />
       <Route path="/productos" element={<Productos />} />

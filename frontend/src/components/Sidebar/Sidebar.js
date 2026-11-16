@@ -1,13 +1,24 @@
-import { NavLink } from 'react-router-dom';
+import { useCallback, useState } from 'react';
+import { NavLink, useLocation } from 'react-router-dom';
 import {
   LayoutDashboard, Users, FolderOpen, Stethoscope, ClipboardList, Utensils,
-  TrendingUp, FlaskConical, CalendarDays, FileText, Settings, Menu, PanelLeftClose,
+  TrendingUp, FlaskConical, CalendarDays, FileText, Settings, Menu, PanelLeftClose, ChevronDown, UserRound,
 } from 'lucide-react';
-import { useAuth, NOMBRES_ROL } from '../../context/AuthContext';
+import { useAuth, nombreRolCompleto } from '../../context/AuthContext';
 import logoNutria from '../../Assets/Picture/LaNutria.webp';
 
-/* Navegación principal. `permiso` oculta lo que el rol no puede usar. */
+/* Navegación principal. `permiso` oculta lo que el rol no puede usar.
+   `soloPaciente`: opciones del portal propio (solo cuentas con rol paciente). */
 const SECCIONES = [
+  {
+    titulo: 'Mi espacio',
+    items: [
+      { to: '/mi-espacio', label: 'Inicio', icon: UserRound, end: true, permiso: 'portal:propio', soloPaciente: true },
+      { to: '/mi-espacio/dieta', label: 'Mi dieta', icon: Utensils, permiso: 'portal:propio', soloPaciente: true },
+      { to: '/mi-espacio/citas', label: 'Mis citas', icon: CalendarDays, permiso: 'portal:propio', soloPaciente: true },
+      { to: '/mi-espacio/progreso', label: 'Mi progreso', icon: TrendingUp, permiso: 'portal:propio', soloPaciente: true },
+    ],
+  },
   {
     titulo: 'General',
     items: [
@@ -22,7 +33,7 @@ const SECCIONES = [
       { to: '/expedientes', label: 'Historial clínico', icon: FolderOpen, permiso: 'clinico:leer' },
       { to: '/consultas', label: 'Consultas', icon: Stethoscope, permiso: 'clinico:leer' },
       { to: '/evaluaciones', label: 'Evaluaciones', icon: ClipboardList, permiso: 'clinico:leer' },
-      { to: '/dietas', label: 'Dietas', icon: Utensils, permiso: 'clinico:leer' },
+      { to: '/dietas', label: 'Dietas', icon: Utensils, permiso: 'dietas:leer' },
       { to: '/cumplimiento', label: 'Cumplimiento', icon: TrendingUp, permiso: 'clinico:leer' },
       { to: '/laboratorio', label: 'Laboratorio', icon: FlaskConical, permiso: 'clinico:leer' },
     ],
@@ -36,6 +47,16 @@ const SECCIONES = [
   },
 ];
 
+/* Categorías desplegables: el estado (abierta/cerrada) se recuerda en este navegador.
+   Es solo una preferencia de la interfaz; no guarda datos del consultorio. */
+const CLAVE_CATEGORIAS = 'la-nutria:menu-categorias';
+function leerCategorias() {
+  try { return JSON.parse(window.localStorage.getItem(CLAVE_CATEGORIAS)) || {}; } catch { return {}; }
+}
+
+/* ¿La ruta actual pertenece a esta opción del menú? (misma regla que NavLink) */
+const esActiva = (pathname, { to, end }) => (end ? pathname === to : pathname === to || pathname.startsWith(`${to}/`));
+
 /**
  * Menú lateral único.
  *  - Encabezado: imagen de La Nutria + nombre + subtítulo + botón de hamburguesa.
@@ -47,6 +68,17 @@ const SECCIONES = [
  */
 function Sidebar({ colapsado = false, onNavegar, onMenu, menuExpandido = true, movil = false }) {
   const { usuario, puede } = useAuth();
+  const { pathname } = useLocation();
+  const [cerradas, setCerradas] = useState(leerCategorias); // { General: true } = contraída
+
+  const alternarCategoria = useCallback((titulo) => {
+    setCerradas((c) => {
+      const sig = { ...c, [titulo]: !c[titulo] };
+      try { window.localStorage.setItem(CLAVE_CATEGORIAS, JSON.stringify(sig)); } catch { /* sin almacenamiento */ }
+      return sig;
+    });
+  }, []);
+
   const etiquetaMenu = movil
     ? 'Cerrar menú de navegación'
     : (menuExpandido ? 'Contraer menú de navegación' : 'Expandir menú de navegación');
@@ -68,31 +100,47 @@ function Sidebar({ colapsado = false, onNavegar, onMenu, menuExpandido = true, m
       </div>
       <nav>
         {SECCIONES.map((s) => {
-          const visibles = s.items.filter((i) => !i.permiso || puede(i.permiso));
+          const esPaciente = usuario?.rol === 'paciente';
+          const visibles = s.items.filter((i) => (!i.permiso || puede(i.permiso)) && (!i.soloPaciente || esPaciente));
           if (!visibles.length) return null;
+          const abierta = !cerradas[s.titulo];
+          const idOpciones = `menu-categoria-${s.titulo.normalize('NFD').replace(/[̀-ͯ]/g, '').toLowerCase()}`;
+          const contieneActiva = visibles.some((i) => esActiva(pathname, i));
           return (
-            <div key={s.titulo} className="sidebar__grupo">
-              <p className="sidebar__seccion">{s.titulo}</p>
-              {visibles.map(({ to, label, icon: Icono, end }) => (
-                <NavLink key={to} to={to} end={end} onClick={onNavegar} data-tooltip={label}
-                  aria-label={colapsado ? label : undefined}
-                  className={({ isActive }) => `menu-item${isActive ? ' active' : ''}`}>
-                  <Icono aria-hidden="true" />
-                  <span className="menu-item__texto">{label}</span>
-                </NavLink>
-              ))}
+            <div key={s.titulo} className={`sidebar__grupo${abierta ? '' : ' sidebar__grupo--cerrado'}`}>
+              <button type="button" className="sidebar__seccion" onClick={() => alternarCategoria(s.titulo)}
+                aria-expanded={abierta} aria-controls={idOpciones}
+                data-tooltip={`${s.titulo} · ${abierta ? 'contraer' : 'expandir'}`}
+                aria-label={colapsado ? `${s.titulo}: ${abierta ? 'contraer' : 'expandir'} categoría` : undefined}>
+                <span className="sidebar__seccion-texto">{s.titulo}</span>
+                {!abierta && contieneActiva && <span className="sidebar__seccion-activa" title="Aquí está la sección abierta" />}
+                <ChevronDown className="sidebar__seccion-flecha" aria-hidden="true" />
+              </button>
+              {/* Contraída: las opciones se ocultan por completo (y no reciben el foco del teclado) */}
+              <div className="sidebar__opciones" id={idOpciones} inert={!abierta} aria-hidden={!abierta}>
+                <div className="sidebar__opciones-interior">
+                  {visibles.map(({ to, label, icon: Icono, end }) => (
+                    <NavLink key={to} to={to} end={end} onClick={onNavegar} data-tooltip={label}
+                      aria-label={colapsado ? label : undefined}
+                      className={({ isActive }) => `menu-item${isActive ? ' active' : ''}`}>
+                      <Icono aria-hidden="true" />
+                      <span className="menu-item__texto">{label}</span>
+                    </NavLink>
+                  ))}
+                </div>
+              </div>
             </div>
           );
         })}
       </nav>
       {usuario && (
-        <div className="sidebar__usuario" data-tooltip={`${usuario.nombre} · ${NOMBRES_ROL[usuario.rol]}`}>
+        <div className="sidebar__usuario" data-tooltip={`${usuario.nombre} · ${nombreRolCompleto(usuario)}`}>
           <span className="sidebar__usuario-iniciales" aria-hidden="true">
             {usuario.nombre.split(/\s+/).slice(0, 2).map((x) => x[0]).join('').toUpperCase()}
           </span>
           <span className="sidebar__usuario-texto">
             <strong>{usuario.nombre}</strong>
-            {NOMBRES_ROL[usuario.rol]}{usuario.cedulaProfesional ? ` · Céd. ${usuario.cedulaProfesional}` : ''}
+            {nombreRolCompleto(usuario)}{usuario.cedulaProfesional ? ` · Céd. ${usuario.cedulaProfesional}` : ''}
           </span>
         </div>
       )}

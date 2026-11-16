@@ -75,8 +75,22 @@ export const authApi = {
 export const usuariosApi = {
   listar: (params) => get('/usuarios', params),
   profesionales: () => get('/usuarios/profesionales'),
+  /* Roles que puedo asignar, niveles, catálogo de permisos y permisos que puedo conceder */
+  roles: () => get('/usuarios/roles'),
   crear: (datos) => post('/usuarios', datos),
   actualizar: (id, datos) => put(`/usuarios/${id}`, datos),
+};
+
+/* Portal del paciente: solo su propia información (el backend toma al paciente de la sesión) */
+export const portalApi = {
+  miEspacio: () => get('/portal'),
+};
+
+/* Consultorios u organizaciones (ámbito del personal) */
+export const consultoriosApi = {
+  listar: () => get('/consultorios'),
+  crear: (datos) => post('/consultorios', datos),
+  actualizar: (id, datos) => put(`/consultorios/${id}`, datos),
 };
 
 export const pacientesApi = {

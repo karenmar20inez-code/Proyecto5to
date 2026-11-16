@@ -1,0 +1,5 @@
+/* Portal del paciente: reutiliza paneles, KPI y estilos de Dietas; solo ajustes propios */
+.mi-espacio__kpi-texto { font-size: var(--fs-md) !important; line-height: 1.35 !important; }
+.mi-espacio__texto { white-space: pre-wrap; color: var(--texto); font-size: var(--fs-base); }
+.mi-espacio__bloqueado { display: flex; align-items: center; gap: var(--e3); justify-content: center; text-align: left; }
+.mi-espacio__bloqueado svg { width: 20px; height: 20px; color: var(--beige); flex-shrink: 0; }

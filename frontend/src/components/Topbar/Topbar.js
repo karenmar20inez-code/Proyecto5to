@@ -1,7 +1,7 @@
 import { useEffect, useMemo, useRef, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { Search, Bell, User, LogOut, Menu, PanelLeftClose, KeyRound } from 'lucide-react';
-import { useAuth, NOMBRES_ROL } from '../../context/AuthContext';
+import { useAuth, nombreRolCompleto } from '../../context/AuthContext';
 import { useNutri } from '../../context/NutriContext';
 import { alertasApi } from '../../services/api';
 import './Topbar.css';
@@ -60,6 +60,8 @@ function Topbar({ onMenu, menuExpandido = true }) {
         </button>
       )}
 
+      {/* Búsqueda de pacientes: solo para quien puede consultar pacientes */}
+      {puede('pacientes:leer') ? (
       <div className="topbar__buscador" role="search">
         <Search size={18} aria-hidden="true" />
         <input
@@ -87,6 +89,7 @@ function Topbar({ onMenu, menuExpandido = true }) {
           </ul>
         )}
       </div>
+      ) : <div className="topbar__espacio" />}
 
       <div className="topbar__acciones" ref={menuRef}>
         {puede('clinico:leer') && (
@@ -104,7 +107,7 @@ function Topbar({ onMenu, menuExpandido = true }) {
           <div className="topbar__dropdown" role="menu">
             <div className="topbar__cuenta">
               <strong>{usuario?.nombre}</strong>
-              <span>{usuario?.correo} · {NOMBRES_ROL[usuario?.rol]}</span>
+              <span>{usuario?.correo} · {nombreRolCompleto(usuario)}</span>
             </div>
             <Link to="/perfil" className="topbar__opcion" role="menuitem" onClick={() => setMenuAbierto(false)}>
               <User aria-hidden="true" /> Mi perfil

@@ -33,6 +33,8 @@ citasPaciente.post('/', cita.crear);
 /* /api/pacientes/:pacienteId/... (información clínica) */
 const expedientePaciente = express.Router({ mergeParams: true });
 expedientePaciente.use(accesoPaciente);
+// Toda escritura clínica exige permiso de escritura además del acceso al expediente
+expedientePaciente.use((req, res, next) => (req.method === 'GET' ? next() : exigirPermiso('clinico:escribir')(req, res, next)));
 expedientePaciente.get('/expediente', expediente.ficha);
 expedientePaciente.put('/expediente', expediente.actualizar);
 expedientePaciente.get('/linea-tiempo', expediente.timeline);
@@ -117,20 +119,20 @@ const alertas = express.Router();
 alertas.get('/', alerta.listar);
 alertas.post('/evaluar', alerta.evaluar);
 alertas.get('/reglas', alerta.listarReglas);
-alertas.post('/reglas', exigirPermiso('administracion'), alerta.crearRegla);
-alertas.put('/reglas/:id', exigirPermiso('administracion'), alerta.actualizarRegla);
+alertas.post('/reglas', exigirPermiso('configuracion:gestionar'), alerta.crearRegla);
+alertas.put('/reglas/:id', exigirPermiso('configuracion:gestionar'), alerta.actualizarRegla);
 alertas.put('/:id', exigirPermiso('alertas:revisar'), alerta.revisar);
 
 const catalogos = express.Router();
 catalogos.get('/', catalogo.sistemas);
 catalogos.get('/:sistema', catalogo.buscar);
 
-/* /api/dietas · catálogo de menús semanales (leer: cualquier sesión; editar: personal clínico) */
+/* /api/dietas · catálogo de menús semanales (leer: dietas:leer; crear/editar: dietas:escribir) */
 const dietas = express.Router();
-dietas.get('/', dieta.listar);
-dietas.get('/:clave', dieta.obtener);
-dietas.post('/', exigirPermiso('clinico:escribir'), dieta.crear);
-dietas.put('/:clave', exigirPermiso('clinico:escribir'), dieta.actualizar);
+dietas.get('/', exigirPermiso('dietas:leer'), dieta.listar);
+dietas.get('/:clave', exigirPermiso('dietas:leer'), dieta.obtener);
+dietas.post('/', exigirPermiso('dietas:escribir'), dieta.crear);
+dietas.put('/:clave', exigirPermiso('dietas:escribir'), dieta.actualizar);
 
 /* /api/fhir (solo lectura) */
 const fhirRouter = express.Router();
@@ -147,11 +149,11 @@ reportes.get('/tipos', expediente.tiposReporte);
 
 /* /api/auditoria?pacienteId=&usuarioId=&limite=  (administración) */
 const auditoria = express.Router();
-auditoria.get('/', exigirPermiso('administracion'), controlador(async (req, res) => {
+auditoria.get('/', exigirPermiso('auditoria:leer'), controlador(async (req, res) => {
   const filtro = {};
   if (req.query.pacienteId) filtro.pacienteId = exigirId(req.query.pacienteId, 'ID de paciente');
   if (req.query.usuarioId) filtro.usuarioId = exigirId(req.query.usuarioId, 'ID de usuario');
-  if (req.query.accion) filtro.accion = req.query.accion;
+  if (req.query.accion) filtro.accion = String(req.query.accion); // sin operadores de consulta
   const limite = Math.min(500, Math.max(1, Number(req.query.limite) || 100));
   res.json(await Auditoria.find(filtro).sort({ fecha: -1 }).limit(limite).lean());
 }));

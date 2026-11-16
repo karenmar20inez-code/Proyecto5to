@@ -10,7 +10,7 @@ const { evaluarMedicion } = require('../Services/nutricion/evaluacion');
 const { pesoInicial } = require('../Services/expediente');
 const { medicionesConEvaluacion } = require('./medicionController');
 const { registrarAuditoria } = require('../Services/auditoria');
-const { pacientesAccesibles } = require('../Services/seguridad/middleware');
+const { ambitoEstadistico } = require('../Services/seguridad/middleware');
 const { tienePermiso } = require('../Services/seguridad/permisos');
 const { ErrorHttp, exigirId, rangoFechas, controlador } = require('../Services/http');
 
@@ -159,8 +159,10 @@ const resumenAdministrativo = controlador(async (req, res) => {
   const anio = Number(req.query.anio) || new Date().getFullYear();
   if (anio < 2000 || anio > 2100) throw new ErrorHttp(400, 'Año no válido');
   if (!tienePermiso(req.usuario, 'estadisticas:leer')) throw new ErrorHttp(403, 'Sin permiso para estadísticas clínicas');
-  // Ámbito: el administrador ve todo; el nutriólogo, solo sus expedientes
-  const ambito = await pacientesAccesibles(req.usuario);
+  // Ámbito: el personal clínico ve sus expedientes; superusuario y personal sin acceso clínico, todo el consultorio
+  const ambito = await ambitoEstadistico(req.usuario);
+  // Sin acceso clínico (administración, docentes): solo agregados, sin nombres ni identificadores
+  const anonimo = !tienePermiso(req.usuario, 'clinico:leer');
   const mP = ambito ? { _id: { $in: ambito } } : {};
   const mR = ambito ? { pacienteId: { $in: ambito } } : {};
   const inicio = new Date(Date.UTC(anio, 0, 1));
@@ -408,10 +410,11 @@ const resumenAdministrativo = controlador(async (req, res) => {
     },
     objetivos: objetivos.map((o) => ({ objetivo: o._id, total: o.total })),
     histogramaImc,
-    dispersion,
+    dispersion: anonimo ? dispersion.map(({ pacienteId, ...d }) => d) : dispersion,
     mapaCalor: mapaCalor.map((c) => ({ dia: c._id.dia, hora: c._id.hora, total: c.total })),
-    pendientes,
-    alertas,
+    pendientes: anonimo ? pendientes.map((p, i) => ({ nombreCompleto: `Paciente ${i + 1}`, diasSinMedicion: p.diasSinMedicion })) : pendientes,
+    alertas: anonimo ? alertas.map((a, i) => ({ nombreCompleto: `Paciente ${i + 1}`, banderas: a.banderas })) : alertas,
+    anonimizado: anonimo,
   });
 });
 

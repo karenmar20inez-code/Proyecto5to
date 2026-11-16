@@ -225,7 +225,7 @@ function Pacientes() {
           <td>
             <div>{p.objetivo}</div>
             <small style={{ color: 'var(--color-texto-suave)' }}>
-              {dieta ? dieta.nombre : 'Sin dieta'}
+              {clinico && (dieta ? dieta.nombre : 'Sin dieta')}
               {resumen?.porcentaje != null && ` · ${resumen.porcentaje}% cumplimiento`}
             </small>
           </td>
@@ -248,7 +248,7 @@ function Pacientes() {
             <button className="boton boton--secundario boton--chico" onClick={() => editar(p)} title="Editar" aria-label={`Editar a ${nombreCompleto(p)}`}>
               <FiEdit2 />
             </button>{' '}
-            {puede('administracion') && (
+            {puede('pacientes:eliminar') && (
               <button className="boton boton--peligro boton--chico" onClick={() => borrar(p)} title="Eliminar" aria-label={`Eliminar a ${nombreCompleto(p)}`}>
                 <FiTrash2 />
               </button>
@@ -380,6 +380,7 @@ function Pacientes() {
               </datalist>
               {error('objetivo')}
             </div>
+            {clinico && (<>
             <div className="campo">
               <label htmlFor="peso">Peso (kg)</label>
               <input id="peso" type="number" min="1" max="400" step="0.1" name="peso" value={form.peso} onChange={cambiar} />
@@ -390,6 +391,7 @@ function Pacientes() {
               <input id="estatura" type="number" min="30" max="250" step="0.1" name="estatura" value={form.estatura} onChange={cambiar} />
               {error('estatura')}
             </div>
+            </>)}
             <div className="campo">
               <label htmlFor="estado">Estado</label>
               <select id="estado" name="estado" value={form.estado} onChange={cambiar}>
@@ -398,6 +400,7 @@ function Pacientes() {
               </select>
               {error('estado')}
             </div>
+            {clinico && (
             <div className="campo">
               <label htmlFor="dietaId">Dieta asignada</label>
               <select id="dietaId" name="dietaId" value={form.dietaId} onChange={cambiar}>
@@ -406,6 +409,7 @@ function Pacientes() {
                 {form.dietaId && !buscarDieta(form.dietaId) && <option value={form.dietaId}>{form.dietaId} (archivada)</option>}
               </select>
             </div>
+            )}
 
             {errorForm && (
               <p className="aviso aviso--error campo--completo" role="alert">

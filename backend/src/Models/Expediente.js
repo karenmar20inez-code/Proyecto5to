@@ -16,6 +16,16 @@ const expedienteSchema = new mongoose.Schema(
     fechaIngreso: { type: Date, default: Date.now },
     motivoConsulta: { type: String, trim: true, maxlength: 1000 },
     fechaUltimoActo: Date, // para la política de conservación (NOM-004: ≥ 5 años)
+    /* Qué puede ver el propio paciente en su portal: todo cerrado hasta que su nutriólogo lo autorice.
+       Nunca se muestran notas clínicas, diagnósticos, antecedentes ni laboratorios. */
+    portal: {
+      dieta: { type: Boolean, default: false },            // dieta asignada
+      recomendaciones: { type: Boolean, default: false },  // recomendaciones del plan vigente
+      citas: { type: Boolean, default: false },            // sus citas
+      progreso: { type: Boolean, default: false },         // peso, IMC, cintura, % grasa, masa muscular
+      cumplimiento: { type: Boolean, default: false },     // su registro de cumplimiento de la dieta
+      indicadoresClinicos: { type: Boolean, default: false }, // presión, glucosa, lípidos, HbA1c (requiere autorización expresa)
+    },
     historial: [{
       _id: false, fecha: { type: Date, default: Date.now }, usuarioId: mongoose.Schema.Types.ObjectId, campos: [String],
     }],
@@ -34,4 +44,5 @@ expedienteSchema.statics.siguienteFolio = async function siguienteFolio() {
 };
 
 module.exports = mongoose.model('Expediente', expedienteSchema, 'expedientes');
+module.exports.CLAVES_PORTAL = ['dieta', 'recomendaciones', 'citas', 'progreso', 'cumplimiento', 'indicadoresClinicos'];
 module.exports.ESTADOS_EXPEDIENTE = ESTADOS_EXPEDIENTE;

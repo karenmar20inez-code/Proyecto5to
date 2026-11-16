@@ -212,8 +212,9 @@ function Dashboard() {
           {espera ? <div className="esqueleto" style={{ height: 160 }} /> : datos?.alertas.length ? (
             <ul className="lista-alertas">
               {datos.alertas.slice(0, 12).map((a) => (
-                <li key={a.pacienteId}>
-                  <Link to={`/pacientes/${a.pacienteId}/analisis`}>{a.nombreCompleto}</Link>
+                <li key={a.pacienteId || a.nombreCompleto}>
+                  {/* Sin acceso clínico el resumen llega anonimizado (sin enlace al expediente) */}
+                  {a.pacienteId ? <Link to={`/pacientes/${a.pacienteId}/analisis`}>{a.nombreCompleto}</Link> : <span>{a.nombreCompleto}</span>}
                   <span className="lista-alertas__banderas">
                     {a.banderas.map((b) => (
                       <span key={b.tipo} className={`insignia insignia--${b.tipo === 'adherencia_baja' || b.tipo === 'inasistencia' ? 'no' : 'medio'}`}>{b.texto}</span>
@@ -232,8 +233,8 @@ function Dashboard() {
           {espera ? <div className="esqueleto" style={{ height: 160 }} /> : datos?.pendientes.length ? (
             <ul className="lista-alertas">
               {datos.pendientes.map((p) => (
-                <li key={p.pacienteId}>
-                  <Link to={`/pacientes/${p.pacienteId}/analisis`}>{p.nombreCompleto}</Link>
+                <li key={p.pacienteId || p.nombreCompleto}>
+                  {p.pacienteId ? <Link to={`/pacientes/${p.pacienteId}/analisis`}>{p.nombreCompleto}</Link> : <span>{p.nombreCompleto}</span>}
                   <span className="insignia">{p.diasSinMedicion === null ? 'Sin mediciones' : `${p.diasSinMedicion} días sin medición`}</span>
                 </li>
               ))}

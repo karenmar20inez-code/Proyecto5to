@@ -1,76 +1,23 @@
 import { useCallback, useEffect, useState } from 'react';
-import { UserPlus, ShieldCheck, Database, Bell, ScrollText } from 'lucide-react';
+import { UserPlus, ShieldCheck, Database, Bell, ScrollText, Building2 } from 'lucide-react';
 import Layout from '../../components/Layout/Layout';
 import Modal from '../../components/ui/Modal';
 import TablaDatos from '../../components/ui/TablaDatos';
-import { usuariosApi, alertasApi, auditoriaApi, catalogosApi, laboratorioApi } from '../../services/api';
+import { alertasApi, auditoriaApi, catalogosApi, laboratorioApi } from '../../services/api';
+import Usuarios from './Usuarios';
+import Consultorios from './Consultorios';
 import { NOMBRES_ROL, useAuth } from '../../context/AuthContext';
 
 const fechaHora = (f) => (f ? new Date(f).toLocaleString('es-MX', { dateStyle: 'medium', timeStyle: 'short' }) : '—');
-const SECCIONES = [['usuarios', 'Usuarios y roles', UserPlus], ['reglas', 'Reglas de alerta', Bell], ['auditoria', 'Auditoría', ScrollText], ['catalogos', 'Catálogos', Database], ['cumplimiento', 'Seguridad y cumplimiento', ShieldCheck]];
-
-/* ---------- Usuarios ---------- */
-function Usuarios() {
-  const { usuario: yo } = useAuth();
-  const [lista, setLista] = useState(null);
-  const [nuevo, setNuevo] = useState(null);
-  const [error, setError] = useState('');
-  const cargar = useCallback(() => usuariosApi.listar().then(setLista).catch((e) => { setError(e.message); setLista([]); }), []);
-  useEffect(() => { cargar(); }, [cargar]);
-
-  const crear = async (e) => {
-    e.preventDefault();
-    try { await usuariosApi.crear(nuevo); setNuevo(null); cargar(); } catch (err) { setError(err.message); }
-  };
-  const alternar = async (u) => {
-    if (!window.confirm(`${u.activo ? 'Desactivar' : 'Activar'} a ${u.nombre}? ${u.activo ? 'Se cerrarán sus sesiones.' : ''}`)) return;
-    await usuariosApi.actualizar(u._id, { activo: !u.activo }).catch((err) => window.alert(err.message));
-    cargar();
-  };
-  const columnas = [
-    { clave: 'nombre', titulo: 'Nombre', render: (u) => <span className="celda-fuerte">{u.nombre}</span> },
-    { clave: 'correo', titulo: 'Correo' },
-    { clave: 'rol', titulo: 'Rol', valor: (u) => NOMBRES_ROL[u.rol] },
-    { clave: 'cedulaProfesional', titulo: 'Cédula' },
-    { clave: 'ultimoAcceso', titulo: 'Último acceso', valor: (u) => u.ultimoAcceso, render: (u) => fechaHora(u.ultimoAcceso) },
-    { clave: 'activo', titulo: 'Estado', valor: (u) => (u.activo ? 'Activo' : 'Inactivo'), render: (u) => (
-      <span className="encabezado-acciones">
-        <span className={`insignia insignia--${u.activo ? 'ok' : ''}`}>{u.activo ? 'Activo' : 'Inactivo'}</span>
-        {String(u._id) !== String(yo._id) && <button className="boton boton--fantasma boton--chico" onClick={() => alternar(u)}>{u.activo ? 'Desactivar' : 'Activar'}</button>}
-      </span>
-    ) },
-  ];
-  return (
-    <section className="panel">
-      <div className="panel-encabezado">
-        <div><h2>Usuarios y roles</h2><p className="panel-descripcion">Administración: todo. Nutriología: sus expedientes. Asistente: identificación y agenda, sin información clínica.</p></div>
-        <button className="boton boton--primario" onClick={() => setNuevo({ nombre: '', correo: '', rol: 'nutriologo', cedulaProfesional: '', contrasenaTemporal: '' })}><UserPlus aria-hidden="true" /> Nuevo usuario</button>
-      </div>
-      {error && <p className="aviso aviso--error" role="alert">{error}</p>}
-      <TablaDatos columnas={columnas} filas={lista || []} cargando={!lista} etiqueta="Usuarios" />
-      <Modal abierto={!!nuevo} titulo="Nuevo usuario" onCerrar={() => setNuevo(null)}>
-        {nuevo && (
-          <form className="formulario" onSubmit={crear}>
-            <div className="campo campo--completo"><label htmlFor="u-nombre">Nombre completo</label><input id="u-nombre" value={nuevo.nombre} required onChange={(e) => setNuevo({ ...nuevo, nombre: e.target.value })} /></div>
-            <div className="campo campo--completo"><label htmlFor="u-correo">Correo</label><input id="u-correo" type="email" value={nuevo.correo} required onChange={(e) => setNuevo({ ...nuevo, correo: e.target.value })} /></div>
-            <div className="campo"><label htmlFor="u-rol">Rol</label>
-              <select id="u-rol" value={nuevo.rol} onChange={(e) => setNuevo({ ...nuevo, rol: e.target.value })}>
-                {Object.entries(NOMBRES_ROL).map(([k, v]) => <option key={k} value={k}>{v}</option>)}
-              </select></div>
-            <div className="campo"><label htmlFor="u-ced">Cédula profesional</label><input id="u-ced" value={nuevo.cedulaProfesional} onChange={(e) => setNuevo({ ...nuevo, cedulaProfesional: e.target.value })} /></div>
-            <div className="campo campo--completo"><label htmlFor="u-pass">Contraseña temporal</label>
-              <input id="u-pass" type="password" autoComplete="new-password" value={nuevo.contrasenaTemporal} required minLength={10} onChange={(e) => setNuevo({ ...nuevo, contrasenaTemporal: e.target.value })} />
-              <span className="campo__ayuda">Mínimo 10 caracteres con letras y números. Se pedirá cambiarla al ingresar.</span></div>
-            <div className="formulario-acciones">
-              <button type="button" className="boton boton--secundario" onClick={() => setNuevo(null)}>Cancelar</button>
-              <button type="submit" className="boton boton--primario">Crear</button>
-            </div>
-          </form>
-        )}
-      </Modal>
-    </section>
-  );
-}
+/* [clave, título, icono, permiso necesario] · cada pestaña aparece solo si el rol tiene el permiso (la API también lo valida) */
+const SECCIONES = [
+  ['usuarios', 'Usuarios y roles', UserPlus, 'usuarios:leer'],
+  ['consultorios', 'Consultorios', Building2, 'consultorios:leer'],
+  ['reglas', 'Reglas de alerta', Bell, 'configuracion:gestionar'],
+  ['auditoria', 'Auditoría', ScrollText, 'auditoria:leer'],
+  ['catalogos', 'Catálogos', Database, 'configuracion:gestionar'],
+  ['cumplimiento', 'Seguridad y cumplimiento', ShieldCheck, 'administracion'],
+];
 
 /* ---------- Reglas de alerta ---------- */
 function Reglas() {
@@ -197,12 +144,14 @@ function Cumplimiento() {
 }
 
 function Administracion() {
-  const [seccion, setSeccion] = useState('usuarios');
-  const Contenido = { usuarios: Usuarios, reglas: Reglas, auditoria: Auditoria, catalogos: Catalogos, cumplimiento: Cumplimiento }[seccion];
+  const { puede } = useAuth();
+  const visibles = SECCIONES.filter(([, , , permiso]) => puede(permiso));
+  const [seccion, setSeccion] = useState(visibles[0]?.[0] || 'cumplimiento');
+  const Contenido = { usuarios: Usuarios, consultorios: Consultorios, reglas: Reglas, auditoria: Auditoria, catalogos: Catalogos, cumplimiento: Cumplimiento }[seccion];
   return (
-    <Layout titulo="Administración" subtitulo="Usuarios, reglas de alerta, auditoría, catálogos y cumplimiento.">
+    <Layout titulo="Administración" subtitulo="Usuarios, roles y permisos, consultorios, reglas de alerta, auditoría y cumplimiento.">
       <div className="pestanas" role="tablist" aria-label="Secciones de administración">
-        {SECCIONES.map(([k, t, Icono]) => (
+        {visibles.map(([k, t, Icono]) => (
           <button key={k} role="tab" aria-selected={seccion === k} className={`pestana${seccion === k ? ' pestana--activa' : ''}`} onClick={() => setSeccion(k)}>
             <Icono size={14} aria-hidden="true" style={{ verticalAlign: '-2px' }} /> {t}
           </button>

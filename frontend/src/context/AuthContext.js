@@ -85,4 +85,16 @@ export function useAuth() {
   return ctx;
 }
 
-export const NOMBRES_ROL = { administrador: 'Administración', nutriologo: 'Nutriología', asistente: 'Asistente' };
+/* Nombres de los roles para la interfaz (el backend también envía usuario.nombreRol) */
+export const NOMBRES_ROL = {
+  superusuario: 'Superusuario',
+  administrador: 'Administrador de sistemas',
+  nutriologo: 'Nutriología',
+  docente: 'Docente',
+  administrativo: 'Administrativo',
+  paciente: 'Paciente',
+  asistente: 'Asistente',
+};
+export const NIVELES_ADMINISTRATIVO = { recepcion: 'Recepción', gestion: 'Gestión', supervisor: 'Supervisor' };
+/* "Administrativo · Recepción" */
+export const nombreRolCompleto = (u) => (u ? [NOMBRES_ROL[u.rol] || u.rol, NIVELES_ADMINISTRATIVO[u.nivel]].filter(Boolean).join(' · ') : '');

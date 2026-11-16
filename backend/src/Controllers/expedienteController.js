@@ -8,6 +8,7 @@ const { lineaTiempo, TIPOS_EVENTO } = require('../Services/clinica/lineaTiempo')
 const { evaluarPaciente } = require('../Services/clinica/alertas');
 const { armarReporte, TIPOS_REPORTE } = require('../Services/reportes');
 const fhir = require('../Services/fhir/mapeos');
+const { alcanceGlobal } = require('../Services/seguridad/permisos');
 const { registrarAuditoria } = require('../Services/auditoria');
 const { ErrorHttp, exigirId, controlador } = require('../Services/http');
 
@@ -30,10 +31,16 @@ const actualizar = controlador(async (req, res) => {
 
   if (estado !== undefined) { exp.estado = estado; campos.push('estado'); }
   if (motivoConsulta !== undefined) { exp.motivoConsulta = motivoConsulta; campos.push('motivoConsulta'); }
+  // Portal del paciente: qué secciones puede ver (solo valores booleanos de las claves conocidas)
+  if (req.body?.portal && typeof req.body.portal === 'object') {
+    Expediente.CLAVES_PORTAL.forEach((k) => { if (typeof req.body.portal[k] === 'boolean') exp.set(`portal.${k}`, req.body.portal[k]); });
+    campos.push('portal');
+  }
   if (responsableId !== undefined || equipoIds !== undefined) {
-    if (req.usuario.rol !== 'administrador' && String(exp.responsableId) !== String(req.usuario._id)) {
-      throw new ErrorHttp(403, 'Solo el responsable o un administrador puede cambiar el equipo');
+    if (!alcanceGlobal(req.usuario) && String(exp.responsableId) !== String(req.usuario._id)) {
+      throw new ErrorHttp(403, 'Solo el responsable o el superusuario puede cambiar el equipo');
     }
+    if (equipoIds !== undefined && !Array.isArray(equipoIds)) throw new ErrorHttp(400, 'equipoIds debe ser una lista', { equipoIds: 'Formato no válido' });
     const ids = [responsableId, ...(equipoIds || [])].filter(Boolean);
     ids.forEach((id) => exigirId(id, 'ID de profesional'));
     const validos = await Usuario.countDocuments({ _id: { $in: ids }, rol: 'nutriologo', activo: true });

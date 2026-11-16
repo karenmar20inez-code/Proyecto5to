@@ -9,7 +9,7 @@ evaluaciones, dietas, cumplimiento, laboratorio, agenda, alertas y reportes.
   react-chartjs-2, recharts, lucide-react. Entrada: `src/App.js`.
 - `backend/`: Node 24, Express 5, Mongoose 9, MongoDB Atlas. Entrada: `server.js`,
   aplicación en `src/app.js`. Carpetas `src/Controllers`, `src/Models`, `src/Routes`, `src/Services`.
-- `docs/`: `arquitectura-clinica.md` y `puesta-en-marcha.md`.
+- `docs/`: `arquitectura-clinica.md`, `puesta-en-marcha.md`, `roles-y-permisos.md` y `despliegue-vercel.md`.
 
 ## Comandos
 
@@ -47,7 +47,13 @@ evaluaciones, dietas, cumplimiento, laboratorio, agenda, alertas y reportes.
 - Estilo verde glassmorphic: usa los tokens de `frontend/src/index.css`
   (`--verde`, `--beige`, `--blanco`, `--texto*`, `--exito`, `--aviso`, `--peligro`, `--vidrio-blur`).
   No uses colores fijos nuevos. Estilos compartidos en `frontend/src/styles/modulos.css`.
-- Roles: administrador, nutriologo, asistente; el acceso se valida por expediente.
+- Roles y permisos (RBAC) en `backend/src/Services/seguridad/permisos.js` (única fuente):
+  superusuario, administrador (sin acceso clínico), nutriologo, docente, administrativo (niveles
+  recepcion / gestion / supervisor) y paciente. `asistente` es heredado (se migra con `npm run migrar-roles`).
+  Valida siempre en el backend con `exigirPermiso` / `tienePermiso`; nunca compares `rol` a mano para
+  decidir acceso. Solo se gestionan cuentas de nivel inferior, nunca la propia; solo se conceden
+  permisos que uno tiene. El acceso clínico se valida por expediente (responsable o equipo).
+- Consultorios (`Consultorio`): el personal ligado a uno solo ve cuentas y pacientes de ese consultorio.
 - Registros clínicos versionados (`grupoId` / `version` / `vigente`). Las notas SOAP firmadas solo admiten adendas.
 - No se borran pacientes con datos clínicos (respuesta 409, NOM-004).
 - Campos sensibles cifrados con el plugin AES-256-GCM (`CLAVE_CIFRADO`); toda acción clínica queda en `Auditoria`.

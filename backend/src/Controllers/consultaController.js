@@ -7,7 +7,7 @@ const ResultadoLaboratorio = require('../Models/ResultadoLaboratorio');
 const { evaluarEnSegundoPlano } = require('../Services/clinica/alertas');
 const { registrarAuditoria } = require('../Services/auditoria');
 const { exigirAccesoClinico } = require('../Services/seguridad/middleware');
-const { tienePermiso } = require('../Services/seguridad/permisos');
+const { tienePermiso, alcanceGlobal } = require('../Services/seguridad/permisos');
 const { ErrorHttp, exigirId, controlador } = require('../Services/http');
 
 const SECCIONES = ['subjetivo', 'objetivo', 'analisis', 'plan'];
@@ -83,7 +83,7 @@ const guardarBorrador = controlador(async (req, res) => {
   exigirEscritura(req);
   const c = await cargar(req, req.params.id);
   if (c.estado === 'firmada') throw new ErrorHttp(409, 'La nota está firmada: usa una adenda para aclaraciones o correcciones');
-  if (String(c.profesionalId) !== String(req.usuario._id) && req.usuario.rol !== 'administrador') {
+  if (String(c.profesionalId) !== String(req.usuario._id) && !alcanceGlobal(req.usuario)) {
     throw new ErrorHttp(403, 'Solo el autor puede editar el borrador');
   }
   const campos = [];

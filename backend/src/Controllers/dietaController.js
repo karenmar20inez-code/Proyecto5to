@@ -67,4 +67,4 @@ const actualizar = controlador(async (req, res) => {
   res.json(aCliente(dieta.toObject()));
 });
 
-module.exports = { listar, obtener, crear, actualizar, claveDesdeNombre };
+module.exports = { listar, obtener, crear, actualizar, claveDesdeNombre, sembrarBase };

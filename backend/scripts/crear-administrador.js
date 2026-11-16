@@ -1,5 +1,6 @@
 /**
- * Crea el primer usuario administrador (o un nutriólogo con --rol nutriologo).
+ * Crea la primera cuenta de la plataforma: superusuario por omisión
+ * (o administrador / nutriólogo con --rol administrador | --rol nutriologo).
  * Uso:
  *   npm run crear-administrador -- --correo tu@correo.com --nombre "Nombre Apellido" [--rol nutriologo] [--cedula 1234567]
  * La contraseña se pide en la terminal (no queda en el historial).
@@ -27,7 +28,7 @@ function preguntarOculto(texto) {
 (async () => {
   const correo = arg('correo');
   const nombre = arg('nombre');
-  const rol = arg('rol') || 'administrador';
+  const rol = arg('rol') || 'superusuario';
   if (!correo || !nombre) {
     console.log('Uso: npm run crear-administrador -- --correo tu@correo.com --nombre "Nombre Apellido" [--rol nutriologo] [--cedula 1234567]');
     process.exit(1);

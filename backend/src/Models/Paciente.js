@@ -91,6 +91,8 @@ const pacienteSchema = new mongoose.Schema(
     },
     // Plan de alimentación asignado (catálogo de dietas del frontend)
     dietaId: { type: String, trim: true, default: '' },
+    /* Consultorio al que pertenece (ámbito del personal administrativo ligado a un consultorio) */
+    consultorioId: { type: mongoose.Schema.Types.ObjectId, ref: 'Consultorio', index: true },
   },
   { timestamps: true, versionKey: false }
 );

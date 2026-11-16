@@ -14,6 +14,6 @@ router.get('/', exigirPermiso('pacientes:leer'), obtenerPacientes);
 router.get('/:id', exigirPermiso('pacientes:leer'), obtenerPaciente);
 router.post('/', exigirPermiso('pacientes:escribir'), crearPaciente);
 router.put('/:id', exigirPermiso('pacientes:escribir'), actualizarPaciente);
-router.delete('/:id', exigirPermiso('administracion'), eliminarPaciente);
+router.delete('/:id', exigirPermiso('pacientes:eliminar'), eliminarPaciente);
 
 module.exports = router;

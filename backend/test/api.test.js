@@ -14,7 +14,7 @@ mongoose.set('bufferCommands', false);
 
 const sesiones = require('../src/Services/seguridad/sesiones');
 const USUARIOS = {
-  'token-admin': { _id: new mongoose.Types.ObjectId(), nombre: 'Admin Pruebas', rol: 'administrador' },
+  'token-admin': { _id: new mongoose.Types.ObjectId(), nombre: 'Superusuario Pruebas', rol: 'superusuario' },
   'token-nutri': { _id: new mongoose.Types.ObjectId(), nombre: 'Nutri Pruebas', rol: 'nutriologo' },
   'token-asist': { _id: new mongoose.Types.ObjectId(), nombre: 'Asist Pruebas', rol: 'asistente' },
 };

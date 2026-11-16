@@ -73,7 +73,7 @@ test('Permisos por rol', () => {
   assert.equal(tienePermiso(undefined, 'pacientes:leer'), false);
 });
 
-test('Acceso clínico: responsable, equipo, administrador; nunca asistente', () => {
+test('Acceso clínico: responsable, equipo y superusuario; nunca asistente ni administrador de sistemas', () => {
   const a = new mongoose.Types.ObjectId();
   const b = new mongoose.Types.ObjectId();
   const exp = { responsableId: a, equipoIds: [b] };
@@ -81,7 +81,8 @@ test('Acceso clínico: responsable, equipo, administrador; nunca asistente', () 
   assert.equal(accesoClinico({ _id: b, rol: 'nutriologo' }, exp), true);
   assert.equal(accesoClinico({ _id: new mongoose.Types.ObjectId(), rol: 'nutriologo' }, exp), false);
   assert.equal(accesoClinico({ _id: a, rol: 'asistente' }, exp), false);
-  assert.equal(accesoClinico({ rol: 'administrador' }, exp), true);
+  assert.equal(accesoClinico({ rol: 'superusuario' }, exp), true);
+  assert.equal(accesoClinico({ rol: 'administrador' }, exp), false); // sin acceso clínico automático
 });
 
 test('Hash de firma cambia si se altera el contenido', () => {

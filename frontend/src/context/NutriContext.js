@@ -1,6 +1,7 @@
 import { createContext, useCallback, useContext, useEffect, useMemo, useState } from 'react';
 import { comidasEvaluables } from '../data/dietas';
 import { pacientesApi, adherenciaApi, medicionesApi, dietasApi } from '../services/api';
+import { useAuth } from './AuthContext';
 
 /* ==========================================
    ESTADO GLOBAL DEL CONSULTORIO
@@ -70,12 +71,14 @@ export function NutriProvider({ children }) {
     }
   }, []);
 
+  /* Carga inicial según permisos: cada rol pide solo lo que puede ver (la API lo valida igualmente) */
+  const { puede, usuario } = useAuth();
   useEffect(() => {
-    recargarPacientes();
-    recargarCumplimiento();
-    recargarMediciones();
-    recargarDietas();
-  }, [recargarPacientes, recargarCumplimiento, recargarMediciones, recargarDietas]);
+    if (usuario?.debeCambiarContrasena) { setCargandoPacientes(false); setCargandoDietas(false); return; } // primero debe cambiar su contraseña
+    if (puede('pacientes:leer')) recargarPacientes(); else setCargandoPacientes(false);
+    if (puede('clinico:leer')) { recargarCumplimiento(); recargarMediciones(); }
+    if (puede('dietas:leer')) recargarDietas(); else setCargandoDietas(false);
+  }, [puede, usuario?.debeCambiarContrasena, recargarPacientes, recargarCumplimiento, recargarMediciones, recargarDietas]);
 
   const acciones = useMemo(() => ({
     recargarPacientes,

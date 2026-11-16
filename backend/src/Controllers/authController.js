@@ -1,7 +1,7 @@
 const Usuario = require('../Models/Usuario');
 const { verificar, validarPolitica, generarHash } = require('../Services/seguridad/contrasenas');
 const sesiones = require('../Services/seguridad/sesiones');
-const { PERMISOS } = require('../Services/seguridad/permisos');
+const { permisosDe, ROLES } = require('../Services/seguridad/permisos');
 const { tokenDe } = require('../Services/seguridad/middleware');
 const { registrarAuditoria } = require('../Services/auditoria');
 const { ErrorHttp, controlador } = require('../Services/http');
@@ -9,7 +9,8 @@ const { ErrorHttp, controlador } = require('../Services/http');
 const MAX_INTENTOS = 5;
 const BLOQUEO_MS = 15 * 60000;
 
-/* Límite por IP (memoria del proceso): 20 intentos cada 15 minutos */
+/* Límite por IP (memoria del proceso): 20 intentos cada 15 minutos (LOGIN_MAX_POR_IP lo ajusta, p. ej. en pruebas) */
+const MAX_POR_IP = Number(process.env.LOGIN_MAX_POR_IP) || 20;
 const intentosPorIp = new Map();
 function limitarIp(ip) {
   const ahora = Date.now();
@@ -17,12 +18,14 @@ function limitarIp(ip) {
   if (ahora - reg.desde > BLOQUEO_MS) { reg.n = 0; reg.desde = ahora; }
   reg.n += 1;
   intentosPorIp.set(ip, reg);
-  if (reg.n > 20) throw new ErrorHttp(429, 'Demasiados intentos. Espera unos minutos.');
+  if (reg.n > MAX_POR_IP) throw new ErrorHttp(429, 'Demasiados intentos. Espera unos minutos.');
 }
 
+/* Datos públicos de la cuenta + permisos efectivos (el frontend los usa solo para mostrar u ocultar opciones) */
 const publico = (u) => ({
-  _id: u._id, nombre: u.nombre, correo: u.correo, rol: u.rol, cedulaProfesional: u.cedulaProfesional,
-  debeCambiarContrasena: u.debeCambiarContrasena, permisos: PERMISOS[u.rol],
+  _id: u._id, nombre: u.nombre, correo: u.correo, telefono: u.telefono, rol: u.rol, nombreRol: ROLES[u.rol]?.nombre,
+  nivel: u.nivel, consultorioId: u.consultorioId, cedulaProfesional: u.cedulaProfesional, especialidad: u.especialidad, pacienteId: u.pacienteId,
+  debeCambiarContrasena: u.debeCambiarContrasena, permisos: permisosDe(u),
 });
 
 // POST /api/auth/login { correo, contrasena }

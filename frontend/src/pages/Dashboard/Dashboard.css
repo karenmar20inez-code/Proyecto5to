@@ -80,7 +80,30 @@
 .sidebar__nombre small { display: block; font-size: 0.6875rem; font-weight: 500; color: var(--beige); }
 .sidebar h2 { display: none; }
 .sidebar nav { display: flex; flex-direction: column; gap: 2px; }
-.sidebar__seccion { margin: var(--e4) var(--e2) var(--e1); font-size: 0.6875rem; font-weight: 600; letter-spacing: 0.06em; text-transform: uppercase; color: var(--beige); white-space: nowrap; }
+/* Título de categoría: botón que despliega o contrae sus opciones */
+.sidebar__seccion {
+  position: relative;
+  display: flex; align-items: center; gap: var(--e2); width: 100%;
+  margin: var(--e3) 0 2px; padding: 6px var(--e2);
+  font: 600 0.6875rem var(--font); letter-spacing: 0.06em; text-transform: uppercase; color: var(--beige); white-space: nowrap;
+  background: transparent; border: 1px solid transparent; border-radius: 8px; cursor: pointer; text-align: left;
+  transition: background 0.2s ease, border-color 0.2s ease, color 0.2s ease;
+}
+.sidebar__seccion:hover { background: rgba(143, 169, 143, 0.12); border-color: var(--borde); color: var(--blanco); }
+.sidebar__seccion-texto { flex: 1; min-width: 0; overflow: hidden; text-overflow: ellipsis; }
+.sidebar__seccion-flecha { width: 14px; height: 14px; flex-shrink: 0; transform: rotate(180deg); transition: transform 0.25s ease; } /* abierta: hacia arriba */
+.sidebar__grupo--cerrado .sidebar__seccion-flecha { transform: rotate(0deg); } /* contraída: hacia abajo */
+.sidebar__seccion-activa { width: 6px; height: 6px; flex-shrink: 0; border-radius: 50%; background: var(--beige); box-shadow: 0 0 0 3px rgba(218, 204, 175, 0.2); }
+
+/* Opciones: altura animada (0fr ↔ 1fr). clip-path recorta arriba/abajo durante la animación
+   pero deja salir a la derecha los tooltips del menú contraído. */
+.sidebar__opciones {
+  display: grid; grid-template-rows: 1fr;
+  clip-path: inset(0 -320px 0 -8px);
+  transition: grid-template-rows 0.25s ease, visibility 0s;
+}
+.sidebar__opciones-interior { min-height: 0; display: flex; flex-direction: column; gap: 2px; padding: 1px 0; }
+.sidebar__grupo--cerrado .sidebar__opciones { grid-template-rows: 0fr; visibility: hidden; transition: grid-template-rows 0.25s ease, visibility 0s 0.25s; }
 
 .menu-item {
   position: relative;
@@ -118,7 +141,11 @@
 .sidebar--colapsado .sidebar__nombre,
 .sidebar--colapsado .menu-item__texto,
 .sidebar--colapsado .sidebar__usuario-texto { display: none; }
-.sidebar--colapsado .sidebar__seccion { height: 1px; margin: var(--e3) var(--e2); padding: 0; overflow: hidden; color: transparent; background: var(--borde); }
+/* Menú contraído: la categoría se muestra como una línea con su flecha (sigue desplegando y contrayendo) */
+.sidebar--colapsado .sidebar__seccion { justify-content: center; margin: var(--e3) 0 2px; padding: 4px 0; border-top-color: var(--borde); border-radius: 0 0 8px 8px; }
+.sidebar--colapsado .sidebar__seccion-texto { display: none; }
+.sidebar--colapsado .sidebar__seccion-activa { position: absolute; left: 10px; }
+.sidebar--colapsado .sidebar__seccion[data-tooltip]::after { text-transform: none; letter-spacing: 0; }
 .sidebar--colapsado .menu-item { justify-content: center; padding: 0; min-height: 44px; }
 .sidebar--colapsado .sidebar__usuario { justify-content: center; padding-left: 0; padding-right: 0; }
 

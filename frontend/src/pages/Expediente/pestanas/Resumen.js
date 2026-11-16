@@ -1,6 +1,6 @@
 import { useCallback, useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
-import { AlertTriangle, CheckCircle2, XCircle, Filter } from 'lucide-react';
+import { AlertTriangle, CheckCircle2, XCircle, Filter, MonitorSmartphone } from 'lucide-react';
 import { useFicha } from '../FichaPaciente';
 import Modal from '../../../components/ui/Modal';
 import { alertasApi, expedienteApi, usuariosApi } from '../../../services/api';
@@ -189,6 +189,57 @@ function LineaTiempo() {
   );
 }
 
+/* ---------- Portal del paciente: qué puede ver el propio paciente ---------- */
+const OPCIONES_PORTAL = [
+  ['dieta', 'Su dieta asignada'],
+  ['recomendaciones', 'Recomendaciones del plan vigente'],
+  ['citas', 'Sus citas'],
+  ['progreso', 'Progreso: peso, IMC, cintura, % grasa y masa muscular'],
+  ['cumplimiento', 'Su registro de cumplimiento de la dieta'],
+  ['indicadoresClinicos', 'Indicadores clínicos: presión, glucosa, lípidos y HbA1c'],
+];
+const PORTAL_POR_OMISION = { dieta: false, recomendaciones: false, citas: false, progreso: false, cumplimiento: false, indicadoresClinicos: false };
+
+function PanelPortal({ expediente, onCambio }) {
+  const { pacienteId } = useFicha();
+  const { puede } = useAuth();
+  const [portal, setPortal] = useState({ ...PORTAL_POR_OMISION, ...(expediente?.portal || {}) });
+  const [guardando, setGuardando] = useState('');
+  const [error, setError] = useState('');
+  const editable = puede('clinico:escribir');
+
+  const cambiar = async (clave, valor) => {
+    const anterior = portal;
+    setPortal({ ...portal, [clave]: valor }); // se refleja al instante y se revierte si falla
+    setGuardando(clave); setError('');
+    try {
+      await expedienteApi.actualizar(pacienteId, { portal: { [clave]: valor } });
+      onCambio?.();
+    } catch (err) {
+      setPortal(anterior);
+      setError(err.message);
+    } finally {
+      setGuardando('');
+    }
+  };
+
+  return (
+    <section className="panel" aria-labelledby="t-portal">
+      <h2 id="t-portal"><MonitorSmartphone size={16} aria-hidden="true" style={{ verticalAlign: '-2px' }} /> Portal del paciente</h2>
+      <p className="panel-descripcion">Lo que este paciente ve al iniciar sesión con su cuenta. Todo está oculto hasta que lo autorices. Nunca se muestran notas, diagnósticos, antecedentes ni laboratorios.</p>
+      <div className="permisos-lista" style={{ marginTop: 0 }}>
+        {OPCIONES_PORTAL.map(([clave, texto]) => (
+          <label key={clave} className="casilla">
+            <input type="checkbox" checked={!!portal[clave]} disabled={!editable || guardando === clave} onChange={(e) => cambiar(clave, e.target.checked)} />
+            <span>{texto}</span>
+          </label>
+        ))}
+      </div>
+      {error && <p className="aviso aviso--error" role="alert">{error}</p>}
+    </section>
+  );
+}
+
 function Resumen() {
   const { ficha, recargar } = useFicha();
   return (
@@ -197,7 +248,10 @@ function Resumen() {
         <PanelAlertas alertas={ficha.alertas} onCambio={recargar} />
         <LineaTiempo />
       </div>
-      <FichaVigente ficha={ficha} />
+      <div className="pila">
+        <FichaVigente ficha={ficha} />
+        <PanelPortal expediente={ficha.expediente} />
+      </div>
     </div>
   );
 }

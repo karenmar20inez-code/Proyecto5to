@@ -432,3 +432,26 @@ body.modal-abierto { overflow: hidden; }
 }
 /* Los mensajes dentro del modal no quedan ocultos tras la barra fija de botones */
 .modal__cuerpo [role="alert"] { scroll-margin-bottom: 84px; }
+
+/* ---------- Administración de usuarios ---------- */
+.formulario-usuario__seccion {
+  margin: var(--e2) 0 0; padding-top: var(--e3);
+  font-size: var(--fs-xs); font-weight: 600; letter-spacing: 0.06em; text-transform: uppercase; color: var(--beige);
+  border-top: 1px solid var(--borde);
+}
+.formulario-usuario__seccion:first-child { margin-top: 0; padding-top: 0; border-top: 0; }
+.formulario-usuario__rol { margin: 0; font-size: var(--fs-sm); }
+.formulario-usuario__clave { display: flex; gap: var(--e2); }
+.formulario-usuario__clave input { flex: 1; min-width: 0; }
+.formulario-usuario__permisos { padding: var(--e3) var(--e4); background: rgba(143, 169, 143, 0.08); border: 1px solid var(--borde); border-radius: var(--radio-lg); }
+.formulario-usuario__permisos summary { cursor: pointer; font-weight: 600; color: var(--texto); }
+.formulario-usuario__permisos[open] summary { margin-bottom: var(--e2); }
+.permisos-lista { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: var(--e2) var(--e4); margin-top: var(--e3); }
+.permisos-lista .casilla { align-items: flex-start; }
+.permisos-lista .casilla input { margin-top: 2px; flex-shrink: 0; }
+.tabla-acciones { display: inline-flex; gap: var(--e1); white-space: nowrap; }
+.insignia--rol-superusuario { background: rgba(218, 204, 175, 0.22); color: var(--beige); border-color: var(--borde-fuerte); }
+.insignia--rol-administrador { background: rgba(229, 216, 255, 0.14); color: #E5D8FF; border-color: rgba(229, 216, 255, 0.4); }
+.insignia--rol-nutriologo { background: var(--exito-50); color: var(--exito); border-color: rgba(167, 232, 192, 0.45); }
+.insignia--rol-paciente { background: rgba(158, 230, 224, 0.14); color: #9EE6E0; border-color: rgba(158, 230, 224, 0.4); }
+@media (max-width: 640px) { .formulario-usuario__clave { flex-wrap: wrap; } }
