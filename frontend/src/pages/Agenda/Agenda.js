@@ -22,7 +22,10 @@ function Agenda() {
 
   const cargar = useCallback(() => {
     setCitas(null);
-    citasApi.listar({ desde: lunes.toISOString(), hasta: new Date(lunes.getTime() + 7 * DIA - 1).toISOString() }) // límites en hora local.then(setCitas).catch((e) => { setError(e.message); setCitas([]); });
+    // Límites de la semana en hora local
+    citasApi.listar({ desde: lunes.toISOString(), hasta: new Date(lunes.getTime() + 7 * DIA - 1).toISOString() })
+      .then((lista) => { setError(''); setCitas(lista); })
+      .catch((e) => { setError(e.message); setCitas([]); });
   }, [lunes]);
   useEffect(() => { cargar(); }, [cargar]);
 
@@ -37,8 +40,12 @@ function Agenda() {
   const crear = async (e) => {
     e.preventDefault();
     try {
-      await citasApi.crear(nueva.pacienteId, { fechaHora: new Date(`${nueva.fecha}T${nueva.hora}`).toISOString(), motivo: nueva.motivo, duracionMin: Number(nueva.duracion) });
-      setNueva(null); cargar();
+      const fechaHora = new Date(`${nueva.fecha}T${nueva.hora}`);
+      await citasApi.crear(nueva.pacienteId, { fechaHora: fechaHora.toISOString(), motivo: nueva.motivo, duracionMin: Number(nueva.duracion) });
+      setNueva(null);
+      // Muestra la semana de la cita recién programada (si ya es la actual, solo recarga)
+      const semana = lunesDe(fechaHora);
+      if (semana.getTime() === lunes.getTime()) cargar(); else setLunes(semana);
     } catch (err) { setError(err.message); }
   };
   const hoy = iso(new Date());
@@ -49,9 +56,9 @@ function Agenda() {
         <button className="boton boton--secundario boton--icono" onClick={() => setLunes(new Date(lunes.getTime() - 7 * DIA))} aria-label="Semana anterior"><ChevronLeft aria-hidden="true" /></button>
         <button className="boton boton--secundario" onClick={() => setLunes(lunesDe(new Date()))}>Hoy</button>
         <button className="boton boton--secundario boton--icono" onClick={() => setLunes(new Date(lunes.getTime() + 7 * DIA))} aria-label="Semana siguiente"><ChevronRight aria-hidden="true" /></button>
-        {puede('agenda:escribir') && <button className="boton boton--primario" onClick={() => setNueva({ pacienteId: pacientes[0]?.id || '', fecha: hoy, hora: '10:00', motivo: 'Seguimiento', duracion: 45 })}><Plus aria-hidden="true" /> Nueva cita</button>}
+        {puede('agenda:escribir') && <button className="boton boton--primario" onClick={() => { setError(''); setNueva({ pacienteId: pacientes[0]?.id || '', fecha: hoy, hora: '10:00', motivo: 'Seguimiento', duracion: 45 }); }}><Plus aria-hidden="true" /> Nueva cita</button>}
       </>}>
-      {error && <p className="aviso aviso--error" role="alert">{error}</p>}
+      {error && !nueva && <p className="aviso aviso--error" role="alert">{error}</p>}
       <div className="rejilla-graficas" style={{ gridTemplateColumns: 'repeat(auto-fill, minmax(240px, 1fr))' }}>
         {dias.map((d) => (
           <section key={iso(d)} className="panel panel--compacto" aria-label={d.toLocaleDateString('es-MX', { weekday: 'long', day: 'numeric', month: 'long' })}
@@ -84,6 +91,8 @@ function Agenda() {
       <Modal abierto={!!nueva} titulo="Nueva cita" onCerrar={() => setNueva(null)}>
         {nueva && (
           <form className="formulario" onSubmit={crear}>
+            {error && <p className="aviso aviso--error campo--completo" role="alert">{error}</p>}
+            {pacientes.length === 0 && <p className="aviso campo--completo">No hay pacientes registrados. Agrega uno en Pacientes para poder agendarle una cita.</p>}
             <div className="campo campo--completo"><label htmlFor="ag-pac">Paciente</label>
               <select id="ag-pac" value={nueva.pacienteId} required onChange={(e) => setNueva({ ...nueva, pacienteId: e.target.value })}>
                 {pacientes.map((p) => <option key={p.id} value={p.id}>{p.nombreCompleto}</option>)}
