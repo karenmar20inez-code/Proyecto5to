@@ -455,3 +455,5 @@ body.modal-abierto { overflow: hidden; }
 .insignia--rol-nutriologo { background: var(--exito-50); color: var(--exito); border-color: rgba(167, 232, 192, 0.45); }
 .insignia--rol-paciente { background: rgba(158, 230, 224, 0.14); color: #9EE6E0; border-color: rgba(158, 230, 224, 0.4); }
 @media (max-width: 640px) { .formulario-usuario__clave { flex-wrap: wrap; } }
+/* Contador en pestañas (p. ej. solicitudes de acceso pendientes) */
+.contador-pestana { display: inline-block; min-width: 18px; margin-left: 6px; padding: 0 5px; border-radius: 999px; background: var(--peligro); color: var(--verde-oscuro); font-size: 0.6875rem; font-weight: 700; text-align: center; line-height: 18px; }

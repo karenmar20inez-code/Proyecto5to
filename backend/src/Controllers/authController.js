@@ -39,6 +39,12 @@ const login = controlador(async (req, res) => {
   const incorrecto = new ErrorHttp(401, 'Correo o contraseña incorrectos');
   if (!usuario || !usuario.activo) {
     registrarAuditoria(req, { accion: 'login_fallido', entidad: 'Sesion', usuario: { nombre: correo } });
+    if (!usuario) {
+      // ¿Pidió acceso y aún no tiene cuenta? Solo se le informa si la contraseña coincide con la de su solicitud
+      const { estadoParaLogin } = require('./solicitudController'); // eslint-disable-line global-require
+      const estado = await estadoParaLogin(correo, contrasena, verificar);
+      if (estado) throw new ErrorHttp(403, estado);
+    }
     throw incorrecto;
   }
   if (usuario.bloqueadoHasta && usuario.bloqueadoHasta > new Date()) {

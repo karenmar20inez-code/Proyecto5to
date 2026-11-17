@@ -217,4 +217,8 @@ const actualizar = controlador(async (req, res) => {
   res.json(conEstado(usuario.toObject()));
 });
 
-module.exports = { listar, catalogo, profesionales, crear, actualizar, rolesVisibles };
+module.exports = {
+  listar, catalogo, profesionales, crear, actualizar, rolesVisibles,
+  // reutilizadas al aprobar solicitudes de acceso
+  ambitoDe, validarConsultorio, validarPaciente, validarResponsable, asignarResponsable,
+};

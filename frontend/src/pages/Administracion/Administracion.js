@@ -1,17 +1,19 @@
 import { useCallback, useEffect, useState } from 'react';
-import { UserPlus, ShieldCheck, Database, Bell, ScrollText, Building2 } from 'lucide-react';
+import { UserPlus, ShieldCheck, Database, Bell, ScrollText, Building2, Inbox } from 'lucide-react';
 import Layout from '../../components/Layout/Layout';
 import Modal from '../../components/ui/Modal';
 import TablaDatos from '../../components/ui/TablaDatos';
-import { alertasApi, auditoriaApi, catalogosApi, laboratorioApi } from '../../services/api';
+import { alertasApi, auditoriaApi, catalogosApi, laboratorioApi, solicitudesApi } from '../../services/api';
 import Usuarios from './Usuarios';
 import Consultorios from './Consultorios';
+import Solicitudes from './Solicitudes';
 import { NOMBRES_ROL, useAuth } from '../../context/AuthContext';
 
 const fechaHora = (f) => (f ? new Date(f).toLocaleString('es-MX', { dateStyle: 'medium', timeStyle: 'short' }) : '—');
 /* [clave, título, icono, permiso necesario] · cada pestaña aparece solo si el rol tiene el permiso (la API también lo valida) */
 const SECCIONES = [
   ['usuarios', 'Usuarios y roles', UserPlus, 'usuarios:leer'],
+  ['solicitudes', 'Solicitudes', Inbox, 'usuarios:crear'],
   ['consultorios', 'Consultorios', Building2, 'consultorios:leer'],
   ['reglas', 'Reglas de alerta', Bell, 'configuracion:gestionar'],
   ['auditoria', 'Auditoría', ScrollText, 'auditoria:leer'],
@@ -147,17 +149,24 @@ function Administracion() {
   const { puede } = useAuth();
   const visibles = SECCIONES.filter(([, , , permiso]) => puede(permiso));
   const [seccion, setSeccion] = useState(visibles[0]?.[0] || 'cumplimiento');
-  const Contenido = { usuarios: Usuarios, consultorios: Consultorios, reglas: Reglas, auditoria: Auditoria, catalogos: Catalogos, cumplimiento: Cumplimiento }[seccion];
+  // Solicitudes de acceso pendientes (contador en la pestaña)
+  const [pendientes, setPendientes] = useState(0);
+  const contarPendientes = useCallback(() => {
+    if (puede('usuarios:crear')) solicitudesApi.listar({ estado: 'pendiente' }).then((l) => setPendientes(l.length)).catch(() => {});
+  }, [puede]);
+  useEffect(() => { contarPendientes(); }, [contarPendientes]);
+  const Contenido = { usuarios: Usuarios, solicitudes: Solicitudes, consultorios: Consultorios, reglas: Reglas, auditoria: Auditoria, catalogos: Catalogos, cumplimiento: Cumplimiento }[seccion];
   return (
     <Layout titulo="Administración" subtitulo="Usuarios, roles y permisos, consultorios, reglas de alerta, auditoría y cumplimiento.">
       <div className="pestanas" role="tablist" aria-label="Secciones de administración">
         {visibles.map(([k, t, Icono]) => (
           <button key={k} role="tab" aria-selected={seccion === k} className={`pestana${seccion === k ? ' pestana--activa' : ''}`} onClick={() => setSeccion(k)}>
             <Icono size={14} aria-hidden="true" style={{ verticalAlign: '-2px' }} /> {t}
+            {k === 'solicitudes' && pendientes > 0 && <span className="contador-pestana" aria-label={`${pendientes} pendientes`}>{pendientes}</span>}
           </button>
         ))}
       </div>
-      <Contenido />
+      <Contenido onCambio={contarPendientes} />
     </Layout>
   );
 }

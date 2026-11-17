@@ -38,6 +38,19 @@ lo que el rol no puede usar. La única fuente de verdad es
 - **Límite de inicio de sesión:** 5 intentos fallidos bloquean la cuenta 15 min. Además hay un máximo de 20 intentos
   por IP cada 15 min (variable `LOGIN_MAX_POR_IP`).
 
+## Solicitudes de acceso (registro por cuenta propia)
+
+- En la pantalla de inicio de sesión, **"¿No tienes cuenta? Solicitar acceso"**: la persona escribe su nombre, correo,
+  teléfono, **su propia contraseña** y el tipo de acceso (nutriólogo, administrativo, docente o paciente).
+- La solicitud queda **pendiente**: no entra hasta que alguien con permiso para crear cuentas (superusuario o
+  administrador) la apruebe en **Configuración → Administración → Solicitudes** (con contador de pendientes).
+- Al aprobar se elige el rol definitivo (solo de nivel inferior al de quien aprueba), nivel y consultorio; si es paciente,
+  se liga a su expediente. La persona entra con el correo y la contraseña que eligió (sin contraseña temporal).
+- Si intenta entrar antes, ve "pendiente" o "rechazada" (con el motivo) solo si escribe su contraseña correcta.
+- Nadie puede solicitar ser superusuario ni administrador. La respuesta es la misma aunque el correo ya exista
+  (no se revelan cuentas) y hay un máximo de 5 solicitudes por hora por conexión (`SOLICITUDES_MAX_POR_IP`).
+- Toda aprobación o rechazo queda en la bitácora.
+
 ## Portal del paciente ("Mi espacio")
 
 - La cuenta de paciente se crea en **Configuración → Usuarios y roles → Registrar usuario → rol Paciente**, ligada a

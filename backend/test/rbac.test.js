@@ -252,3 +252,33 @@ test('API: con contraseña temporal solo se puede consultar la sesión y cambiar
   assert.equal(await pedir('temporal', 'GET', '/api/dietas'), 403);
   assert.equal(await pedir('temporal', 'GET', '/api/auth/yo'), 200);
 });
+
+/* ---------------- Solicitudes de acceso ---------------- */
+
+const publica = async (cuerpo) => {
+  const r = await fetch(`${base}/api/auth/solicitar-acceso`, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(cuerpo) });
+  return [r.status, await r.json().catch(() => null)];
+};
+
+test('Solicitar acceso: es pública pero valida contraseña y datos antes de guardar', async () => {
+  let [st, j] = await publica({ nombre: 'Ana', correo: 'ana@prueba.test', rolSolicitado: 'nutriologo', contrasena: '123' });
+  assert.equal(st, 400);
+  assert.ok(j.errores.contrasena);
+  [st, j] = await publica({ nombre: 'Ana Prueba', correo: 'no-es-correo', rolSolicitado: 'nutriologo', contrasena: 'Segura12345' });
+  assert.equal(st, 400);
+  assert.ok(j.errores.correo);
+  [st, j] = await publica({ nombre: 'Ana Prueba', correo: 'ana@prueba.test', rolSolicitado: 'superusuario', contrasena: 'Segura12345' });
+  assert.equal(st, 400, 'no se puede pedir ser superusuario');
+  assert.ok(j.errores.rolSolicitado);
+  [st] = await publica({ nombre: 'Ana Prueba', correo: 'ana@prueba.test', rolSolicitado: 'administrador', contrasena: 'Segura12345' });
+  assert.equal(st, 400, 'ni administrador');
+});
+
+test('Revisar solicitudes requiere permiso para crear cuentas', async () => {
+  for (const cuenta of ['nutri', 'docente', 'recepcion', 'supervisor', 'paciente']) {
+    // eslint-disable-next-line no-await-in-loop
+    assert.equal(await pedir(cuenta, 'GET', '/api/solicitudes'), 403, cuenta);
+  }
+  assert.equal(await pedir('nutri', 'POST', `/api/solicitudes/${PID}/aprobar`, { rol: 'nutriologo' }), 403);
+  assert.ok(![401, 403].includes(await pedir('admin', 'GET', '/api/solicitudes')));
+});

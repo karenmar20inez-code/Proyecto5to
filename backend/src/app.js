@@ -7,7 +7,7 @@ const cors = require('cors');
 
 const pacienteRoutes = require('./Routes/pacienteRoutes');
 const expediente = require('./Routes/expedienteRoutes');
-const { authRouter, usuariosRouter, consultoriosRouter } = require('./Routes/authRoutes');
+const { authRouter, usuariosRouter, consultoriosRouter, solicitudesRouter } = require('./Routes/authRoutes');
 const { autenticar, soloPortalParaPacientes, exigirCambioContrasena, exigirPermiso } = require('./Services/seguridad/middleware');
 const portal = require('./Controllers/portalController');
 
@@ -51,6 +51,7 @@ app.use('/api', soloPortalParaPacientes);
 
 app.use('/api/usuarios', usuariosRouter);
 app.use('/api/consultorios', consultoriosRouter);
+app.use('/api/solicitudes', solicitudesRouter);
 // Portal del paciente: solo su propia información (el paciente se toma de la sesión)
 app.get('/api/portal', exigirPermiso('portal:propio'), portal.miEspacio);
 app.use('/api/pacientes', pacienteRoutes);

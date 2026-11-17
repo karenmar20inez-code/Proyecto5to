@@ -70,6 +70,15 @@ export const authApi = {
   logout: () => post('/auth/logout'),
   yo: () => get('/auth/yo'),
   cambiarContrasena: (actual, nueva) => post('/auth/cambiar-contrasena', { actual, nueva }),
+  /* Registro por cuenta propia: queda pendiente hasta que un superusuario o administrador lo apruebe */
+  solicitarAcceso: (datos) => post('/auth/solicitar-acceso', datos),
+};
+
+/* Revisión de solicitudes de acceso (quien puede crear cuentas) */
+export const solicitudesApi = {
+  listar: (params) => get('/solicitudes', params),
+  aprobar: (id, datos) => post(`/solicitudes/${id}/aprobar`, datos),
+  rechazar: (id, motivo) => post(`/solicitudes/${id}/rechazar`, { motivo }),
 };
 
 export const usuariosApi = {
