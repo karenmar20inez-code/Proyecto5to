@@ -28,6 +28,13 @@ lo que el rol no puede usar. La única fuente de verdad es
   concede ya tiene. Nunca se conceden `*`, `plataforma:administrar` ni `portal:propio`.
 - **Contraseñas:** se guardan con hash (scrypt). La contraseña temporal **obliga** a cambiarla. Hasta entonces la
   cuenta solo puede usar "Mi perfil", y el servidor bloquea el resto (`CAMBIO_CONTRASENA`).
+- **Asignar contraseña (solo superusuario):** en Usuarios y roles, botón **Cambiar contraseña** de cada cuenta
+  (`usuarios:contrasena`). Por omisión la persona debe cambiarla al iniciar sesión. Se desbloquea la cuenta y se
+  cierran sus sesiones. La propia contraseña se cambia en "Mi perfil".
+- **Eliminar cuentas (solo superusuario):** botón **Eliminar cuenta** (`usuarios:eliminar`). Si la persona es
+  responsable de expedientes, primero hay que transferirlos (409). Si no tiene actividad clínica, la cuenta se borra por
+  completo; si la tiene, desaparece de la lista y ya no puede entrar, pero sus registros **conservan su nombre como autor**
+  (NOM-004). En ambos casos el correo queda libre y la acción queda en la bitácora.
 - **Sesiones:** se cierran al cambiar rol, permisos, estado, consultorio o contraseña.
 - **Información nutricional del paciente** (peso, estatura, dieta asignada): solo el personal con acceso clínico la ve o la modifica.
 - **Transferir un expediente** (cambiar su nutriólogo responsable) es tarea del superusuario o del propio responsable,
@@ -53,8 +60,14 @@ lo que el rol no puede usar. La única fuente de verdad es
 
 ## Portal del paciente ("Mi espacio")
 
-- La cuenta de paciente se crea en **Configuración → Usuarios y roles → Registrar usuario → rol Paciente**, ligada a
-  un paciente existente (un paciente, una cuenta).
+- La cuenta de paciente se crea desde **Pacientes**, con el botón de llave **Dar acceso al portal** de cada paciente
+  (un paciente, una cuenta). "Registrar usuario" ya no ofrece el rol Paciente.
+
+## Eliminar pacientes
+
+- En **Pacientes**, el botón **Eliminar** borra al paciente solo si no tiene historial clínico (y también su cuenta del
+  portal). Si tiene historial, la NOM-004 obliga a conservarlo: se ofrece **Darlo de baja** en su lugar.
+- El filtro **Activos / Dados de baja / Todos** oculta por omisión a los pacientes dados de baja.
 - El paciente se toma **siempre de la sesión**: no hay forma de pedir datos de otro paciente.
 - **Todo está oculto por omisión.** El nutriólogo decide qué compartir en el expediente del paciente, en
   **Resumen clínico → Portal del paciente**: dieta, recomendaciones, citas, progreso (antropometría), cumplimiento e

@@ -88,6 +88,9 @@ export const usuariosApi = {
   roles: () => get('/usuarios/roles'),
   crear: (datos) => post('/usuarios', datos),
   actualizar: (id, datos) => put(`/usuarios/${id}`, datos),
+  /* Solo superusuario: asignar nueva contraseña y eliminar cuentas */
+  cambiarContrasena: (id, nueva, exigirCambio = true) => put(`/usuarios/${id}/contrasena`, { nueva, exigirCambio }),
+  eliminar: (id) => del(`/usuarios/${id}`),
 };
 
 /* Portal del paciente: solo su propia información (el backend toma al paciente de la sesión) */

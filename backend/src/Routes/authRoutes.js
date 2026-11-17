@@ -22,6 +22,8 @@ usuariosRouter.get('/roles', exigirPermiso('usuarios:leer'), usuarios.catalogo);
 usuariosRouter.get('/', exigirPermiso('usuarios:leer'), usuarios.listar);
 usuariosRouter.post('/', exigirPermiso('usuarios:crear'), usuarios.crear);
 usuariosRouter.put('/:id', exigirPermiso('usuarios:leer'), usuarios.actualizar); // editar/estado se validan dentro
+usuariosRouter.put('/:id/contrasena', exigirPermiso('usuarios:contrasena'), usuarios.cambiarContrasena);
+usuariosRouter.delete('/:id', exigirPermiso('usuarios:eliminar'), usuarios.eliminar);
 
 /* /api/consultorios (lectura para quien gestiona cuentas; alta y cambios: consultorios:gestionar) */
 const consultoriosRouter = express.Router();

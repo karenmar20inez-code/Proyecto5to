@@ -148,6 +148,10 @@ const eliminarPaciente = controlador(async (req, res) => {
   const paciente = await Paciente.findByIdAndDelete(id);
   if (!paciente) throw new ErrorHttp(404, 'Paciente no encontrado');
   await Expediente.deleteOne({ pacienteId: id });
+  // Su cuenta del portal (si tenía) deja de existir
+  const { eliminarCuenta } = require('./usuarioController'); // eslint-disable-line global-require
+  const cuentas = await Usuario.find({ pacienteId: id, eliminado: { $ne: true } });
+  for (const cuenta of cuentas) await eliminarCuenta(req, cuenta); // eslint-disable-line no-await-in-loop
   registrarAuditoria(req, { accion: 'eliminar', entidad: 'Paciente', entidadId: paciente._id, pacienteId: paciente._id });
   res.json({ mensaje: 'Paciente eliminado correctamente', id });
 });

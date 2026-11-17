@@ -1,5 +1,5 @@
 import { useCallback, useEffect, useMemo, useState } from 'react';
-import { UserPlus, Pencil, Power, KeyRound, Copy } from 'lucide-react';
+import { UserPlus, Pencil, Power, KeyRound, Copy, Trash2 } from 'lucide-react';
 import Modal from '../../components/ui/Modal';
 import TablaDatos from '../../components/ui/TablaDatos';
 import { usuariosApi, consultoriosApi, pacientesApi } from '../../services/api';
@@ -37,7 +37,8 @@ function FormularioUsuario({ inicial, catalogo, consultorios, pacientes, profesi
   const [guardando, setGuardando] = useState(false);
   const [verClave, setVerClave] = useState(false);
 
-  const roles = catalogo.roles.filter((r) => r.asignable || r.clave === inicial?.rol);
+  // Los pacientes no se registran aquí: se dan de alta en Pacientes (y desde ahí se les da acceso al portal)
+  const roles = catalogo.roles.filter((r) => (r.asignable && r.clave !== 'paciente') || r.clave === inicial?.rol);
   const rol = catalogo.roles.find((r) => r.clave === f.rol);
   const permisosBase = useMemo(() => {
     if (!rol) return [];
@@ -123,6 +124,7 @@ function FormularioUsuario({ inicial, catalogo, consultorios, pacientes, profesi
           {roles.map((r) => <option key={r.clave} value={r.clave}>{r.nombre}</option>)}
         </select>
         {errorDe('rol')}
+        {!editando && <span className="campo__ayuda">Para pacientes usa <strong>Pacientes</strong> (registro y "Acceso al portal").</span>}
       </div>
       <div className="campo">
         <label htmlFor="u-estado">Estado de la cuenta</label>
@@ -257,6 +259,9 @@ function Usuarios() {
   const [filtroEstado, setFiltroEstado] = useState('');
   const [filtroConsultorio, setFiltroConsultorio] = useState('');
   const [editor, setEditor] = useState(null); // null | { inicial }
+  const [claveDe, setClaveDe] = useState(null); // cuenta a la que se asigna nueva contraseña
+  const [nuevaClave, setNuevaClave] = useState({ valor: '', exigirCambio: true, ver: false, error: '' });
+  const [eliminando, setEliminando] = useState(null); // cuenta por eliminar
   const [error, setError] = useState('');
   const [aviso, setAviso] = useState('');
 
@@ -303,6 +308,24 @@ function Usuarios() {
     } catch (err) { setError(err.message); }
   };
 
+  const asignarClave = async (e) => {
+    e.preventDefault();
+    try {
+      const r = await usuariosApi.cambiarContrasena(claveDe._id, nuevaClave.valor, nuevaClave.exigirCambio);
+      setClaveDe(null);
+      mostrarAviso(`${r.mensaje} Compártela con ${claveDe.nombre} por un medio seguro.`);
+    } catch (err) { setNuevaClave((x) => ({ ...x, error: err.message })); }
+  };
+
+  const confirmarEliminar = async () => {
+    try {
+      const r = await usuariosApi.eliminar(eliminando._id);
+      setEliminando(null);
+      mostrarAviso(r.mensaje);
+      cargar();
+    } catch (err) { setEliminando(null); setError(err.message); }
+  };
+
   const columnas = [
     {
       clave: 'nombre', titulo: 'Nombre', render: (u) => (
@@ -332,6 +355,18 @@ function Usuarios() {
             <button className={`boton boton--${u.activo ? 'peligro' : 'secundario'} boton--chico`} onClick={(e) => { e.stopPropagation(); alternar(u); }}
               aria-label={`${u.activo ? 'Desactivar' : 'Activar'} ${u.nombre}`} title={u.activo ? 'Desactivar' : 'Activar'}>
               <Power aria-hidden="true" />
+            </button>
+          )}
+          {puede('usuarios:contrasena') && (
+            <button className="boton boton--secundario boton--chico" onClick={(e) => { e.stopPropagation(); setNuevaClave({ valor: '', exigirCambio: true, ver: false, error: '' }); setClaveDe(u); }}
+              aria-label={`Cambiar la contraseña de ${u.nombre}`} title="Cambiar contraseña">
+              <KeyRound aria-hidden="true" />
+            </button>
+          )}
+          {puede('usuarios:eliminar') && (
+            <button className="boton boton--peligro boton--chico" onClick={(e) => { e.stopPropagation(); setError(''); setEliminando(u); }}
+              aria-label={`Eliminar la cuenta de ${u.nombre}`} title="Eliminar cuenta">
+              <Trash2 aria-hidden="true" />
             </button>
           )}
         </span>
@@ -389,6 +424,53 @@ function Usuarios() {
           <FormularioUsuario inicial={editor.inicial} catalogo={catalogo} consultorios={consultorios} pacientes={pacientes}
             profesionales={profesionales} ocupados={ocupados} ambito={ambito} onGuardar={guardar} onCerrar={() => setEditor(null)} />
         )}
+      </Modal>
+
+      {/* Nueva contraseña (solo superusuario) */}
+      <Modal abierto={!!claveDe} titulo={`Cambiar la contraseña de ${claveDe?.nombre || ''}`}
+        descripcion="Se cerrarán sus sesiones abiertas. Entrégale la nueva contraseña por un medio seguro." onCerrar={() => setClaveDe(null)} cerrarAlFondo={false}>
+        <form className="formulario" onSubmit={asignarClave}>
+          <div className="campo campo--completo">
+            <label htmlFor="nc-clave">Nueva contraseña *</label>
+            <div className="formulario-usuario__clave">
+              <input id="nc-clave" type={nuevaClave.ver ? 'text' : 'password'} autoComplete="new-password" value={nuevaClave.valor} required minLength={10}
+                onChange={(e) => setNuevaClave({ ...nuevaClave, valor: e.target.value, error: '' })} />
+              <button type="button" className="boton boton--secundario" onClick={() => setNuevaClave({ ...nuevaClave, valor: generarContrasena(), ver: true, error: '' })}>
+                <KeyRound aria-hidden="true" /> Generar
+              </button>
+              {nuevaClave.ver && nuevaClave.valor && (
+                <button type="button" className="boton boton--secundario boton--icono" title="Copiar" aria-label="Copiar contraseña" onClick={() => navigator.clipboard?.writeText(nuevaClave.valor)}>
+                  <Copy aria-hidden="true" />
+                </button>
+              )}
+            </div>
+            <span className="campo__ayuda">Mínimo 10 caracteres con letras y números. Se guarda cifrada (hash).</span>
+          </div>
+          <label className="casilla campo--completo">
+            <input type="checkbox" checked={nuevaClave.exigirCambio} onChange={(e) => setNuevaClave({ ...nuevaClave, exigirCambio: e.target.checked })} />
+            Pedirle que la cambie al iniciar sesión (recomendado)
+          </label>
+          {nuevaClave.error && <p className="aviso aviso--error campo--completo" role="alert">{nuevaClave.error}</p>}
+          <div className="formulario-acciones">
+            <button type="button" className="boton boton--secundario" onClick={() => setClaveDe(null)}>Cancelar</button>
+            <button type="submit" className="boton boton--primario"><KeyRound aria-hidden="true" /> Guardar contraseña</button>
+          </div>
+        </form>
+      </Modal>
+
+      {/* Eliminar cuenta (solo superusuario) */}
+      <Modal abierto={!!eliminando} titulo={`¿Eliminar la cuenta de ${eliminando?.nombre || ''}?`} onCerrar={() => setEliminando(null)}
+        acciones={(
+          <>
+            <button type="button" className="boton boton--secundario" onClick={() => setEliminando(null)}>Cancelar</button>
+            <button type="button" className="boton boton--peligro" onClick={confirmarEliminar}><Trash2 aria-hidden="true" /> Eliminar definitivamente</button>
+          </>
+        )}>
+        <p>La cuenta dejará de existir: no podrá iniciar sesión, desaparecerá de las listas y su correo <strong>{eliminando?.correo}</strong> quedará libre.</p>
+        <p className="aviso" style={{ marginTop: 'var(--e3)' }}>
+          Si hizo registros clínicos o aparece en la auditoría, su nombre se conservará como autor de esos registros.
+          Si es responsable de expedientes, primero transfiérelos a otro nutriólogo. Si solo quieres impedir el acceso de forma temporal, usa «Desactivar».
+        </p>
       </Modal>
     </section>
   );

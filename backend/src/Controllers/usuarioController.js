@@ -2,6 +2,8 @@ const Usuario = require('../Models/Usuario');
 const Paciente = require('../Models/Paciente');
 const Expediente = require('../Models/Expediente');
 const Consultorio = require('../Models/Consultorio');
+const crypto = require('crypto');
+const mongoose = require('mongoose');
 const { generarHash, validarPolitica } = require('../Services/seguridad/contrasenas');
 const { revocarSesionesDe } = require('../Services/seguridad/sesiones');
 const { registrarAuditoria } = require('../Services/auditoria');
@@ -86,7 +88,7 @@ async function validarPaciente(pacienteId, excepto, actor) {
 // GET /api/usuarios?rol=&buscar=&activo=   (usuarios:leer)
 const listar = controlador(async (req, res) => {
   const visibles = rolesVisibles(req.usuario);
-  const filtro = { $or: [{ rol: { $in: visibles } }, { _id: req.usuario._id }] };
+  const filtro = { $or: [{ rol: { $in: visibles } }, { _id: req.usuario._id }], eliminado: { $ne: true } };
   if (req.query.rol) {
     if (!visibles.includes(req.query.rol)) return res.json([]);
     filtro.rol = req.query.rol;
@@ -127,7 +129,7 @@ const catalogo = controlador(async (req, res) => {
 // GET /api/usuarios/profesionales  (cualquier usuario autenticado: para elegir responsable)
 const profesionales = controlador(async (req, res) => {
   const ambito = ambitoDe(req.usuario);
-  const lista = await Usuario.find({ rol: 'nutriologo', activo: true, ...(ambito && { consultorioId: ambito }) }).select('nombre cedulaProfesional').sort({ nombre: 1 }).lean();
+  const lista = await Usuario.find({ rol: 'nutriologo', activo: true, eliminado: { $ne: true }, ...(ambito && { consultorioId: ambito }) }).select('nombre cedulaProfesional').sort({ nombre: 1 }).lean();
   res.json(lista);
 });
 
@@ -217,8 +219,92 @@ const actualizar = controlador(async (req, res) => {
   res.json(conEstado(usuario.toObject()));
 });
 
+/* Carga una cuenta que el actor puede gestionar (nunca la propia, nunca de su nivel o superior, nunca eliminada) */
+async function cargarGestionable(req) {
+  exigirId(req.params.id, 'ID de usuario');
+  if (String(req.params.id) === String(req.usuario._id)) throw new ErrorHttp(403, 'No puedes hacer esto con tu propia cuenta');
+  const usuario = await Usuario.findOne({ _id: req.params.id, eliminado: { $ne: true } });
+  if (!usuario) throw new ErrorHttp(404, 'Usuario no encontrado');
+  if (!puedeGestionar(req.usuario, usuario)) throw new ErrorHttp(403, 'No puedes gestionar una cuenta de tu mismo nivel o superior');
+  const ambito = ambitoDe(req.usuario);
+  if (ambito && String(usuario.consultorioId) !== ambito) throw new ErrorHttp(403, 'Esa cuenta no pertenece a tu consultorio');
+  return usuario;
+}
+
+// PUT /api/usuarios/:id/contrasena  { nueva, exigirCambio = true }  (usuarios:contrasena · superusuario)
+const cambiarContrasena = controlador(async (req, res) => {
+  const usuario = await cargarGestionable(req);
+  const errores = validarPolitica(req.body?.nueva);
+  if (errores.length) throw new ErrorHttp(400, `Contraseña insegura: ${errores.join(', ')}`, { nueva: errores.join(', ') });
+  const exigirCambio = req.body?.exigirCambio !== false;
+  usuario.contrasenaHash = await generarHash(req.body.nueva);
+  usuario.debeCambiarContrasena = exigirCambio;
+  usuario.intentosFallidos = 0;
+  usuario.bloqueadoHasta = undefined;
+  await usuario.save();
+  await revocarSesionesDe(usuario._id); // las sesiones abiertas con la contraseña anterior se cierran
+  registrarAuditoria(req, { accion: 'actualizar', entidad: 'Usuario', entidadId: usuario._id, campos: ['contrasena', ...(exigirCambio ? ['debeCambiarContrasena'] : [])] });
+  res.json({ mensaje: exigirCambio ? 'Contraseña asignada. Deberá cambiarla al iniciar sesión.' : 'Contraseña asignada.' });
+});
+
+/* ¿La cuenta aparece como autora o responsable en algún registro? (entonces se conserva como autoría) */
+async function tieneActividad(usuarioId) {
+  const id = new mongoose.Types.ObjectId(usuarioId);
+  const db = mongoose.connection.db;
+  const referencias = [
+    ['expedientes', { $or: [{ responsableId: id }, { equipoIds: id }] }],
+    ['consultas', { $or: [{ autorId: id }, { profesionalId: id }, { 'firma.usuarioId': id }, { 'adendas.autorId': id }] }],
+    ['diagnosticos', { profesionalId: id }], ['objetivos', { profesionalId: id }], ['planes', { profesionalId: id }],
+    ['antecedentes', { registradoPor: id }], ['consentimientos', { registradoPor: id }],
+    ['mediciones', { registradoPor: id }], ['laboratorios', { registradoPor: id }],
+    ['auditoria', { usuarioId: id }], ['usuarios', { creadoPor: id }], ['consultorios', { creadoPor: id }],
+  ];
+  for (const [coleccion, filtro] of referencias) {
+    // eslint-disable-next-line no-await-in-loop
+    if (await db.collection(coleccion).countDocuments(filtro, { limit: 1 })) return true;
+  }
+  return false;
+}
+
+/* Elimina una cuenta: sin actividad se borra por completo; con actividad se conserva solo su nombre como autor */
+async function eliminarCuenta(req, usuario) {
+  const expedientes = await mongoose.connection.db.collection('expedientes').countDocuments({ responsableId: usuario._id });
+  if (expedientes) {
+    throw new ErrorHttp(409, `${usuario.nombre} es responsable de ${expedientes} expediente(s). Transfiérelos a otro nutriólogo antes de eliminar la cuenta.`);
+  }
+  await revocarSesionesDe(usuario._id);
+  await mongoose.connection.db.collection('expedientes').updateMany({ equipoIds: usuario._id }, { $pull: { equipoIds: usuario._id } });
+  const conActividad = await tieneActividad(usuario._id);
+  const correoOriginal = usuario.correo;
+  if (conActividad) {
+    usuario.set({
+      eliminado: true, eliminadoEn: new Date(), eliminadoPor: req.usuario._id, activo: false,
+      correo: `eliminado-${usuario._id}@la-nutria.invalid`, // el correo original queda libre
+      contrasenaHash: crypto.randomBytes(32).toString('hex'), // ninguna contraseña coincide
+      telefono: undefined, permisosExtra: [], permisosRevocados: [], debeCambiarContrasena: false,
+    });
+    await usuario.save({ validateBeforeSave: false });
+  } else {
+    await Usuario.deleteOne({ _id: usuario._id });
+  }
+  registrarAuditoria(req, { accion: 'eliminar', entidad: 'Usuario', entidadId: usuario._id, campos: [conActividad ? 'conserva-autoria' : 'borrado-total', `correo:${correoOriginal.replace(/(^.).*(@.*$)/, '$1***$2')}`] });
+  return conActividad;
+}
+
+// DELETE /api/usuarios/:id  (usuarios:eliminar · superusuario)
+const eliminar = controlador(async (req, res) => {
+  const usuario = await cargarGestionable(req);
+  const conservado = await eliminarCuenta(req, usuario);
+  res.json({
+    mensaje: conservado
+      ? `Cuenta de ${usuario.nombre} eliminada. Su nombre se conserva como autor de los registros que hizo.`
+      : `Cuenta de ${usuario.nombre} eliminada por completo.`,
+    conservaAutoria: conservado,
+  });
+});
+
 module.exports = {
-  listar, catalogo, profesionales, crear, actualizar, rolesVisibles,
+  listar, catalogo, profesionales, crear, actualizar, rolesVisibles, cambiarContrasena, eliminar, eliminarCuenta,
   // reutilizadas al aprobar solicitudes de acceso
   ambitoDe, validarConsultorio, validarPaciente, validarResponsable, asignarResponsable,
 };

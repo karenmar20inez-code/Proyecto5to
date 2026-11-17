@@ -40,6 +40,11 @@ const usuarioSchema = new mongoose.Schema(
     bloqueadoHasta: { type: Date, select: false },
     ultimoAcceso: Date,
     creadoPor: { type: mongoose.Schema.Types.ObjectId, ref: 'Usuario' },
+    /* Cuenta eliminada: ya no existe para el sistema (no entra, no aparece en listas, su correo queda libre),
+       pero se conserva su nombre como autor de los registros clínicos y de auditoría. */
+    eliminado: { type: Boolean, default: false, index: true },
+    eliminadoEn: Date,
+    eliminadoPor: { type: mongoose.Schema.Types.ObjectId, ref: 'Usuario' },
   },
   { timestamps: true, versionKey: false }
 );

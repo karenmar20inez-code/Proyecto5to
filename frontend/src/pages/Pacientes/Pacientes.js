@@ -1,6 +1,6 @@
 import { useEffect, useMemo, useState } from 'react';
 import { Link } from 'react-router-dom';
-import { FiSearch, FiUserPlus, FiEdit2, FiTrash2, FiActivity, FiCheckSquare, FiRefreshCw, FiTrendingUp } from 'react-icons/fi';
+import { FiSearch, FiUserPlus, FiEdit2, FiTrash2, FiActivity, FiCheckSquare, FiRefreshCw, FiTrendingUp, FiKey } from 'react-icons/fi';
 import Layout from '../../components/Layout/Layout';
 import Modal from '../../components/ui/Modal';
 import {
@@ -67,6 +67,16 @@ function Pacientes() {
   const [erroresCampo, setErroresCampo] = useState({});
   const [aviso, setAviso] = useState('');
   const [avisoError, setAvisoError] = useState('');
+  const [verEstado, setVerEstado] = useState('activo'); // las bajas no se muestran salvo que se pidan
+  const [porEliminar, setPorEliminar] = useState(null); // { paciente, conHistorial, mensaje }
+  /* Acceso al portal del paciente (cuenta de inicio de sesión ligada a su expediente) */
+  const daAcceso = puede('usuarios:crear');
+  const [conCuenta, setConCuenta] = useState(new Set());
+  const [accesoDe, setAccesoDe] = useState(null);
+  const [acceso, setAcceso] = useState({ correo: '', clave: '', error: '', guardando: false });
+  useEffect(() => {
+    if (puede('usuarios:leer')) usuariosApi.listar({ rol: 'paciente' }).then((l) => setConCuenta(new Set(l.map((u) => String(u.pacienteId))))).catch(() => {});
+  }, [puede]);
 
   /* Si falla el guardado, desplaza el modal hasta el mensaje de error para que se lea */
   useEffect(() => {
@@ -76,12 +86,13 @@ function Pacientes() {
   const filtrados = useMemo(() => {
     const t = busqueda.toLowerCase().trim();
     return pacientes.filter((p) =>
+      (!verEstado || p.estado === verEstado) &&
       [p.nombreCompleto, p.correo, p.telefono, p.objetivo]
         .join(' ')
         .toLowerCase()
         .includes(t)
     );
-  }, [pacientes, busqueda]);
+  }, [pacientes, busqueda, verEstado]);
 
   const mostrarAviso = (texto) => {
     setAviso(texto);
@@ -154,16 +165,45 @@ function Pacientes() {
     }
   };
 
-  const borrar = async (p) => {
-    if (!window.confirm(`¿Eliminar a ${nombreCompleto(p)}? Esta acción no se puede deshacer.`)) return;
+  const borrar = async () => {
+    const p = porEliminar.paciente;
     setAvisoError('');
     try {
       await eliminarPaciente(p.id);
       if (editandoId === p.id) cerrarModal();
+      setPorEliminar(null);
       mostrarAviso('Paciente eliminado');
     } catch (error) {
-      setAvisoError(error.message); // p. ej. 409: tiene información clínica → usar "baja"
+      // 409: tiene información clínica → NOM-004: se conserva; se ofrece darlo de baja
+      if (error.status === 409) setPorEliminar({ ...porEliminar, conHistorial: true, mensaje: error.message });
+      else { setPorEliminar(null); setAvisoError(error.message); }
     }
+  };
+
+  const darDeBaja = async () => {
+    const p = porEliminar.paciente;
+    try {
+      await actualizarPaciente(p.id, { estado: 'baja' });
+      setPorEliminar(null);
+      mostrarAviso(`${nombreCompleto(p)} quedó dado de baja (su expediente se conserva).`);
+    } catch (error) { setPorEliminar(null); setAvisoError(error.message); }
+  };
+
+  const generarClave = () => {
+    const c = 'ABCDEFGHJKLMNPQRSTUVWXYZabcdefghijkmnpqrstuvwxyz23456789';
+    const azar = () => c[crypto.getRandomValues(new Uint32Array(1))[0] % c.length];
+    return `${Array.from({ length: 10 }, azar).join('')}7a`;
+  };
+  const abrirAcceso = (p) => { setAcceso({ correo: p.correo || '', clave: generarClave(), error: '', guardando: false }); setAccesoDe(p); };
+  const crearAcceso = async (e) => {
+    e.preventDefault();
+    setAcceso((x) => ({ ...x, guardando: true, error: '' }));
+    try {
+      await usuariosApi.crear({ nombre: accesoDe.nombreCompleto, correo: acceso.correo, rol: 'paciente', pacienteId: accesoDe.id, contrasenaTemporal: acceso.clave });
+      setConCuenta((s) => new Set([...s, String(accesoDe.id)]));
+      setAccesoDe(null);
+      mostrarAviso('Acceso al portal creado. Comparte el correo y la contraseña temporal con el paciente.');
+    } catch (err) { setAcceso((x) => ({ ...x, guardando: false, error: err.message })); }
   };
 
   /* Último peso conocido: la medición más reciente o el peso registrado */
@@ -248,8 +288,13 @@ function Pacientes() {
             <button className="boton boton--secundario boton--chico" onClick={() => editar(p)} title="Editar" aria-label={`Editar a ${nombreCompleto(p)}`}>
               <FiEdit2 />
             </button>{' '}
+            {daAcceso && !conCuenta.has(String(p.id)) && (
+              <><button className="boton boton--secundario boton--chico" onClick={() => abrirAcceso(p)} title="Dar acceso al portal" aria-label={`Dar acceso al portal a ${nombreCompleto(p)}`}>
+                <FiKey />
+              </button>{' '}</>
+            )}
             {puede('pacientes:eliminar') && (
-              <button className="boton boton--peligro boton--chico" onClick={() => borrar(p)} title="Eliminar" aria-label={`Eliminar a ${nombreCompleto(p)}`}>
+              <button className="boton boton--peligro boton--chico" onClick={() => { setAvisoError(''); setPorEliminar({ paciente: p, conHistorial: false }); }} title="Eliminar" aria-label={`Eliminar a ${nombreCompleto(p)}`}>
                 <FiTrash2 />
               </button>
             )}
@@ -278,6 +323,11 @@ function Pacientes() {
               </p>
             </div>
             <div className="pacientes-expedientes__herramientas">
+              <select className="selector" value={verEstado} onChange={(e) => setVerEstado(e.target.value)} aria-label="Mostrar pacientes">
+                <option value="activo">Activos</option>
+                <option value="baja">Dados de baja</option>
+                <option value="">Todos</option>
+              </select>
               <div className="buscador-empleados">
                 <FiSearch size={18} />
                 <input
@@ -424,6 +474,50 @@ function Pacientes() {
               </button>
             </div>
           </form>
+      </Modal>
+      {/* Eliminar paciente: sin historial se borra; con historial (NOM-004) se ofrece darlo de baja */}
+      <Modal abierto={!!porEliminar} titulo={porEliminar?.conHistorial ? 'No se puede eliminar' : `¿Eliminar a ${porEliminar ? nombreCompleto(porEliminar.paciente) : ''}?`}
+        onCerrar={() => setPorEliminar(null)}
+        acciones={porEliminar?.conHistorial ? (
+          <>
+            <button type="button" className="boton boton--secundario" onClick={() => setPorEliminar(null)}>Cancelar</button>
+            {porEliminar.paciente.estado !== 'baja' && <button type="button" className="boton boton--primario" onClick={darDeBaja}>Darlo de baja</button>}
+          </>
+        ) : (
+          <>
+            <button type="button" className="boton boton--secundario" onClick={() => setPorEliminar(null)}>Cancelar</button>
+            <button type="button" className="boton boton--peligro" onClick={borrar}><FiTrash2 /> Eliminar definitivamente</button>
+          </>
+        )}>
+        {porEliminar?.conHistorial ? (
+          <>
+            <p>{porEliminar.mensaje}</p>
+            <p className="aviso" style={{ marginTop: 'var(--e3)' }}>Al darlo de baja deja de aparecer en la lista de activos y su expediente se conserva (puedes verlo con el filtro «Dados de baja»).</p>
+          </>
+        ) : (
+          <p>Se borrarán sus datos y su expediente vacío. Esta acción no se puede deshacer. Si ya tiene consultas, mediciones u otro historial, se te ofrecerá darlo de baja.</p>
+        )}
+      </Modal>
+
+      {/* Acceso al portal del paciente */}
+      <Modal abierto={!!accesoDe} titulo={`Acceso al portal · ${accesoDe ? nombreCompleto(accesoDe) : ''}`}
+        descripcion="Crea su cuenta para entrar a «Mi espacio». Verá solo su información y lo que su nutriólogo autorice." onCerrar={() => setAccesoDe(null)} cerrarAlFondo={false}>
+        <form className="formulario" onSubmit={crearAcceso}>
+          <div className="campo campo--completo">
+            <label htmlFor="ac-correo">Correo con el que iniciará sesión *</label>
+            <input id="ac-correo" type="email" value={acceso.correo} required onChange={(e) => setAcceso({ ...acceso, correo: e.target.value, error: '' })} />
+          </div>
+          <div className="campo campo--completo">
+            <label htmlFor="ac-clave">Contraseña temporal *</label>
+            <input id="ac-clave" type="text" value={acceso.clave} required minLength={10} onChange={(e) => setAcceso({ ...acceso, clave: e.target.value, error: '' })} />
+            <span className="campo__ayuda">Se le pedirá cambiarla la primera vez que entre.</span>
+          </div>
+          {acceso.error && <p className="aviso aviso--error campo--completo" role="alert">{acceso.error}</p>}
+          <div className="formulario-acciones">
+            <button type="button" className="boton boton--secundario" onClick={() => setAccesoDe(null)}>Cancelar</button>
+            <button type="submit" className="boton boton--primario" disabled={acceso.guardando}><FiKey /> {acceso.guardando ? 'Creando…' : 'Crear acceso'}</button>
+          </div>
+        </form>
       </Modal>
     </Layout>
   );

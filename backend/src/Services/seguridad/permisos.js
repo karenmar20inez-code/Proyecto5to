@@ -19,6 +19,8 @@ const CATALOGO_PERMISOS = {
   'usuarios:crear': 'Registrar cuentas de usuario',
   'usuarios:editar': 'Modificar cuentas, roles y permisos asignables',
   'usuarios:estado': 'Activar, suspender o desactivar cuentas',
+  'usuarios:contrasena': 'Asignar una nueva contraseña a otra cuenta',
+  'usuarios:eliminar': 'Eliminar cuentas (conservando la autoría de sus registros)',
   'consultorios:leer': 'Consultar consultorios',
   'consultorios:gestionar': 'Crear y modificar consultorios',
   'auditoria:leer': 'Consultar la bitácora de auditoría',
