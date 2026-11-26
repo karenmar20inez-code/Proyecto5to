@@ -3,70 +3,118 @@
 @tailwind utilities;
 
 /* ==========================================================
-   LA NUTRIA · SISTEMA DE DISEÑO · VERDE NATURAL GLASSMORPHIC
-   - Verde oscuro #1F3D31: fondo, navegación e identidad
-   - Verde salvia #8FA98F: tinte de superficies secundarias y tarjetas
-   - Verde natural #4F7A5A: botones y elementos interactivos
-   - Beige #DACCAF: bordes, iconos, textos secundarios y acentos
-   - Blanco #FFFFFF: textos principales
-   - Vidrio sutil: tarjetas con tinte salvia poco transparente, desenfoque
-     moderado y bordes beige translúcidos (la lectura es prioritaria)
-   - Contrastes (WCAG 2.2 AA) sobre una tarjeta salvia ≈ #2F4C3E:
-     blanco 9.4:1 · beige 5.9:1 · blanco sobre botón verde natural 4.9:1
+   LA NUTRIA · SISTEMA DE DISEÑO · PALETA "NUTRIA" (tema claro)
+   Colores tomados de Assets/Picture/Nutria_Mejorada.png:
+   - Crema #FAEBCF / arena #E2CAA6: fondos y superficies de vidrio
+   - Salvia #B1B183 / oliva #9B9A64: tintes, bordes y estados de selección
+   - Oliva profundo #5F6B35: botones, menú activo e interacción
+   - Café nutria #3D2C17 / #4E3A20: textos; caramelo #7A5530 y dorado #D1A86A: acentos
+   - Contrastes (WCAG 2.2 AA) sobre el fondo crema #EFE0C3:
+     texto 10.3:1 · texto-3 5.6:1 · acento caramelo 5.1:1 · blanco sobre botón oliva 5.8:1
+   - Los nombres históricos (--verde-*, --beige, --azul*) se conservan y apuntan a esta paleta
    - Tipografía Inter · espaciado en múltiplos de 8 px
 ========================================================== */
 
 :root {
-  /* Paleta de marca */
-  --verde-noche: #142B22;
-  --verde-oscuro: #1F3D31;
-  --verde-salvia: #8FA98F;
-  --verde-natural: #4F7A5A;
-  --verde-natural-hover: #436B4D;
+  /* Paleta de la imagen */
+  --crema: #FAEBCF;
+  --arena-clara: #ECD7B8;
+  --salvia: #B1B183;
+  --oliva: #9B9A64;
+  --oliva-profundo: #5F6B35;
+  --cafe: #4E3A20;
+  --cafe-oscuro: #3D2C17;
+  --caramelo: #7A5530;
+  --dorado: #D1A86A;
+
+  /* Canales RGB para transparencias */
+  --claro-rgb: 250, 240, 220;   /* crema translúcido: vidrio */
+  --tinte-rgb: 155, 154, 100;   /* oliva: tintes de selección y hover */
+  --tinta-rgb: 78, 58, 32;      /* café: bordes, rejillas y hovers sutiles */
+  --sombra-rgb: 92, 70, 36;     /* sombras cálidas */
+
+  /* Nombres históricos de marca (ahora en la paleta de la nutria) */
+  --verde-noche: #2F3719;
+  --verde-oscuro: #3F4A22;
+  --verde-salvia: var(--salvia);
+  --verde-natural: var(--oliva-profundo);
+  --verde-natural-hover: #4E5A2B;
   --verde: var(--verde-oscuro);
   --verde-claro: var(--verde-natural);
-  --beige: #DACCAF;
+  --beige: var(--caramelo);        /* acento: bordes activos, iconos y textos secundarios */
   --blanco: #FFFFFF;
 
-  /* Superficies (vidrio con tinte salvia sobre el fondo verde oscuro) */
-  --fondo: #1F3D31;
-  --superficie: rgba(143, 169, 143, 0.14);
-  --superficie-2: rgba(143, 169, 143, 0.09);
-  --superficie-3: rgba(143, 169, 143, 0.20);
-  --superficie-solida: #24443A;          /* menús, tooltips y capas flotantes */
-  --vidrio-navegacion: rgba(20, 43, 34, 0.80);   /* menú lateral */
-  --vidrio-barra: rgba(24, 50, 40, 0.74);        /* barra superior y pestañas fijas */
-  --vidrio-modal: rgba(33, 62, 50, 0.92);        /* ventanas modales */
-  --velo: rgba(10, 22, 17, 0.58);                /* fondo oscurecido tras modales y menú móvil */
-  --borde: rgba(218, 204, 175, 0.18);
-  --borde-fuerte: rgba(218, 204, 175, 0.45);
+  /* Superficies (vidrio crema sobre fondo arena) */
+  --fondo: #EFE0C3;
+  --superficie: rgba(var(--claro-rgb), 0.62);
+  --superficie-2: rgba(var(--claro-rgb), 0.45);
+  --superficie-3: rgba(var(--claro-rgb), 0.80);
+  --superficie-solida: #F8EDD8;          /* menús, tooltips y capas flotantes */
+  --vidrio-navegacion: rgba(246, 233, 208, 0.84);   /* menú lateral */
+  --vidrio-barra: rgba(248, 237, 216, 0.80);        /* barra superior y pestañas fijas */
+  --vidrio-modal: rgba(250, 241, 224, 0.97);        /* ventanas modales */
+  --velo: rgba(61, 44, 23, 0.42);                   /* fondo oscurecido tras modales y menú móvil */
+  --borde: rgba(var(--tinta-rgb), 0.16);
+  --borde-fuerte: rgba(var(--tinta-rgb), 0.34);
   --vidrio-blur: blur(14px) saturate(115%);
 
-  /* Texto (sobre verde) */
-  --texto: #FFFFFF;
-  --texto-2: #F2ECDF;
-  --texto-3: #DACCAF;
+  /* Texto (café sobre crema) */
+  --texto: var(--cafe-oscuro);
+  --texto-2: var(--cafe);
+  --texto-3: #6B5230;
 
   /* Acento de navegación e información (nombres históricos: --azul*) */
-  --azul: #FFFFFF;
-  --azul-700: #FFFFFF;
-  --azul-50: rgba(255, 255, 255, 0.14);
-  --azul-100: rgba(255, 255, 255, 0.30);
-  --azul-rgb: 255, 255, 255;
+  --azul: #55602F;
+  --azul-700: #46502A;
+  --azul-50: rgba(95, 107, 53, 0.12);
+  --azul-100: rgba(95, 107, 53, 0.24);
+  --azul-rgb: 95, 107, 53;
 
-  /* Estados (tonos claros legibles sobre verde) */
-  --exito: #A7E8C0;
-  --exito-50: rgba(167, 232, 192, 0.16);
-  --aviso: #F6CD8A;
-  --aviso-50: rgba(246, 205, 138, 0.16);
-  --aviso-borde: rgba(246, 205, 138, 0.55);
-  --peligro: #FFB8AE;
-  --peligro-50: rgba(255, 184, 174, 0.16);
-  --peligro-borde: rgba(255, 184, 174, 0.55);
+  /* Estados (tonos oscuros legibles sobre crema) */
+  --exito: #3F6B2A;
+  --exito-50: rgba(63, 107, 42, 0.12);
+  --aviso: #8A5A12;
+  --aviso-50: rgba(209, 168, 106, 0.22);
+  --aviso-borde: rgba(138, 90, 18, 0.45);
+  --peligro: #A23B2A;
+  --peligro-50: rgba(162, 59, 42, 0.10);
+  --peligro-borde: rgba(162, 59, 42, 0.45);
+
+  /* Tokens que cambian entre modo claro y oscuro */
+  --campo-fondo: rgba(255, 252, 244, 0.82);
+  --brillo-interior: rgba(255, 255, 255, 0.45);
+  --login-velo: rgba(0, 0, 0, 0);
+  --vidrio-movil: rgba(248, 237, 216, 0.98);
+  --sobre-peligro: #FFFFFF;
+  --fondo-imagen:
+    radial-gradient(circle at 84% 10%, rgba(250, 235, 207, 0.95), transparent 40%),
+    radial-gradient(ellipse at 4% 98%, rgba(177, 177, 131, 0.50), transparent 45%),
+    radial-gradient(ellipse at 0% 0%, rgba(177, 177, 131, 0.30), transparent 35%),
+    linear-gradient(140deg, #E2CAA6 0%, #EFE0C3 48%, #D9D2AA 100%);
+
+  /* Gráficas (Chart.js y Recharts leen estos valores al dibujar) */
+  --grafica-1: #5F6B35; --grafica-1-suave: rgba(95, 107, 53, 0.16);
+  --grafica-2: #9B6F48; --grafica-2-suave: rgba(155, 111, 72, 0.18);
+  --grafica-3: #9B9A64; --grafica-3-suave: rgba(155, 154, 100, 0.22);
+  --grafica-4: #3F4A22;
+  --grafica-5: #C0614A;
+  --grafica-cat-1: #5F6B35; --grafica-cat-2: #9B6F48; --grafica-cat-3: #D1A86A; --grafica-cat-4: #9B9A64;
+  --grafica-cat-5: #5A4320; --grafica-cat-6: #B1B183; --grafica-cat-7: #C0614A;
+  --grafica-texto: #6B5230;
+  --grafica-leyenda: #4E3A20;
+  --grafica-eje: rgba(78, 58, 32, 0.40);
+  --grafica-rejilla: rgba(78, 58, 32, 0.12);
+  --grafica-cursor: rgba(78, 58, 32, 0.06);
+  --grafica-fondo: #FAF1E0;
+  --grafica-tooltip-borde: rgba(122, 85, 48, 0.45);
+  --grafica-tooltip-titulo: #3D2C17;
+  --grafica-tooltip-texto: #4E3A20;
+  --clinica-azul: #5F6B35; --clinica-verde: #3F6B2A; --clinica-ambar: #B07A1F; --clinica-rojo: #A23B2A;
+  --clinica-morado: #7A5530; --clinica-gris: #6B5230; --clinica-turquesa: #9B9A64;
 
   /* Marca */
   --marca: var(--verde-oscuro);
-  --marca-arena: #DACCAF;
+  --marca-arena: var(--dorado);
 
   /* Tipografía */
   --font: 'Inter', system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
@@ -85,8 +133,8 @@
   --radio-sm: 6px;
   --radio: 8px;
   --radio-lg: 12px;
-  --sombra: 0 8px 24px rgba(8, 20, 15, 0.22), inset 0 1px 0 rgba(255, 255, 255, 0.07);
-  --sombra-md: 0 14px 36px rgba(8, 20, 15, 0.32);
+  --sombra: 0 8px 24px rgba(var(--sombra-rgb), 0.14), inset 0 1px 0 rgba(255, 255, 255, 0.50);
+  --sombra-md: 0 14px 36px rgba(var(--sombra-rgb), 0.20);
   --foco: 0 0 0 3px rgba(var(--azul-rgb), 0.35);
 
   /* ---- Alias de tokens anteriores (compatibilidad con pantallas existentes) ---- */
@@ -96,13 +144,102 @@
   --lh-texto: var(--lh); --lh-titulo: 1.25;
   --color-texto: var(--texto-2); --color-texto-suave: var(--texto-3); --color-titulo: var(--texto);
   --acento: var(--azul); --acento-rgb: var(--azul-rgb);
-  --arena: var(--beige); --arena-rgb: 218, 204, 175;
+  --arena: var(--beige); --arena-rgb: 122, 85, 48;
   --verde-950: var(--texto); --verde-900: var(--texto); --verde-800: var(--verde-oscuro); --verde-700: var(--azul-700);
   --verde-600: var(--azul); --verde-500: var(--azul); --verde-300: var(--exito);
   --glass-bg: var(--superficie); --glass-bg-verde: var(--vidrio-barra);
   --glass-borde: 1px solid var(--borde); --glass-borde-fuerte: var(--borde-fuerte);
   --glass-blur: var(--vidrio-blur); --glass-sombra: var(--sombra); --glass-sombra-hover: var(--sombra-md);
   --font-titulo: var(--font); --font-texto: var(--font);
+}
+
+/* ==========================================================
+   MODO OSCURO · misma paleta de la nutria en versión nocturna
+   Fondo café oscuro, vidrio café, texto crema; acentos dorado y salvia.
+   Contrastes sobre #1C1812: texto 15:1 · texto-3 8.6:1 · dorado 8.4:1 · blanco sobre botón oliva 4.8:1
+========================================================== */
+:root[data-tema="oscuro"] {
+  color-scheme: dark;
+  --caramelo: #E0B98A;
+  --verde-oscuro: #D9D6A8;
+  --verde-noche: #EDEAC8;
+  --verde-natural: #6B7A3A;
+  --verde-natural-hover: #7A8A45;
+  --beige: var(--dorado);
+
+  --claro-rgb: 43, 36, 26;
+  --tinte-rgb: 177, 177, 131;
+  --tinta-rgb: 245, 235, 216;
+  --sombra-rgb: 0, 0, 0;
+  --arena-rgb: 209, 168, 106;
+
+  --fondo: #1C1812;
+  --superficie: rgba(var(--claro-rgb), 0.70);
+  --superficie-2: rgba(var(--claro-rgb), 0.52);
+  --superficie-3: rgba(var(--claro-rgb), 0.86);
+  --superficie-solida: #2B241A;
+  --vidrio-navegacion: rgba(33, 28, 20, 0.88);
+  --vidrio-barra: rgba(36, 30, 22, 0.84);
+  --vidrio-modal: rgba(40, 33, 24, 0.97);
+  --velo: rgba(0, 0, 0, 0.58);
+  --borde: rgba(var(--tinta-rgb), 0.14);
+  --borde-fuerte: rgba(var(--tinta-rgb), 0.30);
+
+  --texto: #F5EBD8;
+  --texto-2: #E6D6BA;
+  --texto-3: #CDB58F;
+
+  --azul: #C9CF8F;
+  --azul-700: #DDE2AA;
+  --azul-50: rgba(201, 207, 143, 0.14);
+  --azul-100: rgba(201, 207, 143, 0.28);
+  --azul-rgb: 201, 207, 143;
+
+  --exito: #A9C98A;
+  --exito-50: rgba(169, 201, 138, 0.14);
+  --aviso: #E3B86A;
+  --aviso-50: rgba(227, 184, 106, 0.16);
+  --aviso-borde: rgba(227, 184, 106, 0.50);
+  --peligro: #F0A08F;
+  --peligro-50: rgba(240, 160, 143, 0.14);
+  --peligro-borde: rgba(240, 160, 143, 0.50);
+
+  --sombra: 0 8px 24px rgba(0, 0, 0, 0.35), inset 0 1px 0 rgba(255, 255, 255, 0.05);
+  --sombra-md: 0 14px 36px rgba(0, 0, 0, 0.45);
+
+  --campo-fondo: rgba(18, 15, 10, 0.55);
+  --brillo-interior: rgba(255, 255, 255, 0.06);
+  --login-velo: rgba(18, 15, 10, 0.55);
+  --vidrio-movil: rgba(33, 28, 20, 0.98);
+  --sobre-peligro: #2B1A14;
+  --fondo-imagen:
+    radial-gradient(circle at 84% 10%, rgba(209, 168, 106, 0.16), transparent 40%),
+    radial-gradient(ellipse at 4% 98%, rgba(107, 122, 58, 0.30), transparent 45%),
+    radial-gradient(ellipse at 0% 0%, rgba(107, 122, 58, 0.18), transparent 35%),
+    linear-gradient(140deg, #18140F 0%, #1C1812 48%, #20211A 100%);
+
+  --grafica-1: #C9CF8F; --grafica-1-suave: rgba(201, 207, 143, 0.18);
+  --grafica-2: #E0B98A; --grafica-2-suave: rgba(224, 185, 138, 0.18);
+  --grafica-3: #A9B07A; --grafica-3-suave: rgba(169, 176, 122, 0.22);
+  --grafica-4: #E8DDB5;
+  --grafica-5: #E8907A;
+  --grafica-cat-1: #C9CF8F; --grafica-cat-2: #E0B98A; --grafica-cat-3: #D1A86A; --grafica-cat-4: #A9B07A;
+  --grafica-cat-5: #F5EBD8; --grafica-cat-6: #B1B183; --grafica-cat-7: #E8907A;
+  --grafica-texto: #CDB58F;
+  --grafica-leyenda: #E6D6BA;
+  --grafica-eje: rgba(245, 235, 216, 0.35);
+  --grafica-rejilla: rgba(245, 235, 216, 0.12);
+  --grafica-cursor: rgba(245, 235, 216, 0.08);
+  --grafica-fondo: #2B241A;
+  --grafica-tooltip-borde: rgba(209, 168, 106, 0.50);
+  --grafica-tooltip-titulo: #F5EBD8;
+  --grafica-tooltip-texto: #E6D6BA;
+  --clinica-azul: #C9CF8F; --clinica-verde: #A9C98A; --clinica-ambar: #E3B86A; --clinica-rojo: #F0A08F;
+  --clinica-morado: #E0B98A; --clinica-gris: #CDB58F; --clinica-turquesa: #B1B183;
+}
+/* Transición suave al cambiar de tema (se omite con "reducir movimiento") */
+@media (prefers-reduced-motion: no-preference) {
+  body, .sidebar, .topbar, .panel, .kpi, .card-kpi, .modal { transition: background-color 0.25s ease, color 0.25s ease, border-color 0.25s ease; }
 }
 
 * { box-sizing: border-box; }
@@ -116,12 +253,8 @@ body {
   line-height: var(--lh);
   color: var(--texto-2);
   background-color: var(--fondo);
-  /* Destellos beige y salvia, discretos, para que el vidrio se aprecie */
-  background-image:
-    radial-gradient(circle at 12% 10%, rgba(218, 204, 175, 0.14), transparent 34%),
-    radial-gradient(circle at 88% 16%, rgba(143, 169, 143, 0.24), transparent 36%),
-    radial-gradient(circle at 70% 92%, rgba(218, 204, 175, 0.08), transparent 38%),
-    linear-gradient(140deg, #142B22 0%, #1F3D31 50%, #19352A 100%);
+  /* Luz dorada y curvas salvia, como en la imagen de la nutria (cambia con el tema) */
+  background-image: var(--fondo-imagen);
   background-attachment: fixed;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;

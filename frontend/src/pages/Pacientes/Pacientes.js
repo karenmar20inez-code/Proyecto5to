@@ -214,7 +214,7 @@ function Pacientes() {
   const conDieta = pacientes.filter((p) => p.dietaId).length;
 
   const error = (campo) =>
-    erroresCampo[campo] ? <small style={{ color: '#f3b9b0' }}>{erroresCampo[campo]}</small> : null;
+    erroresCampo[campo] ? <small style={{ color: 'var(--peligro)' }}>{erroresCampo[campo]}</small> : null;
 
   let cuerpoTabla;
   if (cargandoPacientes) {

@@ -6,23 +6,20 @@
   display: flex; min-height: 100vh; color: var(--texto-2);
   /* Vidrio verde oscuro sobre la fotografía clara: deja ver las burbujas y mantiene
      el contraste (blanco ≥ 7:1 y beige ≥ 4.5:1 aun sobre la zona más clara de la imagen). */
-  --superficie: rgba(24, 50, 40, 0.58);
-  --superficie-2: rgba(24, 50, 40, 0.40);
-  --superficie-3: rgba(24, 50, 40, 0.68);
+  --superficie: rgba(var(--claro-rgb), 0.66);
+  --superficie-2: rgba(var(--claro-rgb), 0.50);
+  --superficie-3: rgba(var(--claro-rgb), 0.82);
 }
 
-/* Fondo general tras iniciar sesión: Assets/Picture/paleta.jpeg (no se usa en el Login).
-   Capa fija a pantalla completa compartida por todas las secciones (todas usan Layout):
-   no se desplaza ni cambia de posición al navegar, y el navegador reutiliza la imagen ya cargada. */
+/* Fondo general tras iniciar sesión: degradado con la paleta de Nutria_Mejorada.png
+   (luz dorada arriba a la derecha y curvas salvia). paleta.jpeg ya no se usa, pero se conserva.
+   Capa fija a pantalla completa compartida por todas las secciones (todas usan Layout). */
 .dashboard-layout::before {
   content: "";
   position: fixed; inset: 0; z-index: -1;
   pointer-events: none;
   background-color: var(--fondo);
-  background-image:
-    /* Velo más denso arriba (título y subtítulo van directo sobre la imagen) y más ligero abajo */
-    linear-gradient(180deg, rgba(20, 43, 34, 0.74) 0px, rgba(20, 43, 34, 0.56) 200px, rgba(20, 43, 34, 0.50) 60%, rgba(16, 36, 28, 0.58) 100%),
-    url('../../Assets/Picture/paleta.jpeg');
+  background-image: var(--fondo-imagen); /* cambia con el modo claro u oscuro (index.css) */
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
@@ -34,9 +31,9 @@
 .dashboard-layout .card-kpi,
 .dashboard-layout .grafica-dashboard,
 .dashboard-layout .tabla-empleados {
-  background-image: linear-gradient(160deg, rgba(143, 169, 143, 0.14), rgba(143, 169, 143, 0) 55%);
-  border-color: rgba(218, 204, 175, 0.22);
-  box-shadow: 0 10px 30px rgba(8, 20, 15, 0.28), inset 0 1px 0 rgba(255, 255, 255, 0.08);
+  background-image: linear-gradient(160deg, rgba(var(--tinte-rgb), 0.14), rgba(var(--tinte-rgb), 0) 55%);
+  border-color: rgba(var(--arena-rgb), 0.22);
+  box-shadow: 0 10px 30px rgba(var(--sombra-rgb), 0.17), inset 0 1px 0 var(--brillo-interior);
 }
 /* El subtítulo de página va directo sobre la imagen: tono más claro para conservar el contraste */
 .dashboard-layout .encabezado-pagina__sub { color: var(--texto-2); }
@@ -47,12 +44,12 @@
   width: 276px; min-width: 276px; height: 100vh;
   display: flex; flex-direction: column;
   padding: var(--e4) var(--e3);
-  background: linear-gradient(180deg, rgba(143, 169, 143, 0.10), rgba(143, 169, 143, 0) 40%), var(--vidrio-navegacion);
+  background: linear-gradient(180deg, rgba(var(--tinte-rgb), 0.10), rgba(var(--tinte-rgb), 0) 40%), var(--vidrio-navegacion);
   backdrop-filter: var(--vidrio-blur);
   -webkit-backdrop-filter: var(--vidrio-blur);
   border-right: 1px solid var(--borde);
   border-radius: 0 20px 20px 0;
-  box-shadow: 6px 0 28px rgba(8, 20, 15, 0.28);
+  box-shadow: 6px 0 28px rgba(var(--sombra-rgb), 0.17);
   overflow-y: auto; overflow-x: hidden;
   z-index: 20;
   transition: width 0.25s ease, min-width 0.25s ease, padding 0.25s ease;
@@ -73,11 +70,11 @@
   width: 44px; height: 44px; flex-shrink: 0;
   object-fit: cover; border-radius: 14px;
   border: 1px solid var(--borde-fuerte);
-  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.25);
+  box-shadow: 0 4px 14px rgba(var(--sombra-rgb), 0.15);
   background: var(--superficie-solida);
 }
-.sidebar__nombre { min-width: 0; font-size: var(--fs-md); font-weight: 700; color: var(--blanco); line-height: 1.15; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-.sidebar__nombre small { display: block; font-size: 0.6875rem; font-weight: 500; color: var(--beige); }
+.sidebar__nombre { min-width: 0; font-size: var(--fs-md); font-weight: 700; color: var(--texto); line-height: 1.15; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.sidebar__nombre small { display: block; margin-top: 2px; font-size: 0.6875rem; font-weight: 500; line-height: 1.25; letter-spacing: 0; color: var(--beige); white-space: normal; }
 .sidebar h2 { display: none; }
 .sidebar nav { display: flex; flex-direction: column; gap: 2px; }
 /* Título de categoría: botón que despliega o contrae sus opciones */
@@ -89,11 +86,11 @@
   background: transparent; border: 1px solid transparent; border-radius: 8px; cursor: pointer; text-align: left;
   transition: background 0.2s ease, border-color 0.2s ease, color 0.2s ease;
 }
-.sidebar__seccion:hover { background: rgba(143, 169, 143, 0.12); border-color: var(--borde); color: var(--blanco); }
+.sidebar__seccion:hover { background: rgba(var(--tinte-rgb), 0.12); border-color: var(--borde); color: var(--texto); }
 .sidebar__seccion-texto { flex: 1; min-width: 0; overflow: hidden; text-overflow: ellipsis; }
 .sidebar__seccion-flecha { width: 14px; height: 14px; flex-shrink: 0; transform: rotate(180deg); transition: transform 0.25s ease; } /* abierta: hacia arriba */
 .sidebar__grupo--cerrado .sidebar__seccion-flecha { transform: rotate(0deg); } /* contraída: hacia abajo */
-.sidebar__seccion-activa { width: 6px; height: 6px; flex-shrink: 0; border-radius: 50%; background: var(--beige); box-shadow: 0 0 0 3px rgba(218, 204, 175, 0.2); }
+.sidebar__seccion-activa { width: 6px; height: 6px; flex-shrink: 0; border-radius: 50%; background: var(--beige); box-shadow: 0 0 0 3px rgba(var(--arena-rgb), 0.2); }
 
 /* Opciones: altura animada (0fr ↔ 1fr). clip-path recorta arriba/abajo durante la animación
    pero deja salir a la derecha los tooltips del menú contraído. */
@@ -115,13 +112,13 @@
 }
 .menu-item svg { width: 18px; height: 18px; color: var(--beige); flex-shrink: 0; }
 .menu-item__texto { white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-.menu-item:hover { background: rgba(143, 169, 143, 0.14); border-color: var(--borde); color: var(--blanco); }
-.menu-item.active { background: rgba(79, 122, 90, 0.55); border-color: rgba(218, 204, 175, 0.38); color: var(--blanco); font-weight: 600; box-shadow: inset 3px 0 0 var(--beige); }
+.menu-item:hover { background: rgba(var(--tinte-rgb), 0.14); border-color: var(--borde); color: var(--texto); }
+.menu-item.active { background: var(--verde-natural); border-color: rgba(var(--arena-rgb), 0.38); color: var(--blanco); font-weight: 600; box-shadow: inset 3px 0 0 var(--beige); }
 .menu-item.active svg { color: var(--blanco); }
 
 .sidebar__usuario { margin-top: auto; padding: var(--e3) var(--e2) 0; border-top: 1px solid var(--borde); font-size: var(--fs-xs); color: var(--beige); display: flex; align-items: center; gap: var(--e2); position: relative; }
-.sidebar__usuario strong { display: block; color: var(--blanco); font-size: var(--fs-sm); }
-.sidebar__usuario-iniciales { width: 32px; height: 32px; flex-shrink: 0; border-radius: 50%; display: grid; place-items: center; background: rgba(143, 169, 143, 0.22); border: 1px solid var(--borde); color: var(--blanco); font-weight: 700; font-size: var(--fs-xs); }
+.sidebar__usuario strong { display: block; color: var(--texto); font-size: var(--fs-sm); }
+.sidebar__usuario-iniciales { width: 32px; height: 32px; flex-shrink: 0; border-radius: 50%; display: grid; place-items: center; background: rgba(var(--tinte-rgb), 0.22); border: 1px solid var(--borde); color: var(--texto); font-weight: 700; font-size: var(--fs-xs); }
 .sidebar__usuario-texto { min-width: 0; overflow: hidden; }
 
 /* ---------- Menú contraído: barra estrecha ---------- */
@@ -133,7 +130,7 @@
   position: absolute; right: -24px; top: 11px;
   width: 30px; height: 30px; border-radius: 50%;
   background: var(--superficie-solida); border-color: var(--borde-fuerte);
-  box-shadow: 0 4px 12px rgba(8, 20, 15, 0.35);
+  box-shadow: 0 4px 12px rgba(var(--sombra-rgb), 0.21);
   z-index: 2;
 }
 .sidebar--colapsado .sidebar__boton-menu svg { width: 16px; height: 16px; }
@@ -166,7 +163,7 @@
 /* ---------- Área principal (se ajusta sola al ancho del menú) ---------- */
 .main-area { flex: 1; min-width: 0; min-height: 100vh; display: flex; flex-direction: column; }
 .content { width: 100%; max-width: 1440px; min-width: 0; padding: var(--e5) var(--e6) var(--e7); margin: 0 auto; }
-.content h1 { margin: 0 0 var(--e5); font-size: var(--fs-xl); color: var(--blanco); }
+.content h1 { margin: 0 0 var(--e5); font-size: var(--fs-xl); color: var(--texto); }
 .content > p { max-width: 70ch; color: var(--texto-2); }
 
 /* Tarjetas KPI del dashboard (componente Card) */
@@ -184,7 +181,7 @@
     position: fixed; left: 0; top: 0; bottom: 0;
     width: 272px; min-width: 272px; padding: var(--e4) var(--e3);
     transform: translateX(-105%); transition: transform 0.25s ease;
-    background: rgba(20, 43, 34, 0.97);
+    background: var(--vidrio-movil);
   }
   .dashboard-layout--menu-abierto .sidebar { transform: none; }
   .dashboard-layout--menu-abierto::after { content: ""; position: fixed; inset: 0; background: var(--velo); z-index: 15; }

@@ -4,17 +4,28 @@
     <meta charset="utf-8" />
     <link rel="icon" href="./LaNutria.ico" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <meta name="theme-color" content="#ffffff" />
-    <meta name="description" content="La Nutria · Plataforma de gestión clínica nutricional" />
+    <meta name="theme-color" content="#EFE0C3" />
+    <meta name="description" content="NUTRIVA — Sistema Integral de Gestión Nutricional. Cada persona tiene su propio equilibrio." />
     <meta name="robots" content="noindex, nofollow" />
     <link rel="apple-touch-icon" href="./LaNutria.ico" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" />
-    <title>La Nutria · Gestión clínica nutricional</title>
+    <title>NUTRIVA · Sistema Integral de Gestión Nutricional</title>
+    <script>
+      /* Aplica el modo claro u oscuro antes de pintar la página (evita un destello del otro tema) */
+      (function () {
+        var tema = null;
+        try { tema = window.localStorage.getItem('nutriva:tema'); } catch (e) { /* sin almacenamiento */ }
+        if (tema !== 'claro' && tema !== 'oscuro') {
+          tema = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches ? 'oscuro' : 'claro';
+        }
+        document.documentElement.setAttribute('data-tema', tema);
+      })();
+    </script>
   </head>
   <body>
-    <noscript>Activa JavaScript para usar La Nutria.</noscript>
+    <noscript>Activa JavaScript para usar NUTRIVA.</noscript>
     <div id="root"></div>
   </body>
 </html>

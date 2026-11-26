@@ -1,5 +1,5 @@
 /* ==========================================
-   CLIENTE HTTP DE LA NUTRIA
+   CLIENTE HTTP DE NUTRIVA
    - URL configurable con REACT_APP_API_URL (por omisión, backend local :5000)
    - Autenticación: token de sesión en sessionStorage (se borra al cerrar la pestaña)
    - Un 401 dispara el evento "sesion-expirada" para volver al inicio de sesión
@@ -46,7 +46,7 @@ async function solicitud(ruta, { method = 'GET', body } = {}) {
       body: body ? JSON.stringify(body) : undefined,
     });
   } catch {
-    throw new ApiError('No se pudo conectar con el servidor de La Nutria. Verifica que el backend esté encendido.', 0);
+    throw new ApiError('No se pudo conectar con el servidor de NUTRIVA. Verifica que el backend esté encendido.', 0);
   }
 
   const datos = await respuesta.json().catch(() => null);

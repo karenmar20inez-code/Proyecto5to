@@ -1,8 +1,9 @@
 import { useState } from 'react';
-import { LogIn, ShieldCheck, UserPlus } from 'lucide-react';
+import { Eye, EyeOff, LogIn, ShieldCheck, UserPlus } from 'lucide-react';
 import { useAuth } from '../../context/AuthContext';
-import logoNutria from '../../Assets/Picture/LaNutria.webp';
-import fondoLogin from '../../Assets/Picture/Login.webp';
+import { MARCA } from '../../config/marca';
+import LogoNutriva from '../../components/Marca/LogoNutriva';
+import SelectorTema from '../../components/Tema/SelectorTema';
 import SolicitarAcceso from './SolicitarAcceso';
 import './Login.css';
 
@@ -10,6 +11,7 @@ function Login() {
   const { iniciar, aviso } = useAuth();
   const [correo, setCorreo] = useState('');
   const [contrasena, setContrasena] = useState('');
+  const [verContrasena, setVerContrasena] = useState(false);
   const [error, setError] = useState('');
   const [enviando, setEnviando] = useState(false);
   const [solicitando, setSolicitando] = useState(false); // formulario "Solicitar acceso"
@@ -29,15 +31,17 @@ function Login() {
   };
 
   return (
-    <main className="login" style={{ '--login-fondo': `url(${fondoLogin})` }}>
+    <main className="login" style={{ '--login-fondo': `url(${MARCA.ilustracion})` }}>
+      <SelectorTema className="login__tema" />
       <section className="login__tarjeta" aria-labelledby="titulo-login">
         <div className="login__marca">
-          <img src={logoNutria} alt="" className="login__logo" width="56" height="56" />
+          <LogoNutriva tamano={56} className="login__logo" />
           <div>
-            <h1 id="titulo-login">La Nutria</h1>
-            <p>Gestión clínica nutricional</p>
+            <h1 id="titulo-login">{MARCA.nombre}</h1>
+            <p>{MARCA.descriptor}</p>
           </div>
         </div>
+        <p className="login__eslogan">{MARCA.eslogan}</p>
 
         {aviso && !solicitando && <p className="aviso" role="status">{aviso}</p>}
 
@@ -51,8 +55,16 @@ function Login() {
           </div>
           <div className="campo">
             <label htmlFor="login-contrasena">Contraseña</label>
-            <input id="login-contrasena" type="password" autoComplete="current-password" value={contrasena}
-              onChange={(e) => setContrasena(e.target.value)} required />
+            <div className="login__contrasena">
+              <input id="login-contrasena" type={verContrasena ? 'text' : 'password'} autoComplete="current-password" value={contrasena}
+                onChange={(e) => setContrasena(e.target.value)} required />
+              <button type="button" className="login__ver" onClick={() => setVerContrasena((v) => !v)}
+                aria-controls="login-contrasena" aria-pressed={verContrasena}
+                aria-label={verContrasena ? 'Ocultar contraseña' : 'Mostrar contraseña'}
+                title={verContrasena ? 'Ocultar contraseña' : 'Mostrar contraseña'}>
+                {verContrasena ? <EyeOff aria-hidden="true" /> : <Eye aria-hidden="true" />}
+              </button>
+            </div>
           </div>
           {error && <p className="aviso aviso--error" role="alert">{error}</p>}
           <button className="boton boton--primario login__boton" type="submit" disabled={enviando || !correo || !contrasena}>

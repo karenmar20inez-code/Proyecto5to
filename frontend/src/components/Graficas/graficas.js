@@ -1,6 +1,7 @@
 /* ==========================================
    CONFIGURACIÓN COMÚN DE GRÁFICAS (Chart.js)
-   Usa la paleta de La Nutria: verde · #daccaf · #ffffff
+   Los colores salen de los tokens --grafica-* de index.css, así que siguen el modo claro u oscuro.
+   Se leen en el momento de dibujar; al cambiar de tema la aplicación vuelve a dibujar las pantallas.
 ========================================== */
 import {
   Chart as ChartJS,
@@ -18,48 +19,60 @@ import {
 ChartJS.register(CategoryScale, LinearScale, PointElement, LineElement, BarElement, ArcElement, Filler, Tooltip, Legend);
 ChartJS.defaults.font.family = "'Inter', system-ui, sans-serif";
 
-/* Paleta sobre el verde glassmorphic (los nombres se conservan por compatibilidad) */
-export const COLORES = {
-  blanco: '#FFFFFF',      // serie principal
-  arena: '#DACCAF',       // serie secundaria (beige)
-  verdeClaro: '#A7E8C0',
-  verde: '#2E7A5E',
-  coral: '#FFB8AE',
-  arenaSuave: 'rgba(218, 204, 175, 0.22)',
-  verdeSuave: 'rgba(167, 232, 192, 0.22)',
-  blancoSuave: 'rgba(255, 255, 255, 0.16)',
-  rejilla: 'rgba(255, 255, 255, 0.12)',
+/** Valor actual de un token de color (con respaldo si aún no hay estilos cargados) */
+export const colorTema = (token, respaldo = '#5F6B35') => {
+  if (typeof document === 'undefined') return respaldo;
+  return getComputedStyle(document.documentElement).getPropertyValue(token).trim() || respaldo;
 };
 
-/* Serie para categorías (objetivos, etc.) */
-export const SERIE_CATEGORICA = ['#FFFFFF', '#DACCAF', '#A7E8C0', '#F6CD8A', '#E5D8FF', '#9EE6E0', '#FFB8AE'];
+/* Paleta de la nutria (los nombres históricos se conservan por compatibilidad) */
+export const COLORES = {
+  get blanco() { return colorTema('--grafica-1', '#5F6B35'); },       // serie principal
+  get arena() { return colorTema('--grafica-2', '#9B6F48'); },        // serie secundaria
+  get verdeClaro() { return colorTema('--grafica-3', '#9B9A64'); },
+  get verde() { return colorTema('--grafica-4', '#3F4A22'); },
+  get coral() { return colorTema('--grafica-5', '#C0614A'); },
+  get arenaSuave() { return colorTema('--grafica-2-suave', 'rgba(155, 111, 72, 0.18)'); },
+  get verdeSuave() { return colorTema('--grafica-3-suave', 'rgba(155, 154, 100, 0.22)'); },
+  get blancoSuave() { return colorTema('--grafica-1-suave', 'rgba(95, 107, 53, 0.16)'); },
+  get rejilla() { return colorTema('--grafica-rejilla', 'rgba(78, 58, 32, 0.12)'); },
+  get texto() { return colorTema('--grafica-texto', '#6B5230'); },
+  get fondo() { return colorTema('--grafica-fondo', '#FAF1E0'); },
+};
 
-const tooltip = {
-  backgroundColor: '#24443A',
-  borderColor: 'rgba(218, 204, 175, 0.6)',
+/* Serie para categorías (objetivos, etc.): cada posición lee su token al usarse */
+export const SERIE_CATEGORICA = [];
+for (let i = 0; i < 7; i += 1) {
+  Object.defineProperty(SERIE_CATEGORICA, i, { enumerable: true, get: () => colorTema(`--grafica-cat-${i + 1}`) });
+}
+
+const tooltip = () => ({
+  backgroundColor: COLORES.fondo,
+  borderColor: colorTema('--grafica-tooltip-borde', 'rgba(122, 85, 48, 0.45)'),
   borderWidth: 1,
-  titleColor: '#FFFFFF',
-  bodyColor: '#F2ECDF',
+  titleColor: colorTema('--grafica-tooltip-titulo', '#3D2C17'),
+  bodyColor: colorTema('--grafica-tooltip-texto', '#4E3A20'),
   padding: 10,
   cornerRadius: 10,
-};
+});
 
-const ejes = {
-  x: { ticks: { color: '#DACCAF' }, grid: { color: COLORES.rejilla } },
-  y: { ticks: { color: '#DACCAF' }, grid: { color: COLORES.rejilla } },
-};
+const ejes = () => ({
+  x: { ticks: { color: COLORES.texto }, grid: { color: COLORES.rejilla } },
+  y: { ticks: { color: COLORES.texto }, grid: { color: COLORES.rejilla } },
+});
 
 /** Opciones base; `extra` se mezcla en profundidad simple por nivel. */
 export function opciones({ leyenda = true, unidad = '', ejesVisibles = true, apilado = false, extra = {} } = {}) {
+  const e = ejes();
   return {
     responsive: true,
     maintainAspectRatio: false,
     interaction: { mode: 'index', intersect: false },
     animation: { duration: 600 },
     plugins: {
-      legend: { display: leyenda, position: 'bottom', labels: { color: '#F2ECDF', usePointStyle: true, padding: 14 } },
+      legend: { display: leyenda, position: 'bottom', labels: { color: colorTema('--grafica-leyenda', '#4E3A20'), usePointStyle: true, padding: 14 } },
       tooltip: {
-        ...tooltip,
+        ...tooltip(),
         callbacks: unidad
           ? { label: (c) => `${c.dataset.label}: ${c.formattedValue} ${unidad}` }
           : undefined,
@@ -68,8 +81,8 @@ export function opciones({ leyenda = true, unidad = '', ejesVisibles = true, api
     },
     scales: ejesVisibles
       ? {
-          x: { ...ejes.x, stacked: apilado, ...(extra.x || {}) },
-          y: { ...ejes.y, stacked: apilado, ...(extra.y || {}) },
+          x: { ...e.x, stacked: apilado, ...(extra.x || {}) },
+          y: { ...e.y, stacked: apilado, ...(extra.y || {}) },
         }
       : undefined,
     spanGaps: true,
@@ -83,7 +96,7 @@ export const linea = (label, data, color = COLORES.blanco, extra = {}) => ({
   borderColor: color,
   backgroundColor: color === COLORES.blanco ? COLORES.blancoSuave : `${color}33`,
   pointBackgroundColor: color,
-  pointBorderColor: '#24443A',
+  pointBorderColor: COLORES.fondo,
   pointRadius: 4,
   pointHoverRadius: 6,
   borderWidth: 2,

@@ -76,7 +76,7 @@ function Documento() {
 
       <header className="documento__encabezado">
         <div>
-          <p className="documento__marca">La Nutria · Gestión clínica nutricional</p>
+          <p className="documento__marca">NUTRIVA — Sistema Integral de Gestión Nutricional</p>
           <h1>{d.titulo}</h1>
           {d.paraTerceros && <p className="documento__terceros">Versión para terceros: contiene solo la información necesaria.</p>}
         </div>

@@ -203,7 +203,7 @@ function MiEspacio() {
 
   return (
     <Layout titulo={seccion ? titulo : `Hola${datos ? `, ${datos.paciente.nombreCompleto.split(' ')[0]}` : ''}`}
-      subtitulo="Tu espacio personal en La Nutria. Solo tú puedes ver esta información.">
+      subtitulo="Tu espacio personal en NUTRIVA. Solo tú puedes ver esta información.">
       <div className="pestanas no-imprimir" role="tablist" aria-label="Secciones de mi espacio">
         {SECCIONES.map(([k, t, Icono]) => (
           <Link key={k || 'inicio'} to={`/mi-espacio${k ? `/${k}` : ''}`} role="tab" aria-selected={seccion === k}

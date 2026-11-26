@@ -4,6 +4,7 @@ import { Search, Bell, User, LogOut, Menu, PanelLeftClose, KeyRound } from 'luci
 import { useAuth, nombreRolCompleto } from '../../context/AuthContext';
 import { useNutri } from '../../context/NutriContext';
 import { alertasApi } from '../../services/api';
+import SelectorTema from '../Tema/SelectorTema';
 import './Topbar.css';
 
 const normalizar = (t) => String(t || '').toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g, '');
@@ -92,6 +93,7 @@ function Topbar({ onMenu, menuExpandido = true }) {
       ) : <div className="topbar__espacio" />}
 
       <div className="topbar__acciones" ref={menuRef}>
+        <SelectorTema />
         {puede('clinico:leer') && (
           <Link className="topbar__notificaciones" to="/alertas" aria-label={`Alertas clínicas: ${alertas} pendientes`}>
             <Bell size={18} aria-hidden="true" />

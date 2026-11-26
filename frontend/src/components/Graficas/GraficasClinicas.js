@@ -10,11 +10,22 @@ import {
   ReferenceLine, ReferenceArea, PieChart, Pie, Cell,
 } from 'recharts';
 
+import { colorTema } from './graficas';
+
+/* Tonos de la paleta de la nutria: salen de los tokens --clinica-* y siguen el modo claro u oscuro */
 export const PALETA = {
-  // Tonos claros, legibles sobre el verde La Nutria (#1F3D31)
-  azul: '#FFFFFF', verde: '#A7E8C0', ambar: '#F6CD8A', rojo: '#FFB8AE', morado: '#E5D8FF', gris: '#DACCAF', turquesa: '#9EE6E0',
+  get azul() { return colorTema('--clinica-azul', '#5F6B35'); },
+  get verde() { return colorTema('--clinica-verde', '#3F6B2A'); },
+  get ambar() { return colorTema('--clinica-ambar', '#B07A1F'); },
+  get rojo() { return colorTema('--clinica-rojo', '#A23B2A'); },
+  get morado() { return colorTema('--clinica-morado', '#7A5530'); },
+  get gris() { return colorTema('--clinica-gris', '#6B5230'); },
+  get turquesa() { return colorTema('--clinica-turquesa', '#9B9A64'); },
 };
-const SERIES = [PALETA.azul, PALETA.verde, PALETA.morado, PALETA.ambar, PALETA.turquesa, PALETA.gris];
+const SERIES = [];
+['azul', 'verde', 'morado', 'ambar', 'turquesa', 'gris'].forEach((c, i) => {
+  Object.defineProperty(SERIES, i, { enumerable: true, get: () => PALETA[c] });
+});
 
 /* Las fechas clínicas (medición, toma de muestra) se guardan como día calendario en UTC */
 const fechaCorta = (t) => new Date(t).toLocaleDateString('es-MX', { day: 'numeric', month: 'short', year: '2-digit', timeZone: 'UTC' });
@@ -22,7 +33,10 @@ const fechaLarga = (t) => new Date(t).toLocaleDateString('es-MX', { day: 'numeri
 const num = (v, d = 1) => (typeof v === 'number' ? v.toLocaleString('es-MX', { maximumFractionDigits: d }) : '—');
 const ORIGEN = { medido: 'Medido', calculado: 'Calculado', estimado: 'Estimado', prescrito: 'Prescrito', ajustado: 'Ajustado' };
 
-const EJE = { stroke: 'rgba(218, 204, 175, 0.55)', tick: { fill: '#DACCAF', fontSize: 12 } };
+const EJE = {
+  get stroke() { return colorTema('--grafica-eje', 'rgba(78, 58, 32, 0.40)'); },
+  get tick() { return { fill: colorTema('--grafica-texto', '#6B5230'), fontSize: 12 }; },
+};
 
 function TooltipClinico({ active, payload, unidad }) {
   if (!active || !payload?.length) return null;
@@ -84,11 +98,11 @@ export function SerieTemporal({ series, unidad, objetivo, rango, alto = 260, dom
       <div style={{ width: '100%', height: alto }}>
         <ResponsiveContainer>
           <LineChart margin={{ top: 8, right: 16, bottom: 4, left: 0 }}>
-            <CartesianGrid stroke="rgba(255, 255, 255, 0.12)" strokeDasharray="3 3" />
+            <CartesianGrid stroke={colorTema('--grafica-rejilla')} strokeDasharray="3 3" />
             <XAxis dataKey="t" type="number" scale="time" domain={unPunto ? [ts[0] - 864e5 * 7, ts[0] + 864e5 * 7] : ['dataMin', 'dataMax']}
               tickFormatter={fechaCorta} {...EJE} allowDuplicatedCategory={false} />
             <YAxis {...EJE} width={48} domain={dominio || [Math.floor(Math.min(...valores) - margen), Math.ceil(Math.max(...valores) + margen)]}
-              tickFormatter={(v) => num(v)} label={{ value: unidad, angle: -90, position: 'insideLeft', fill: '#DACCAF', fontSize: 11 }} />
+              tickFormatter={(v) => num(v)} label={{ value: unidad, angle: -90, position: 'insideLeft', fill: colorTema('--grafica-texto'), fontSize: 11 }} />
             <Tooltip content={<TooltipClinico unidad={unidad} />} />
             {conDatos.length > 1 && <Legend wrapperStyle={{ fontSize: 12 }} />}
             {rango && (rango.min != null || rango.max != null) && (
@@ -101,7 +115,7 @@ export function SerieTemporal({ series, unidad, objetivo, rango, alto = 260, dom
             )}
             {conDatos.map((s, i) => (
               <Line key={s.nombre} data={s.puntos} dataKey="valor" name={s.nombre} stroke={s.color || SERIES[i % SERIES.length]}
-                strokeWidth={2} dot={{ r: 4, strokeWidth: 2, fill: '#24443A' }} activeDot={{ r: 6 }}
+                strokeWidth={2} dot={{ r: 4, strokeWidth: 2, fill: colorTema('--grafica-fondo') }} activeDot={{ r: 6 }}
                 connectNulls={false} isAnimationActive={false} strokeDasharray={s.punteada ? '5 4' : undefined} />
             ))}
           </LineChart>
@@ -121,10 +135,10 @@ export function BarrasTemporales({ puntos, nombre, unidad, objetivo, color = PAL
       <div style={{ width: '100%', height: alto }}>
         <ResponsiveContainer>
           <BarChart data={datos} margin={{ top: 8, right: 16, bottom: 4, left: 0 }}>
-            <CartesianGrid stroke="rgba(255, 255, 255, 0.12)" strokeDasharray="3 3" vertical={false} />
+            <CartesianGrid stroke={colorTema('--grafica-rejilla')} strokeDasharray="3 3" vertical={false} />
             <XAxis dataKey="etiqueta" {...EJE} />
             <YAxis {...EJE} width={48} domain={[0, maximo || 'auto']} tickFormatter={(v) => num(v, 0)} />
-            <Tooltip content={<TooltipClinico unidad={unidad} />} cursor={{ fill: 'rgba(255,255,255,0.08)' }} />
+            <Tooltip content={<TooltipClinico unidad={unidad} />} cursor={{ fill: colorTema('--grafica-cursor') }} />
             {objetivo?.valor != null && (
               <ReferenceLine y={objetivo.valor} stroke={PALETA.morado} strokeDasharray="6 4"
                 label={{ value: objetivo.etiqueta, position: 'insideTopRight', fill: PALETA.morado, fontSize: 11 }} />
@@ -186,7 +200,7 @@ export function GraficaObjetivos({ objetivos }) {
     <div style={{ width: '100%', height: Math.max(120, datos.length * 44) }}>
       <ResponsiveContainer>
         <BarChart data={datos} layout="vertical" margin={{ top: 4, right: 24, bottom: 4, left: 8 }}>
-          <CartesianGrid stroke="rgba(255, 255, 255, 0.12)" strokeDasharray="3 3" horizontal={false} />
+          <CartesianGrid stroke={colorTema('--grafica-rejilla')} strokeDasharray="3 3" horizontal={false} />
           <XAxis type="number" domain={[0, 100]} {...EJE} tickFormatter={(v) => `${v}%`} />
           <YAxis type="category" dataKey="nombre" width={200} {...EJE} />
           <Tooltip formatter={(v, n, p) => [`${num(p.payload.real)} % (acotado a 0–100)`, 'Avance']} />

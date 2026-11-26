@@ -16,6 +16,7 @@ import { Radar, Pie } from "react-chartjs-2";
 import { FiSearch, FiUsers } from "react-icons/fi";
 
 import "./GraficaDashboard.css";
+import { colorTema } from "./Graficas/graficas";
 
 ChartJS.register(
   RadialLinearScale,
@@ -53,12 +54,12 @@ function GraficaDashboard({ mostrarGraficas = true }) {
         label: "Mujeres",
         data: [85, 90, 75, 80, 95, 88, 82],
         fill: true,
-        backgroundColor: "rgba(218, 204, 175, 0.25)",
-        borderColor: "#DACCAF",
-        pointBackgroundColor: "#DACCAF",
-        pointBorderColor: "#FFFFFF",
-        pointHoverBackgroundColor: "#FFFFFF",
-        pointHoverBorderColor: "#DACCAF",
+        backgroundColor: colorTema("--grafica-2-suave"),
+        borderColor: colorTema("--grafica-2"),
+        pointBackgroundColor: colorTema("--grafica-2"),
+        pointBorderColor: colorTema("--grafica-fondo"),
+        pointHoverBackgroundColor: colorTema("--grafica-fondo"),
+        pointHoverBorderColor: colorTema("--grafica-2"),
         borderWidth: 2,
         pointRadius: 4,
         pointHoverRadius: 7,
@@ -68,12 +69,12 @@ function GraficaDashboard({ mostrarGraficas = true }) {
         label: "Hombres",
         data: [75, 80, 85, 90, 78, 82, 88],
         fill: true,
-        backgroundColor: "rgba(127, 201, 155, 0.25)",
-        borderColor: "#7FC99B",
-        pointBackgroundColor: "#7FC99B",
-        pointBorderColor: "#FFFFFF",
-        pointHoverBackgroundColor: "#FFFFFF",
-        pointHoverBorderColor: "#7FC99B",
+        backgroundColor: colorTema("--grafica-1-suave"),
+        borderColor: colorTema("--grafica-1"),
+        pointBackgroundColor: colorTema("--grafica-1"),
+        pointBorderColor: colorTema("--grafica-fondo"),
+        pointHoverBackgroundColor: colorTema("--grafica-fondo"),
+        pointHoverBorderColor: colorTema("--grafica-1"),
         borderWidth: 2,
         pointRadius: 4,
         pointHoverRadius: 7,
@@ -109,7 +110,7 @@ function GraficaDashboard({ mostrarGraficas = true }) {
         position: "bottom",
 
         labels: {
-          color: "#DACCAF",
+          color: colorTema("--grafica-texto"),
           padding: 15,
           font: {
             size: 12,
@@ -119,10 +120,10 @@ function GraficaDashboard({ mostrarGraficas = true }) {
       },
 
       tooltip: {
-        titleColor: "#FFFFFF",
-        bodyColor: "#DACCAF",
-        backgroundColor: "rgba(11, 42, 29, 0.92)",
-        borderColor: "#FFFFFF",
+        titleColor: colorTema("--grafica-tooltip-titulo"),
+        bodyColor: colorTema("--grafica-tooltip-texto"),
+        backgroundColor: colorTema("--grafica-fondo"),
+        borderColor: colorTema("--grafica-tooltip-borde"),
         borderWidth: 1,
         padding: 12,
         cornerRadius: 10,
@@ -136,20 +137,20 @@ function GraficaDashboard({ mostrarGraficas = true }) {
 
         ticks: {
           stepSize: 20,
-          color: "rgba(218, 204, 175, 0.8)",
+          color: colorTema("--grafica-texto"),
           backdropColor: "transparent",
         },
 
         angleLines: {
-          color: "rgba(218, 204, 175, 0.30)",
+          color: colorTema("--grafica-eje"),
         },
 
         grid: {
-          color: "rgba(218, 204, 175, 0.20)",
+          color: colorTema("--grafica-rejilla"),
         },
 
         pointLabels: {
-          color: "#DACCAF",
+          color: colorTema("--grafica-texto"),
           font: {
             size: 11,
             weight: "bold",
@@ -172,16 +173,16 @@ function GraficaDashboard({ mostrarGraficas = true }) {
         data: [300, 200],
 
         backgroundColor: [
-          "#DACCAF",
-          "#7FC99B",
+          colorTema("--grafica-2"),
+          colorTema("--grafica-1"),
         ],
 
-        borderColor: "#FFFFFF",
+        borderColor: colorTema("--grafica-tooltip-borde"),
         borderWidth: 3,
 
         hoverOffset: 15,
 
-        hoverBorderColor: "#FFFFFF",
+        hoverBorderColor: colorTema("--grafica-fondo"),
         hoverBorderWidth: 4,
       },
     ],
@@ -212,7 +213,7 @@ function GraficaDashboard({ mostrarGraficas = true }) {
         position: "bottom",
 
         labels: {
-          color: "#DACCAF",
+          color: colorTema("--grafica-texto"),
           padding: 15,
           font: {
             size: 12,
@@ -222,10 +223,10 @@ function GraficaDashboard({ mostrarGraficas = true }) {
       },
 
       tooltip: {
-        titleColor: "#FFFFFF",
-        bodyColor: "#DACCAF",
-        backgroundColor: "rgba(11, 42, 29, 0.92)",
-        borderColor: "#FFFFFF",
+        titleColor: colorTema("--grafica-tooltip-titulo"),
+        bodyColor: colorTema("--grafica-tooltip-texto"),
+        backgroundColor: colorTema("--grafica-fondo"),
+        borderColor: colorTema("--grafica-tooltip-borde"),
         borderWidth: 1,
         padding: 12,
         cornerRadius: 10,
@@ -343,7 +344,7 @@ function GraficaDashboard({ mostrarGraficas = true }) {
 
           <div>
             <h2>Usuarios del sistema</h2>
-            <p>Personal registrado en La Nutria</p>
+            <p>Personal registrado en NUTRIVA</p>
           </div>
 
           <span className="total-empleados">

@@ -13,17 +13,17 @@
 
 /* ---------- Editor de dietas (modal) ---------- */
 .editor-dieta__dia { display: flex; flex-direction: column; gap: var(--e3); }
-.editor-dieta__comida { margin: 0; padding: var(--e3) var(--e4) var(--e4); min-width: 0; background: rgba(143, 169, 143, 0.08); border: 1px solid var(--borde); border-radius: 12px; }
+.editor-dieta__comida { margin: 0; padding: var(--e3) var(--e4) var(--e4); min-width: 0; background: rgba(var(--tinte-rgb), 0.08); border: 1px solid var(--borde); border-radius: 12px; }
 .editor-dieta__fila { display: grid; grid-template-columns: minmax(120px, 0.6fr) minmax(0, 1.4fr) auto; gap: var(--e3); align-items: end; }
 .editor-dieta__quitar { min-height: 40px; }
 .editor-dieta__ingredientes { display: flex; flex-direction: column; gap: var(--e2); margin-top: var(--e3); }
 .editor-dieta__ingrediente { display: grid; grid-template-columns: minmax(0, 1.3fr) minmax(0, 1fr) auto; gap: var(--e2); }
 .editor-dieta__ingrediente input {
   width: 100%; min-height: 36px; padding: 0 var(--e3); font: var(--fs-sm) var(--font); color: var(--texto);
-  background: rgba(0, 0, 0, 0.18); border: 1px solid rgba(255, 255, 255, 0.24); border-radius: var(--radio); outline: none;
+  background: var(--campo-fondo); border: 1px solid rgba(var(--tinta-rgb), 0.30); border-radius: var(--radio); outline: none;
 }
-.editor-dieta__ingrediente input::placeholder { color: rgba(242, 236, 223, 0.55); }
-.editor-dieta__ingrediente input:focus { border-color: var(--beige); box-shadow: 0 0 0 3px rgba(218, 204, 175, 0.28); }
+.editor-dieta__ingrediente input::placeholder { color: rgba(var(--tinta-rgb), 0.50); }
+.editor-dieta__ingrediente input:focus { border-color: var(--beige); box-shadow: 0 0 0 3px rgba(var(--arena-rgb), 0.28); }
 .editor-dieta__ingredientes > .boton { align-self: flex-start; }
 .editor-dieta__acciones-dia { display: flex; flex-wrap: wrap; gap: var(--e2); }
 .editor-dieta__archivar, .editor-dieta__confirmar { margin-right: auto; }

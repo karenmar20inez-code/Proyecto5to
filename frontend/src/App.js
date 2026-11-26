@@ -31,6 +31,7 @@ import Alertas from './pages/Alertas/Alertas';
 import Administracion from './pages/Administracion/Administracion';
 import { NutriProvider } from './context/NutriContext';
 import { AuthProvider, useAuth } from './context/AuthContext';
+import { TemaProvider, useTema } from './context/TemaContext';
 
 import './App.css';
 
@@ -130,6 +131,7 @@ function ContenidoApp() {
 /* Sin sesión: pantalla de inicio de sesión. Con sesión: la aplicación. */
 function Aplicacion() {
   const { usuario, verificando } = useAuth();
+  const { tema } = useTema();
   if (verificando) {
     return <div className="loader-pantalla-completa"><Loader /></div>;
   }
@@ -137,7 +139,8 @@ function Aplicacion() {
   return (
     <NutriProvider key={usuario._id}>
       <BrowserRouter>
-        <ContenidoApp />
+        {/* Al cambiar de modo claro/oscuro se vuelven a dibujar las pantallas (las gráficas toman los colores nuevos) */}
+        <ContenidoApp key={tema} />
       </BrowserRouter>
     </NutriProvider>
   );
@@ -145,9 +148,11 @@ function Aplicacion() {
 
 function App() {
   return (
-    <AuthProvider>
-      <Aplicacion />
-    </AuthProvider>
+    <TemaProvider>
+      <AuthProvider>
+        <Aplicacion />
+      </AuthProvider>
+    </TemaProvider>
   );
 }
 

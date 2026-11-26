@@ -107,7 +107,7 @@ function Dashboard() {
           {k && (
             <Doughnut options={{ ...opciones({ ejesVisibles: false }), cutout: '61.8%' }} data={{
               labels: ['Activos', 'Baja'],
-              datasets: [{ data: [k.activos, k.inactivos], backgroundColor: [COLORES.verdeClaro, COLORES.arena], borderColor: 'rgba(11,42,29,0.9)', borderWidth: 2 }],
+              datasets: [{ data: [k.activos, k.inactivos], backgroundColor: [COLORES.verdeClaro, COLORES.arena], borderColor: COLORES.fondo, borderWidth: 2 }],
             }} />
           )}
         </PanelGrafica>

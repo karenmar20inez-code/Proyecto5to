@@ -14,11 +14,11 @@
 .boton-menu {
   display: inline-flex; align-items: center; justify-content: center; flex-shrink: 0;
   width: 40px; height: 40px; padding: 0;
-  color: var(--beige); background: rgba(143, 169, 143, 0.12);
+  color: var(--beige); background: rgba(var(--tinte-rgb), 0.12);
   border: 1px solid var(--borde); border-radius: 12px; cursor: pointer;
   transition: background 0.2s ease, color 0.2s ease, border-color 0.2s ease;
 }
-.boton-menu:hover { background: rgba(143, 169, 143, 0.24); color: var(--blanco); border-color: var(--borde-fuerte); }
+.boton-menu:hover { background: rgba(var(--tinte-rgb), 0.24); color: var(--texto); border-color: var(--borde-fuerte); }
 .boton-menu svg { width: 20px; height: 20px; }
 
 .topbar__buscador {
@@ -26,12 +26,12 @@
   flex: 1; max-width: 440px; height: 38px;
   padding: 0 var(--e3);
   display: flex; align-items: center; gap: var(--e2);
-  background: rgba(0, 0, 0, 0.18);
+  background: var(--campo-fondo);
   border: 1px solid var(--borde);
   border-radius: 12px;
   color: var(--texto-3);
 }
-.topbar__buscador:focus-within { border-color: var(--beige); box-shadow: 0 0 0 3px rgba(218, 204, 175, 0.3); }
+.topbar__buscador:focus-within { border-color: var(--beige); box-shadow: 0 0 0 3px rgba(var(--arena-rgb), 0.3); }
 .topbar__buscador input { width: 100%; background: transparent; border: none; outline: none; color: var(--texto); font: var(--fs-base) var(--font); }
 .topbar__resultados {
   position: absolute; top: calc(100% + 4px); left: 0; right: 0;
@@ -39,7 +39,7 @@
   background: var(--superficie); border: 1px solid var(--borde); border-radius: var(--radio); box-shadow: var(--sombra-md);
 }
 .topbar__resultados a, .topbar__resultados span { display: block; padding: var(--e2) var(--e3); border-radius: var(--radio-sm); color: var(--texto); text-decoration: none; font-size: var(--fs-sm); }
-.topbar__resultados a:hover, .topbar__resultados a:focus { background: rgba(255, 255, 255, 0.10); }
+.topbar__resultados a:hover, .topbar__resultados a:focus { background: rgba(var(--tinta-rgb), 0.10); }
 .topbar__resultados small { color: var(--texto-3); margin-left: var(--e2); }
 
 .topbar__acciones { margin-left: auto; display: flex; align-items: center; gap: var(--e2); position: relative; }
@@ -57,7 +57,7 @@
   position: absolute; top: -4px; right: -4px;
   min-width: 18px; height: 18px; padding: 0 4px;
   display: grid; place-items: center;
-  background: var(--peligro); color: #fff; border-radius: 999px; font-size: 0.6875rem; font-weight: 700;
+  background: var(--peligro); color: var(--sobre-peligro); border-radius: 999px; font-size: 0.6875rem; font-weight: 700;
 }
 .topbar__avatar {
   width: 38px; height: 38px;
