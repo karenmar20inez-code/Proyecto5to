@@ -1,6 +1,6 @@
 # Despliegue en Vercel (preparado, NO desplegado)
 
-La Nutria se publica como **dos proyectos de Vercel** desde el mismo repositorio:
+NUTRIONIX (antes «La Nutria») se publica como **dos proyectos de Vercel** desde el mismo repositorio:
 
 | Proyecto | Root Directory | Qué publica |
 |----------|----------------|-------------|

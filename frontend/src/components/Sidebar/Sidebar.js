@@ -60,7 +60,7 @@ const esActiva = (pathname, { to, end }) => (end ? pathname === to : pathname ==
 
 /**
  * Menú lateral único.
- *  - Encabezado: logotipo de NUTRIVA + nombre + descriptor + botón de hamburguesa.
+ *  - Encabezado: logotipo de NUTRIONIX + nombre + descriptor + botón de hamburguesa.
  *  - colapsado: barra estrecha; el encabezado muestra solo la imagen y el botón queda
  *    en el borde del menú para volver a expandirlo. Iconos con tooltip.
  *  - expandido: imagen, nombre, subtítulo y nombre de cada sección.
@@ -89,7 +89,8 @@ function Sidebar({ colapsado = false, onNavegar, onMenu, menuExpandido = true, m
       <div className="sidebar__encabezado">
         <NavLink to="/" className="sidebar__marca" onClick={onNavegar} aria-label={`${MARCA.nombre} · inicio`} data-tooltip={MARCA.nombre}>
           <LogoNutriva tamano={44} className="sidebar__logo-img" />
-          <span className="sidebar__nombre">{MARCA.nombre}<small>{MARCA.descriptor}</small></span>
+          {/* En el menú, nombre + eslogan (el descriptor completo aparece al pasar el cursor) */}
+          <span className="sidebar__nombre" title={MARCA.nombreCompleto}>{MARCA.nombre}<small>{MARCA.eslogan}</small></span>
         </NavLink>
         {onMenu && (
           <button type="button" className="boton-menu sidebar__boton-menu" onClick={onMenu}

@@ -1,6 +1,10 @@
 .loader-pantalla-completa {
   position: fixed; inset: 0;
-  display: flex; justify-content: center; align-items: center;
-  background: var(--fondo);
+  display: flex; flex-direction: column; justify-content: center; align-items: center; gap: var(--e2);
+  background-color: var(--fondo);
+  background-image: var(--fondo-imagen);
   z-index: 99999;
 }
+.loader-pantalla-completa__marca { margin-top: var(--e4); font-size: var(--fs-lg); font-weight: 700; letter-spacing: 0.14em; color: var(--texto); }
+.loader-pantalla-completa__texto { font-size: var(--fs-sm); color: var(--texto-3); }
+.loader-pantalla-completa__eslogan { margin-top: -4px; font-size: var(--fs-sm); font-style: italic; color: var(--texto-2); }

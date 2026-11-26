@@ -8,6 +8,7 @@ import { SerieTemporal } from '../../../components/Graficas/GraficasClinicas';
 import { laboratorioApi, consultasApi } from '../../../services/api';
 import { formatoFecha, fechaISO } from '../../../context/NutriContext';
 import { useAuth } from '../../../context/AuthContext';
+import { useTema } from '../../../context/TemaContext';
 
 const fecha = (f) => formatoFecha(fechaISO(f));
 const VACIO = { fechaMuestra: new Date().toISOString().slice(0, 10), analito: 'glucosa_ayuno', nombre: '', valor: '', unidad: '', min: '', max: '', texto: '', procedencia: '', metodo: '', ayuno: false, observaciones: '', consultaId: '' };
@@ -64,6 +65,7 @@ function FormLaboratorio({ analitos, consultas, onGuardar, onCancelar }) {
 }
 
 function Laboratorios() {
+  useTema(); // al cambiar de modo claro/oscuro se vuelven a dibujar las gráficas con los colores del tema
   const { pacienteId, recargar } = useFicha();
   const { puede } = useAuth();
   const [params] = useSearchParams();

@@ -8,6 +8,8 @@ import { formatoFecha, resumenCumplimiento } from '../../context/NutriContext';
 import { comidasEvaluables } from '../../data/dietas';
 import '../Dietas/Dietas.css';
 import './MiEspacio.css';
+import { useTema } from '../../context/TemaContext';
+import { MARCA } from '../../config/marca';
 
 const fechaHora = (f) => new Date(f).toLocaleString('es-MX', { weekday: 'long', day: 'numeric', month: 'long', hour: '2-digit', minute: '2-digit' });
 const ESTADO_CITA = { programada: ['Programada', 'info'], realizada: ['Realizada', 'ok'], cancelada: ['Cancelada', 'no'], no_asistio: ['No asistió', 'no'] };
@@ -192,6 +194,7 @@ function MiProgreso({ datos }) {
 
 /** Espacio propio del paciente: solo su información y lo que su nutriólogo autorizó */
 function MiEspacio() {
+  useTema(); // al cambiar de modo claro/oscuro se vuelven a dibujar las gráficas con los colores del tema
   const { seccion = '' } = useParams();
   const [datos, setDatos] = useState(null);
   const [error, setError] = useState('');
@@ -203,7 +206,7 @@ function MiEspacio() {
 
   return (
     <Layout titulo={seccion ? titulo : `Hola${datos ? `, ${datos.paciente.nombreCompleto.split(' ')[0]}` : ''}`}
-      subtitulo="Tu espacio personal en NUTRIVA. Solo tú puedes ver esta información.">
+      subtitulo={`Tu espacio personal en ${MARCA.nombre}. Solo tú puedes ver esta información.`}>
       <div className="pestanas no-imprimir" role="tablist" aria-label="Secciones de mi espacio">
         {SECCIONES.map(([k, t, Icono]) => (
           <Link key={k || 'inicio'} to={`/mi-espacio${k ? `/${k}` : ''}`} role="tab" aria-selected={seccion === k}

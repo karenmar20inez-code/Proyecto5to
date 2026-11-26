@@ -1,4 +1,4 @@
-# Puesta en marcha de La Nutria (plataforma clínica)
+# Puesta en marcha de NUTRIONIX — Sistema Integral de Gestión Nutricional
 
 A partir de esta versión la API exige inicio de sesión y cifra información sensible.
 El servidor **no arranca** sin `CLAVE_CIFRADO`.

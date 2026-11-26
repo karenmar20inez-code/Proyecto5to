@@ -1,4 +1,4 @@
-# La Nutria · Arquitectura clínica
+# NUTRIONIX · Arquitectura clínica
 
 > Documento técnico de diseño. Describe criterios de diseño clínico aplicados en el software;
 > **no** constituye una validación ni un aval de profesionales sanitarios. Antes de usarse en

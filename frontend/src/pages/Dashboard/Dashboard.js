@@ -11,6 +11,7 @@ import { opciones, linea, barras, COLORES, SERIE_CATEGORICA } from '../../compon
 import { estadisticasApi } from '../../services/api';
 
 import './Dashboard.css';
+import { useTema } from '../../context/TemaContext';
 
 const MESES = ['Ene', 'Feb', 'Mar', 'Abr', 'May', 'Jun', 'Jul', 'Ago', 'Sep', 'Oct', 'Nov', 'Dic'];
 /* $dayOfWeek de MongoDB: 1 = domingo … 7 = sábado → orden lunes-domingo */
@@ -46,6 +47,7 @@ function MapaCalor({ celdas }) {
 }
 
 function Dashboard() {
+  useTema(); // al cambiar de modo claro/oscuro se vuelven a dibujar las gráficas con los colores del tema
   const anioActual = new Date().getFullYear();
   const [anio, setAnio] = useState(anioActual);
   const [datos, setDatos] = useState(null);

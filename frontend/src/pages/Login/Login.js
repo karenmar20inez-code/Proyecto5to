@@ -34,14 +34,15 @@ function Login() {
     <main className="login" style={{ '--login-fondo': `url(${MARCA.ilustracion})` }}>
       <SelectorTema className="login__tema" />
       <section className="login__tarjeta" aria-labelledby="titulo-login">
+        {/* Jerarquía de marca: nombre (protagonista) → eslogan → descriptor */}
         <div className="login__marca">
-          <LogoNutriva tamano={56} className="login__logo" />
-          <div>
+          <LogoNutriva tamano={60} className="login__logo" />
+          <div className="login__identidad">
             <h1 id="titulo-login">{MARCA.nombre}</h1>
-            <p>{MARCA.descriptor}</p>
+            <p className="login__eslogan">{MARCA.eslogan}</p>
+            <p className="login__descriptor">{MARCA.descriptor}</p>
           </div>
         </div>
-        <p className="login__eslogan">{MARCA.eslogan}</p>
 
         {aviso && !solicitando && <p className="aviso" role="status">{aviso}</p>}
 

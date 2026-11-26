@@ -17,6 +17,8 @@ import { FiSearch, FiUsers } from "react-icons/fi";
 
 import "./GraficaDashboard.css";
 import { colorTema } from "./Graficas/graficas";
+import { useTema } from "../context/TemaContext";
+import { MARCA } from "../config/marca";
 
 ChartJS.register(
   RadialLinearScale,
@@ -33,6 +35,7 @@ ChartJS.defaults.font.family = "'Roboto', system-ui, sans-serif";
 
 /* mostrarGraficas = false oculta las gráficas de ejemplo y conserva la tabla de usuarios */
 function GraficaDashboard({ mostrarGraficas = true }) {
+  useTema(); // al cambiar de modo claro/oscuro se vuelven a dibujar las gráficas con los colores del tema
 
   // =====================================
   // GRÁFICA DE RADAR
@@ -344,7 +347,7 @@ function GraficaDashboard({ mostrarGraficas = true }) {
 
           <div>
             <h2>Usuarios del sistema</h2>
-            <p>Personal registrado en NUTRIVA</p>
+            <p>Personal registrado en {MARCA.nombre}</p>
           </div>
 
           <span className="total-empleados">

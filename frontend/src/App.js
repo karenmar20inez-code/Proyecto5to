@@ -8,7 +8,7 @@ import {
   useSearchParams,
 } from 'react-router-dom';
 
-import Loader from './components/Loaders/Loaders';
+import PantallaCarga from './components/Loaders/PantallaCarga';
 import Layout from './components/Layout/Layout';
 import Dashboard from './pages/Dashboard/Dashboard';
 import Productos from './pages/Productos/Productos';
@@ -31,7 +31,7 @@ import Alertas from './pages/Alertas/Alertas';
 import Administracion from './pages/Administracion/Administracion';
 import { NutriProvider } from './context/NutriContext';
 import { AuthProvider, useAuth } from './context/AuthContext';
-import { TemaProvider, useTema } from './context/TemaContext';
+import { TemaProvider } from './context/TemaContext';
 
 import './App.css';
 
@@ -81,9 +81,7 @@ function ContenidoApp() {
 
   if (cargando) {
     return (
-      <div className="loader-pantalla-completa">
-        <Loader />
-      </div>
+      <PantallaCarga />
     );
   }
 
@@ -131,16 +129,14 @@ function ContenidoApp() {
 /* Sin sesión: pantalla de inicio de sesión. Con sesión: la aplicación. */
 function Aplicacion() {
   const { usuario, verificando } = useAuth();
-  const { tema } = useTema();
   if (verificando) {
-    return <div className="loader-pantalla-completa"><Loader /></div>;
+    return <PantallaCarga />;
   }
   if (!usuario) return <Login />;
   return (
     <NutriProvider key={usuario._id}>
       <BrowserRouter>
-        {/* Al cambiar de modo claro/oscuro se vuelven a dibujar las pantallas (las gráficas toman los colores nuevos) */}
-        <ContenidoApp key={tema} />
+        <ContenidoApp />
       </BrowserRouter>
     </NutriProvider>
   );

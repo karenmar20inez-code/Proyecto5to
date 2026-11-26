@@ -2,16 +2,23 @@ import { Moon, Sun } from 'lucide-react';
 import { useTema } from '../../context/TemaContext';
 import './SelectorTema.css';
 
-/** Botón para cambiar entre modo claro y modo oscuro (barra superior e inicio de sesión). */
+const OPCIONES = [
+  ['claro', 'Modo claro', Sun],
+  ['oscuro', 'Modo oscuro', Moon],
+];
+
+/** Selector de tema: sol = modo claro, luna = modo oscuro. Se usa en la barra superior y en el inicio de sesión. */
 function SelectorTema({ className = '' }) {
-  const { tema, alternar } = useTema();
-  const oscuro = tema === 'oscuro';
-  const etiqueta = oscuro ? 'Cambiar a modo claro' : 'Cambiar a modo oscuro';
+  const { tema, cambiar } = useTema();
   return (
-    <button type="button" className={`selector-tema ${className}`.trim()} onClick={alternar}
-      aria-label={etiqueta} aria-pressed={oscuro} title={etiqueta}>
-      {oscuro ? <Sun aria-hidden="true" /> : <Moon aria-hidden="true" />}
-    </button>
+    <div className={`selector-tema ${className}`.trim()} role="group" aria-label="Apariencia">
+      {OPCIONES.map(([valor, etiqueta, Icono]) => (
+        <button key={valor} type="button" className={`selector-tema__opcion${tema === valor ? ' selector-tema__opcion--activa' : ''}`}
+          onClick={() => cambiar(valor)} aria-pressed={tema === valor} aria-label={etiqueta} title={etiqueta}>
+          <Icono aria-hidden="true" />
+        </button>
+      ))}
+    </div>
   );
 }
 

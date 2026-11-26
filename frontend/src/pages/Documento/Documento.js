@@ -4,6 +4,7 @@ import { Printer, ArrowLeft } from 'lucide-react';
 import { expedienteApi } from '../../services/api';
 import '../../styles/modulos.css';
 import './Documento.css';
+import { MARCA } from '../../config/marca';
 
 const fecha = (f) => (f ? new Date(f).toLocaleDateString('es-MX', { day: 'numeric', month: 'long', year: 'numeric', timeZone: 'UTC' }) : '—');
 const fechaHora = (f) => (f ? new Date(f).toLocaleString('es-MX', { dateStyle: 'long', timeStyle: 'short' }) : '—');
@@ -76,7 +77,7 @@ function Documento() {
 
       <header className="documento__encabezado">
         <div>
-          <p className="documento__marca">NUTRIVA — Sistema Integral de Gestión Nutricional</p>
+          <p className="documento__marca">{MARCA.nombreCompleto}</p>
           <h1>{d.titulo}</h1>
           {d.paraTerceros && <p className="documento__terceros">Versión para terceros: contiene solo la información necesaria.</p>}
         </div>

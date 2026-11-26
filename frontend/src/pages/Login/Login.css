@@ -25,16 +25,18 @@
   .login { justify-items: center; padding: var(--e4); background-position: 86% center; }
 }
 @media (max-width: 520px) { .login .login__tarjeta { padding: var(--e5); } }
-.login__marca { display: flex; align-items: center; gap: var(--e3); margin-bottom: var(--e3); }
-.login__marca h1 { font-size: var(--fs-xl); font-weight: 700; letter-spacing: 0.14em; }
-.login__marca p { font-size: var(--fs-xs); color: var(--texto-3); }
-.login__eslogan {
-  margin: 0 0 var(--e5); padding-left: var(--e3); border-left: 2px solid var(--dorado);
-  font-size: var(--fs-md); font-style: italic; color: var(--texto-2);
+.login__marca { display: flex; align-items: center; gap: var(--e3); margin-bottom: var(--e5); }
+.login__identidad { min-width: 0; display: flex; flex-direction: column; gap: 2px; }
+.login__marca h1 { font-size: var(--fs-2xl); font-weight: 700; letter-spacing: 0.10em; line-height: 1.1; }
+.login__eslogan { font-size: var(--fs-md); font-style: italic; color: var(--texto-2); }
+.login__descriptor {
+  margin-top: 2px; padding-top: 4px; border-top: 1px solid rgba(var(--arena-rgb), 0.35);
+  font-size: 0.6875rem; font-weight: 600; letter-spacing: 0.08em; color: var(--texto-3);
 }
+@media (max-width: 400px) { .login__marca h1 { font-size: var(--fs-xl); } }
 /* Selector de modo claro / oscuro en la esquina superior derecha */
 .login { position: relative; }
-.login .login__tema { position: absolute; top: var(--e4); right: var(--e4); z-index: 2; background: var(--superficie-3); }
+.login .login__tema { position: absolute; top: var(--e4); right: var(--e4); z-index: 2; background: var(--superficie-3); box-shadow: var(--sombra); }
 /* Contraseña con botón para mostrar u ocultar */
 .login__contrasena { position: relative; }
 .login .login__contrasena input { padding-right: 46px; }

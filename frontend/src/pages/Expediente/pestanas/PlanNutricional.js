@@ -9,6 +9,7 @@ import { planeacionApi, prescripcionesApi, estadisticasApi, consultasApi } from 
 import { formatoFecha, fechaISO, useNutri } from '../../../context/NutriContext';
 import { useAuth } from '../../../context/AuthContext';
 import { alimentosDeDieta } from '../../../data/dietas';
+import { useTema } from '../../../context/TemaContext';
 
 const fecha = (f) => (f ? formatoFecha(fechaISO(f)) : '—');
 const ESTADOS = { borrador: ['Borrador', 'aviso'], vigente: ['Vigente', 'ok'], finalizado: ['Finalizado', ''], reemplazado: ['Reemplazado', ''] };
@@ -66,6 +67,7 @@ function FormPlan({ pacienteId, objetivos, onGuardar, onCancelar }) {
 }
 
 function PlanNutricional() {
+  useTema(); // al cambiar de modo claro/oscuro se vuelven a dibujar las gráficas con los colores del tema
   const { pacienteId, ficha, recargar } = useFicha();
   const { recargarPacientes, buscarDieta } = useNutri();
   const { puede } = useAuth();

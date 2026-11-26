@@ -6,6 +6,7 @@ import {
 } from '../../../components/Graficas/GraficasClinicas';
 import { estadisticasApi, laboratorioApi, planeacionApi, expedienteApi, consultasApi } from '../../../services/api';
 import { formatoFecha, fechaISO } from '../../../context/NutriContext';
+import { useTema } from '../../../context/TemaContext';
 
 const t = (f) => new Date(f).getTime();
 const fecha = (f) => formatoFecha(fechaISO(f));
@@ -33,6 +34,7 @@ const calculados = (mediciones, obtener) => mediciones.map((m) => ({ m, v: obten
   .filter((x) => x.v != null).map((x) => ({ t: t(x.m.fecha), valor: x.v, origen: 'calculado' }));
 
 function Evolucion() {
+  useTema(); // al cambiar de modo claro/oscuro se vuelven a dibujar las gráficas con los colores del tema
   const { pacienteId } = useFicha();
   const [rango, setRango] = useState({});
   const [datos, setDatos] = useState(null);

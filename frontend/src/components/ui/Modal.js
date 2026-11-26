@@ -1,4 +1,5 @@
 import { useEffect, useRef } from 'react';
+import { createPortal } from 'react-dom';
 import { X } from 'lucide-react';
 
 /**
@@ -46,7 +47,10 @@ function Modal({ titulo, descripcion, abierto, onCerrar, children, acciones, anc
   }, [abierto]);
 
   if (!abierto) return null;
-  return (
+  /* Se dibuja directamente en <body> (portal de React): así el velo cubre toda la pantalla aunque el
+     botón que lo abre esté dentro de un panel de vidrio (backdrop-filter crea un contenedor que
+     atrapaba a position: fixed y en celular dejaba el modal fuera de la pantalla). */
+  return createPortal(
     <div className="modal-fondo" onMouseDown={(e) => { if (cerrarAlFondo && e.target === e.currentTarget) onCerrar?.(); }}>
       <div className="modal" role="dialog" aria-modal="true" aria-labelledby="modal-titulo"
         aria-describedby={descripcion ? 'modal-descripcion' : undefined} ref={ref} tabIndex={-1}
@@ -65,7 +69,8 @@ function Modal({ titulo, descripcion, abierto, onCerrar, children, acciones, anc
         <div className="modal__cuerpo">{children}</div>
         {acciones && <div className="modal__acciones">{acciones}</div>}
       </div>
-    </div>
+    </div>,
+    document.body,
   );
 }
 

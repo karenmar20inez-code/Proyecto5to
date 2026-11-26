@@ -7,6 +7,7 @@ import { GraficaObjetivos } from '../../../components/Graficas/GraficasClinicas'
 import { planeacionApi, laboratorioApi } from '../../../services/api';
 import { formatoFecha, fechaISO } from '../../../context/NutriContext';
 import { useAuth } from '../../../context/AuthContext';
+import { useTema } from '../../../context/TemaContext';
 
 const fecha = (f) => (f ? formatoFecha(fechaISO(f)) : '—');
 const ESTADOS = { activo: ['Activo', 'info'], logrado: ['Logrado', 'ok'], no_logrado: ['No logrado', 'aviso'], suspendido: ['Suspendido', ''] };
@@ -59,6 +60,7 @@ function FormObjetivo({ indicadores, diagnosticos, analitos, onGuardar, onCancel
 }
 
 function Objetivos() {
+  useTema(); // al cambiar de modo claro/oscuro se vuelven a dibujar las gráficas con los colores del tema
   const { pacienteId, ficha, recargar } = useFicha();
   const { puede } = useAuth();
   const [params] = useSearchParams();

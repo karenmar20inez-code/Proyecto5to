@@ -1,6 +1,6 @@
 # Roles, permisos y portal del paciente
 
-La Nutria es multiusuario. Cada cuenta tiene **un rol**, y el rol trae un conjunto de **permisos**.
+NUTRIONIX es multiusuario. Cada cuenta tiene **un rol**, y el rol trae un conjunto de **permisos**.
 La autorización se valida siempre en el backend (middleware de Express); el frontend solo oculta
 lo que el rol no puede usar. La única fuente de verdad es
 `backend/src/Services/seguridad/permisos.js`: para agregar un rol o un permiso basta con editar esa tabla.
@@ -78,3 +78,15 @@ lo que el rol no puede usar. La única fuente de verdad es
 
 - `npm run migrar-roles --prefix backend` hace una simulación; con `-- --aplicar` aplica los cambios. Es segura y se puede repetir.
 - `npm run crear-administrador --prefix backend -- --correo ... --nombre "..."` crea la primera cuenta (superusuario).
+
+## Apariencia: modo claro y modo oscuro
+
+- Selector con **sol (modo claro)** y **luna (modo oscuro)** en la barra superior y en la pantalla de inicio de sesión.
+  En celulares se muestra un solo botón: el del modo al que se cambia.
+- La elección manual se guarda en el navegador de cada persona (`nutriva:tema`, nombre interno que se conserva) y se conserva al navegar y al volver
+  a abrir la aplicación. Si nunca se eligió, se usa el tema del dispositivo detectado al abrir; durante el uso no
+  cambia solo. Es una preferencia de interfaz: no se guarda en la base de datos.
+- Los colores de ambos temas son tokens en `frontend/src/index.css` (`:root` y `:root[data-tema="oscuro"]`);
+  las gráficas leen los tokens `--grafica-*` y `--clinica-*` al dibujarse.
+- La identidad de NUTRIONIX (nombre, eslogan «Innovación para nutrir mejor», descriptor, logotipo e ilustración) está en
+  `frontend/src/config/marca.js`.

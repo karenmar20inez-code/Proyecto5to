@@ -3,6 +3,7 @@ import { KeyRound } from 'lucide-react';
 import Layout from '../../components/Layout/Layout';
 import { useAuth, nombreRolCompleto } from '../../context/AuthContext';
 import { authApi } from '../../services/api';
+import { MARCA } from '../../config/marca';
 
 function Perfil() {
   const { usuario, salir } = useAuth();
@@ -31,7 +32,7 @@ function Perfil() {
             <dt>Rol</dt><dd>{nombreRolCompleto(usuario)}</dd>
             <dt>Cédula profesional</dt><dd>{usuario?.cedulaProfesional || '—'}</dd>
           </dl>
-          {usuario?.debeCambiarContrasena && <p className="aviso aviso--alerta" role="alert">Tu contraseña es temporal: cámbiala para poder usar NUTRIVA. Después inicia sesión con la nueva.</p>}
+          {usuario?.debeCambiarContrasena && <p className="aviso aviso--alerta" role="alert">Tu contraseña es temporal: cámbiala para poder usar {MARCA.nombre}. Después inicia sesión con la nueva.</p>}
         </section>
         <section className="panel" id="contrasena">
           <h2><KeyRound size={16} aria-hidden="true" /> Cambiar contraseña</h2>

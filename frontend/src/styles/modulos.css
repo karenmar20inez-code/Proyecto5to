@@ -457,3 +457,19 @@ body.modal-abierto { overflow: hidden; }
 @media (max-width: 640px) { .formulario-usuario__clave { flex-wrap: wrap; } }
 /* Contador en pestañas (p. ej. solicitudes de acceso pendientes) */
 .contador-pestana { display: inline-block; min-width: 18px; margin-left: 6px; padding: 0 5px; border-radius: 999px; background: var(--peligro); color: var(--sobre-peligro); font-size: 0.6875rem; font-weight: 700; text-align: center; line-height: 18px; }
+
+/* ==========================================
+   PANTALLAS TÁCTILES Y ANGOSTAS (tablet y celular)
+   Objetivos de toque cómodos (≥ 40-44 px) sin cambiar el diseño de escritorio.
+   Los campos usan 16 px para que el celular no haga zoom al escribir.
+========================================== */
+@media (max-width: 768px), (pointer: coarse) {
+  .boton { min-height: 44px; }
+  .boton--chico { min-height: 40px; padding: 0 var(--e3); }
+  .boton--icono, .boton--chico:has(> svg:only-child) { min-width: 40px; }
+  .tabla th button { min-height: 36px; padding: 4px 2px; }
+  .campo input:not([type="radio"]):not([type="checkbox"]), .campo select, .campo textarea, .selector { min-height: 44px; font-size: 16px; }
+  .buscador-tabla { min-height: 44px; }
+  .modal__cerrar { width: 40px; height: 40px; }
+  .buscador-tabla input { font-size: 16px; }
+}
