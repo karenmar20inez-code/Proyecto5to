@@ -2,7 +2,7 @@ import { useCallback, useState } from 'react';
 import { NavLink, useLocation } from 'react-router-dom';
 import {
   LayoutDashboard, Users, FolderOpen, Stethoscope, ClipboardList, Utensils,
-  TrendingUp, FlaskConical, CalendarDays, FileText, Settings, Menu, PanelLeftClose, ChevronDown, UserRound,
+  TrendingUp, FlaskConical, CalendarDays, FileText, Settings, Menu, PanelLeftClose, ChevronDown, UserRound, Salad,
 } from 'lucide-react';
 import { useAuth, nombreRolCompleto } from '../../context/AuthContext';
 import { MARCA } from '../../config/marca';
@@ -16,6 +16,7 @@ const SECCIONES = [
     items: [
       { to: '/mi-espacio', label: 'Inicio', icon: UserRound, end: true, permiso: 'portal:propio', soloPaciente: true },
       { to: '/mi-espacio/dieta', label: 'Mi dieta', icon: Utensils, permiso: 'portal:propio', soloPaciente: true },
+      { to: '/mi-espacio/plan', label: 'Mi plan alimentario', icon: Salad, permiso: 'portal:propio', soloPaciente: true },
       { to: '/mi-espacio/citas', label: 'Mis citas', icon: CalendarDays, permiso: 'portal:propio', soloPaciente: true },
       { to: '/mi-espacio/progreso', label: 'Mi progreso', icon: TrendingUp, permiso: 'portal:propio', soloPaciente: true },
     ],

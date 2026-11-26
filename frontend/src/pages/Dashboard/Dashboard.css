@@ -4,25 +4,33 @@
 
 .dashboard-layout {
   display: flex; min-height: 100vh; color: var(--texto-2);
-  /* Vidrio verde oscuro sobre la fotografía clara: deja ver las burbujas y mantiene
-     el contraste (blanco ≥ 7:1 y beige ≥ 4.5:1 aun sobre la zona más clara de la imagen). */
+  /* Vidrio crema sobre la ilustración Organico.png: deja ver las hojas y mantiene
+     el contraste del texto en ambos temas. */
   --superficie: rgba(var(--claro-rgb), 0.66);
   --superficie-2: rgba(var(--claro-rgb), 0.50);
   --superficie-3: rgba(var(--claro-rgb), 0.82);
 }
 
-/* Fondo general tras iniciar sesión: degradado con la paleta de Nutria_Mejorada.png
-   (luz dorada arriba a la derecha y curvas salvia). paleta.jpeg ya no se usa, pero se conserva.
-   Capa fija a pantalla completa compartida por todas las secciones (todas usan Layout). */
+/* Fondo general tras iniciar sesión: ilustración orgánica Assets/Picture/Organico.png
+   (hojas, curvas salvia y piedras con corazón). Capa fija a pantalla completa compartida por todas
+   las secciones (todas usan Layout): no se desplaza al navegar y el navegador reutiliza la imagen.
+   --fondo-app-velo (index.css) la atenúa en modo oscuro para conservar el tema y el contraste.
+   paleta.jpeg ya no se usa, pero se conserva. */
 .dashboard-layout::before {
   content: "";
   position: fixed; inset: 0; z-index: -1;
   pointer-events: none;
   background-color: var(--fondo);
-  background-image: var(--fondo-imagen); /* cambia con el modo claro u oscuro (index.css) */
+  background-image:
+    linear-gradient(var(--fondo-app-velo), var(--fondo-app-velo)),
+    url('../../Assets/Picture/Organico.png');
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
+}
+/* Celular y tablet vertical: se recorta hacia la esquina de las piedras y el corazón */
+@media (max-width: 768px) {
+  .dashboard-layout::before { background-position: 88% center; }
 }
 
 /* Superficies de cristal sobre la imagen: brillo salvia sutil y borde beige translúcido */

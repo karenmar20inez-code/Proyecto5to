@@ -1,0 +1,2615 @@
+[
+  {
+    "clave": "avena-con-platano",
+    "nombre": "Avena cocida con plátano y canela",
+    "tiempos": [
+      "desayuno"
+    ],
+    "proteina": "lacteo",
+    "ingredientes": [
+      {
+        "alimento": "Avena en hojuelas",
+        "cantidad": "½ taza"
+      },
+      {
+        "alimento": "Leche descremada",
+        "cantidad": "1 taza"
+      },
+      {
+        "alimento": "Plátano",
+        "cantidad": "½ pieza"
+      },
+      {
+        "alimento": "Canela",
+        "cantidad": "al gusto"
+      }
+    ],
+    "equivalentes": {
+      "cereales": 2,
+      "lacteos": 1,
+      "frutas": 1
+    },
+    "alergenos": [
+      "gluten",
+      "lacteos"
+    ],
+    "contiene": [],
+    "etiquetas": [
+      "rapido"
+    ]
+  },
+  {
+    "clave": "huevos-a-la-mexicana",
+    "nombre": "Huevos a la mexicana con tortillas",
+    "tiempos": [
+      "desayuno"
+    ],
+    "proteina": "huevo",
+    "ingredientes": [
+      {
+        "alimento": "Huevo",
+        "cantidad": "2 piezas"
+      },
+      {
+        "alimento": "Jitomate, cebolla y chile serrano",
+        "cantidad": "½ taza"
+      },
+      {
+        "alimento": "Tortilla de maíz",
+        "cantidad": "2 piezas"
+      },
+      {
+        "alimento": "Aceite vegetal",
+        "cantidad": "1 cucharadita"
+      }
+    ],
+    "equivalentes": {
+      "aoa": 2,
+      "verduras": 1,
+      "cereales": 2,
+      "grasas": 1
+    },
+    "alergenos": [
+      "huevo"
+    ],
+    "contiene": [],
+    "etiquetas": [
+      "rapido"
+    ]
+  },
+  {
+    "clave": "molletes-integrales",
+    "nombre": "Molletes integrales con frijol, panela y pico de gallo",
+    "tiempos": [
+      "desayuno"
+    ],
+    "proteina": "leguminosa",
+    "ingredientes": [
+      {
+        "alimento": "Bolillo integral",
+        "cantidad": "1 pieza"
+      },
+      {
+        "alimento": "Frijoles cocidos machacados",
+        "cantidad": "½ taza"
+      },
+      {
+        "alimento": "Queso panela",
+        "cantidad": "40 g"
+      },
+      {
+        "alimento": "Pico de gallo",
+        "cantidad": "½ taza"
+      }
+    ],
+    "equivalentes": {
+      "cereales": 2,
+      "leguminosas": 1,
+      "aoa": 1,
+      "verduras": 0.5
+    },
+    "alergenos": [
+      "gluten",
+      "lacteos"
+    ],
+    "contiene": [],
+    "etiquetas": []
+  },
+  {
+    "clave": "yogur-con-fruta-y-granola",
+    "nombre": "Yogur natural con fresas y granola",
+    "tiempos": [
+      "desayuno"
+    ],
+    "proteina": "lacteo",
+    "ingredientes": [
+      {
+        "alimento": "Yogur natural sin azúcar",
+        "cantidad": "1 taza"
+      },
+      {
+        "alimento": "Fresas",
+        "cantidad": "1 taza"
+      },
+      {
+        "alimento": "Granola sin nueces",
+        "cantidad": "¼ taza"
+      }
+    ],
+    "equivalentes": {
+      "lacteos": 1,
+      "frutas": 1,
+      "cereales": 1
+    },
+    "alergenos": [
+      "lacteos",
+      "gluten"
+    ],
+    "contiene": [
+      "miel"
+    ],
+    "etiquetas": [
+      "rapido",
+      "sin-coccion",
+      "azucar-anadida"
+    ]
+  },
+  {
+    "clave": "chilaquiles-horneados-pollo",
+    "nombre": "Chilaquiles verdes horneados con pollo",
+    "tiempos": [
+      "desayuno"
+    ],
+    "proteina": "pollo",
+    "ingredientes": [
+      {
+        "alimento": "Totopos de tortilla horneados",
+        "cantidad": "1 taza"
+      },
+      {
+        "alimento": "Salsa verde",
+        "cantidad": "½ taza"
+      },
+      {
+        "alimento": "Pechuga de pollo deshebrada",
+        "cantidad": "60 g"
+      },
+      {
+        "alimento": "Queso fresco",
+        "cantidad": "20 g"
+      },
+      {
+        "alimento": "Crema ligera",
+        "cantidad": "1 cucharada"
+      }
+    ],
+    "equivalentes": {
+      "cereales": 2,
+      "aoa": 2,
+      "verduras": 1,
+      "grasas": 1
+    },
+    "alergenos": [
+      "lacteos"
+    ],
+    "contiene": [
+      "pollo"
+    ],
+    "etiquetas": []
+  },
+  {
+    "clave": "enfrijoladas-queso-fresco",
+    "nombre": "Enfrijoladas con queso fresco y cebolla",
+    "tiempos": [
+      "desayuno",
+      "cena"
+    ],
+    "proteina": "leguminosa",
+    "ingredientes": [
+      {
+        "alimento": "Tortilla de maíz",
+        "cantidad": "2 piezas"
+      },
+      {
+        "alimento": "Frijoles licuados",
+        "cantidad": "½ taza"
+      },
+      {
+        "alimento": "Queso fresco",
+        "cantidad": "30 g"
+      },
+      {
+        "alimento": "Cebolla",
+        "cantidad": "al gusto"
+      }
+    ],
+    "equivalentes": {
+      "cereales": 2,
+      "leguminosas": 1,
+      "aoa": 1,
+      "verduras": 0.5
+    },
+    "alergenos": [
+      "lacteos"
+    ],
+    "contiene": [],
+    "etiquetas": []
+  },
+  {
+    "clave": "omelette-espinacas",
+    "nombre": "Omelette de espinacas y champiñones con pan integral",
+    "tiempos": [
+      "desayuno",
+      "cena"
+    ],
+    "proteina": "huevo",
+    "ingredientes": [
+      {
+        "alimento": "Huevo",
+        "cantidad": "2 piezas"
+      },
+      {
+        "alimento": "Espinacas",
+        "cantidad": "1 taza"
+      },
+      {
+        "alimento": "Champiñones",
+        "cantidad": "½ taza"
+      },
+      {
+        "alimento": "Pan integral",
+        "cantidad": "1 rebanada"
+      },
+      {
+        "alimento": "Aceite de oliva",
+        "cantidad": "1 cucharadita"
+      }
+    ],
+    "equivalentes": {
+      "aoa": 2,
+      "verduras": 1,
+      "cereales": 1,
+      "grasas": 1
+    },
+    "alergenos": [
+      "huevo",
+      "gluten"
+    ],
+    "contiene": [],
+    "etiquetas": [
+      "rapido"
+    ]
+  },
+  {
+    "clave": "hot-cakes-avena-platano",
+    "nombre": "Hot cakes de avena y plátano",
+    "tiempos": [
+      "desayuno"
+    ],
+    "proteina": "huevo",
+    "ingredientes": [
+      {
+        "alimento": "Avena molida",
+        "cantidad": "½ taza"
+      },
+      {
+        "alimento": "Plátano",
+        "cantidad": "½ pieza"
+      },
+      {
+        "alimento": "Huevo",
+        "cantidad": "1 pieza"
+      },
+      {
+        "alimento": "Leche descremada",
+        "cantidad": "½ taza"
+      }
+    ],
+    "equivalentes": {
+      "cereales": 2,
+      "frutas": 1,
+      "aoa": 1,
+      "lacteos": 0.5
+    },
+    "alergenos": [
+      "huevo",
+      "lacteos",
+      "gluten"
+    ],
+    "contiene": [],
+    "etiquetas": []
+  },
+  {
+    "clave": "tostadas-aguacate-frijol",
+    "nombre": "Tostadas horneadas de frijol y aguacate",
+    "tiempos": [
+      "desayuno",
+      "cena"
+    ],
+    "proteina": "leguminosa",
+    "ingredientes": [
+      {
+        "alimento": "Tostada de maíz horneada",
+        "cantidad": "2 piezas"
+      },
+      {
+        "alimento": "Frijoles cocidos machacados",
+        "cantidad": "½ taza"
+      },
+      {
+        "alimento": "Aguacate",
+        "cantidad": "⅓ pieza"
+      },
+      {
+        "alimento": "Jitomate",
+        "cantidad": "½ pieza"
+      }
+    ],
+    "equivalentes": {
+      "cereales": 2,
+      "leguminosas": 1,
+      "grasas": 2,
+      "verduras": 0.5
+    },
+    "alergenos": [],
+    "contiene": [],
+    "etiquetas": [
+      "rapido"
+    ]
+  },
+  {
+    "clave": "licuado-papaya-avena-soya",
+    "nombre": "Licuado de papaya con avena y bebida de soya",
+    "tiempos": [
+      "desayuno"
+    ],
+    "proteina": "leguminosa",
+    "ingredientes": [
+      {
+        "alimento": "Papaya",
+        "cantidad": "1 taza"
+      },
+      {
+        "alimento": "Avena en hojuelas",
+        "cantidad": "¼ taza"
+      },
+      {
+        "alimento": "Bebida de soya sin azúcar",
+        "cantidad": "1 taza"
+      }
+    ],
+    "equivalentes": {
+      "frutas": 1,
+      "cereales": 1,
+      "leguminosas": 1
+    },
+    "alergenos": [
+      "soya",
+      "gluten"
+    ],
+    "contiene": [],
+    "etiquetas": [
+      "rapido",
+      "sin-coccion"
+    ]
+  },
+  {
+    "clave": "tofu-a-la-mexicana",
+    "nombre": "Tofu a la mexicana con tortillas",
+    "tiempos": [
+      "desayuno",
+      "cena"
+    ],
+    "proteina": "leguminosa",
+    "ingredientes": [
+      {
+        "alimento": "Tofu firme",
+        "cantidad": "100 g"
+      },
+      {
+        "alimento": "Jitomate, cebolla y chile serrano",
+        "cantidad": "½ taza"
+      },
+      {
+        "alimento": "Tortilla de maíz",
+        "cantidad": "2 piezas"
+      },
+      {
+        "alimento": "Aceite vegetal",
+        "cantidad": "1 cucharadita"
+      }
+    ],
+    "equivalentes": {
+      "leguminosas": 1,
+      "verduras": 1,
+      "cereales": 2,
+      "grasas": 1
+    },
+    "alergenos": [
+      "soya"
+    ],
+    "contiene": [],
+    "etiquetas": [
+      "rapido"
+    ]
+  },
+  {
+    "clave": "pan-crema-cacahuate",
+    "nombre": "Pan integral con crema de cacahuate y plátano",
+    "tiempos": [
+      "desayuno"
+    ],
+    "proteina": "leguminosa",
+    "ingredientes": [
+      {
+        "alimento": "Pan integral (sin lácteos)",
+        "cantidad": "2 rebanadas"
+      },
+      {
+        "alimento": "Crema de cacahuate natural",
+        "cantidad": "1 cucharada"
+      },
+      {
+        "alimento": "Plátano",
+        "cantidad": "½ pieza"
+      }
+    ],
+    "equivalentes": {
+      "cereales": 2,
+      "grasasProteina": 1,
+      "frutas": 1
+    },
+    "alergenos": [
+      "gluten",
+      "cacahuate"
+    ],
+    "contiene": [],
+    "etiquetas": [
+      "rapido",
+      "sin-coccion"
+    ]
+  },
+  {
+    "clave": "quesadillas-flor-calabaza",
+    "nombre": "Quesadillas de flor de calabaza en tortilla de maíz",
+    "tiempos": [
+      "desayuno",
+      "cena"
+    ],
+    "proteina": "lacteo",
+    "ingredientes": [
+      {
+        "alimento": "Tortilla de maíz",
+        "cantidad": "2 piezas"
+      },
+      {
+        "alimento": "Queso Oaxaca",
+        "cantidad": "40 g"
+      },
+      {
+        "alimento": "Flor de calabaza guisada",
+        "cantidad": "½ taza"
+      }
+    ],
+    "equivalentes": {
+      "cereales": 2,
+      "aoa": 1.5,
+      "verduras": 1
+    },
+    "alergenos": [
+      "lacteos"
+    ],
+    "contiene": [],
+    "etiquetas": [
+      "rapido"
+    ]
+  },
+  {
+    "clave": "huevos-con-nopales",
+    "nombre": "Huevos revueltos con nopales y salsa",
+    "tiempos": [
+      "desayuno"
+    ],
+    "proteina": "huevo",
+    "ingredientes": [
+      {
+        "alimento": "Huevo",
+        "cantidad": "2 piezas"
+      },
+      {
+        "alimento": "Nopales cocidos",
+        "cantidad": "1 taza"
+      },
+      {
+        "alimento": "Tortilla de maíz",
+        "cantidad": "2 piezas"
+      },
+      {
+        "alimento": "Salsa roja",
+        "cantidad": "al gusto"
+      }
+    ],
+    "equivalentes": {
+      "aoa": 2,
+      "verduras": 1,
+      "cereales": 2,
+      "grasas": 0.5
+    },
+    "alergenos": [
+      "huevo"
+    ],
+    "contiene": [],
+    "etiquetas": [
+      "rapido"
+    ]
+  },
+  {
+    "clave": "sandwich-pavo-panela",
+    "nombre": "Sándwich integral de pechuga de pavo y panela",
+    "tiempos": [
+      "desayuno",
+      "cena"
+    ],
+    "proteina": "pollo",
+    "ingredientes": [
+      {
+        "alimento": "Pan integral",
+        "cantidad": "2 rebanadas"
+      },
+      {
+        "alimento": "Pechuga de pavo",
+        "cantidad": "2 rebanadas"
+      },
+      {
+        "alimento": "Queso panela",
+        "cantidad": "30 g"
+      },
+      {
+        "alimento": "Jitomate y lechuga",
+        "cantidad": "al gusto"
+      }
+    ],
+    "equivalentes": {
+      "cereales": 2,
+      "aoa": 2,
+      "verduras": 0.5
+    },
+    "alergenos": [
+      "gluten",
+      "lacteos"
+    ],
+    "contiene": [
+      "pavo"
+    ],
+    "etiquetas": [
+      "rapido",
+      "sin-coccion",
+      "alto-sodio"
+    ]
+  },
+  {
+    "clave": "huevos-pochados-espinaca",
+    "nombre": "Huevos pochados sobre espinacas con pan tostado",
+    "tiempos": [
+      "desayuno",
+      "cena"
+    ],
+    "proteina": "huevo",
+    "ingredientes": [
+      {
+        "alimento": "Huevo",
+        "cantidad": "2 piezas"
+      },
+      {
+        "alimento": "Espinacas salteadas",
+        "cantidad": "1 taza"
+      },
+      {
+        "alimento": "Pan integral tostado",
+        "cantidad": "1 rebanada"
+      }
+    ],
+    "equivalentes": {
+      "aoa": 2,
+      "verduras": 1,
+      "cereales": 1
+    },
+    "alergenos": [
+      "huevo",
+      "gluten"
+    ],
+    "contiene": [],
+    "etiquetas": []
+  },
+  {
+    "clave": "chia-con-mango",
+    "nombre": "Pudín de chía con bebida de coco y mango",
+    "tiempos": [
+      "desayuno",
+      "colacion"
+    ],
+    "proteina": "ninguna",
+    "ingredientes": [
+      {
+        "alimento": "Semillas de chía",
+        "cantidad": "2 cucharadas"
+      },
+      {
+        "alimento": "Bebida de coco sin azúcar",
+        "cantidad": "¾ taza"
+      },
+      {
+        "alimento": "Mango",
+        "cantidad": "½ taza"
+      }
+    ],
+    "equivalentes": {
+      "grasasProteina": 1,
+      "frutas": 1,
+      "grasas": 0.5
+    },
+    "alergenos": [
+      "frutos-secos"
+    ],
+    "contiene": [],
+    "etiquetas": [
+      "sin-coccion"
+    ]
+  },
+  {
+    "clave": "amaranto-con-fruta",
+    "nombre": "Amaranto con fruta y bebida de arroz",
+    "tiempos": [
+      "desayuno"
+    ],
+    "proteina": "ninguna",
+    "ingredientes": [
+      {
+        "alimento": "Amaranto tostado",
+        "cantidad": "½ taza"
+      },
+      {
+        "alimento": "Bebida de arroz sin azúcar",
+        "cantidad": "1 taza"
+      },
+      {
+        "alimento": "Fresas y plátano",
+        "cantidad": "1 taza"
+      }
+    ],
+    "equivalentes": {
+      "cereales": 2,
+      "frutas": 1.5
+    },
+    "alergenos": [],
+    "contiene": [],
+    "etiquetas": [
+      "rapido",
+      "sin-coccion"
+    ]
+  },
+  {
+    "clave": "tacos-papa-frijol",
+    "nombre": "Tacos dorados al horno de papa con frijol y salsa",
+    "tiempos": [
+      "desayuno",
+      "cena"
+    ],
+    "proteina": "leguminosa",
+    "ingredientes": [
+      {
+        "alimento": "Tortilla de maíz",
+        "cantidad": "3 piezas"
+      },
+      {
+        "alimento": "Papa cocida machacada",
+        "cantidad": "½ taza"
+      },
+      {
+        "alimento": "Frijoles cocidos",
+        "cantidad": "½ taza"
+      },
+      {
+        "alimento": "Lechuga y salsa roja",
+        "cantidad": "1 taza"
+      }
+    ],
+    "equivalentes": {
+      "cereales": 3.5,
+      "leguminosas": 1,
+      "verduras": 1,
+      "grasas": 0.5
+    },
+    "alergenos": [],
+    "contiene": [],
+    "etiquetas": []
+  },
+  {
+    "clave": "chilaquiles-rojos-frijol",
+    "nombre": "Chilaquiles rojos horneados con frijol y aguacate",
+    "tiempos": [
+      "desayuno"
+    ],
+    "proteina": "leguminosa",
+    "ingredientes": [
+      {
+        "alimento": "Totopos de tortilla horneados",
+        "cantidad": "1 taza"
+      },
+      {
+        "alimento": "Salsa roja",
+        "cantidad": "½ taza"
+      },
+      {
+        "alimento": "Frijoles de la olla",
+        "cantidad": "½ taza"
+      },
+      {
+        "alimento": "Aguacate y cebolla",
+        "cantidad": "⅓ pieza"
+      }
+    ],
+    "equivalentes": {
+      "cereales": 2,
+      "leguminosas": 1,
+      "verduras": 1,
+      "grasas": 1.5
+    },
+    "alergenos": [],
+    "contiene": [],
+    "etiquetas": []
+  },
+  {
+    "clave": "fruta-picada-chile-limon",
+    "nombre": "Fruta y verdura picada con chile y limón",
+    "tiempos": [
+      "colacion"
+    ],
+    "proteina": "ninguna",
+    "ingredientes": [
+      {
+        "alimento": "Papaya",
+        "cantidad": "½ taza"
+      },
+      {
+        "alimento": "Pepino y jícama",
+        "cantidad": "1 taza"
+      },
+      {
+        "alimento": "Limón y chile en polvo",
+        "cantidad": "al gusto"
+      }
+    ],
+    "equivalentes": {
+      "frutas": 1,
+      "verduras": 1
+    },
+    "alergenos": [],
+    "contiene": [],
+    "etiquetas": [
+      "rapido",
+      "sin-coccion"
+    ]
+  },
+  {
+    "clave": "yogur-griego-fresas",
+    "nombre": "Yogur griego natural con fresas",
+    "tiempos": [
+      "colacion"
+    ],
+    "proteina": "lacteo",
+    "ingredientes": [
+      {
+        "alimento": "Yogur griego natural",
+        "cantidad": "¾ taza"
+      },
+      {
+        "alimento": "Fresas",
+        "cantidad": "½ taza"
+      }
+    ],
+    "equivalentes": {
+      "lacteos": 1,
+      "frutas": 0.5
+    },
+    "alergenos": [
+      "lacteos"
+    ],
+    "contiene": [],
+    "etiquetas": [
+      "rapido",
+      "sin-coccion"
+    ]
+  },
+  {
+    "clave": "almendras-y-manzana",
+    "nombre": "Almendras con manzana",
+    "tiempos": [
+      "colacion"
+    ],
+    "proteina": "ninguna",
+    "ingredientes": [
+      {
+        "alimento": "Almendras",
+        "cantidad": "10 piezas"
+      },
+      {
+        "alimento": "Manzana",
+        "cantidad": "1 pieza chica"
+      }
+    ],
+    "equivalentes": {
+      "grasasProteina": 1,
+      "frutas": 1
+    },
+    "alergenos": [
+      "frutos-secos"
+    ],
+    "contiene": [],
+    "etiquetas": [
+      "rapido",
+      "sin-coccion"
+    ]
+  },
+  {
+    "clave": "jicama-pepino-limon",
+    "nombre": "Bastones de jícama y pepino con limón",
+    "tiempos": [
+      "colacion"
+    ],
+    "proteina": "ninguna",
+    "ingredientes": [
+      {
+        "alimento": "Jícama",
+        "cantidad": "1 taza"
+      },
+      {
+        "alimento": "Pepino",
+        "cantidad": "1 taza"
+      },
+      {
+        "alimento": "Limón y chile en polvo",
+        "cantidad": "al gusto"
+      }
+    ],
+    "equivalentes": {
+      "verduras": 2
+    },
+    "alergenos": [],
+    "contiene": [],
+    "etiquetas": [
+      "rapido",
+      "sin-coccion"
+    ]
+  },
+  {
+    "clave": "palomitas-naturales",
+    "nombre": "Palomitas naturales de maíz",
+    "tiempos": [
+      "colacion"
+    ],
+    "proteina": "ninguna",
+    "ingredientes": [
+      {
+        "alimento": "Palomitas naturales de maíz, sin grasa añadida",
+        "cantidad": "3 tazas"
+      }
+    ],
+    "equivalentes": {
+      "cereales": 1
+    },
+    "alergenos": [],
+    "contiene": [],
+    "etiquetas": [
+      "rapido"
+    ]
+  },
+  {
+    "clave": "hummus-zanahoria",
+    "nombre": "Hummus con bastones de zanahoria",
+    "tiempos": [
+      "colacion"
+    ],
+    "proteina": "leguminosa",
+    "ingredientes": [
+      {
+        "alimento": "Hummus (garbanzo y tahini)",
+        "cantidad": "3 cucharadas"
+      },
+      {
+        "alimento": "Zanahoria y apio",
+        "cantidad": "1 taza"
+      }
+    ],
+    "equivalentes": {
+      "leguminosas": 0.5,
+      "verduras": 1,
+      "grasas": 0.5
+    },
+    "alergenos": [
+      "ajonjoli"
+    ],
+    "contiene": [],
+    "etiquetas": [
+      "rapido",
+      "sin-coccion"
+    ]
+  },
+  {
+    "clave": "panela-con-pepino",
+    "nombre": "Queso panela con pepino",
+    "tiempos": [
+      "colacion"
+    ],
+    "proteina": "lacteo",
+    "ingredientes": [
+      {
+        "alimento": "Queso panela",
+        "cantidad": "40 g"
+      },
+      {
+        "alimento": "Pepino",
+        "cantidad": "1 taza"
+      }
+    ],
+    "equivalentes": {
+      "aoa": 1,
+      "verduras": 1
+    },
+    "alergenos": [
+      "lacteos"
+    ],
+    "contiene": [],
+    "etiquetas": [
+      "rapido",
+      "sin-coccion"
+    ]
+  },
+  {
+    "clave": "manzana-crema-cacahuate",
+    "nombre": "Manzana con crema de cacahuate",
+    "tiempos": [
+      "colacion"
+    ],
+    "proteina": "ninguna",
+    "ingredientes": [
+      {
+        "alimento": "Manzana",
+        "cantidad": "1 pieza chica"
+      },
+      {
+        "alimento": "Crema de cacahuate natural",
+        "cantidad": "1 cucharada"
+      }
+    ],
+    "equivalentes": {
+      "frutas": 1,
+      "grasasProteina": 1
+    },
+    "alergenos": [
+      "cacahuate"
+    ],
+    "contiene": [],
+    "etiquetas": [
+      "rapido",
+      "sin-coccion"
+    ]
+  },
+  {
+    "clave": "pera-con-nueces",
+    "nombre": "Pera con nueces",
+    "tiempos": [
+      "colacion"
+    ],
+    "proteina": "ninguna",
+    "ingredientes": [
+      {
+        "alimento": "Pera",
+        "cantidad": "½ pieza"
+      },
+      {
+        "alimento": "Nuez",
+        "cantidad": "3 mitades"
+      }
+    ],
+    "equivalentes": {
+      "frutas": 1,
+      "grasasProteina": 1
+    },
+    "alergenos": [
+      "frutos-secos"
+    ],
+    "contiene": [],
+    "etiquetas": [
+      "rapido",
+      "sin-coccion"
+    ]
+  },
+  {
+    "clave": "edamames",
+    "nombre": "Edamames cocidos con limón",
+    "tiempos": [
+      "colacion"
+    ],
+    "proteina": "leguminosa",
+    "ingredientes": [
+      {
+        "alimento": "Edamames en vaina",
+        "cantidad": "1 taza"
+      },
+      {
+        "alimento": "Limón y sal",
+        "cantidad": "al gusto"
+      }
+    ],
+    "equivalentes": {
+      "leguminosas": 1
+    },
+    "alergenos": [
+      "soya"
+    ],
+    "contiene": [],
+    "etiquetas": [
+      "rapido"
+    ]
+  },
+  {
+    "clave": "galletas-arroz-aguacate",
+    "nombre": "Galletas de arroz con aguacate",
+    "tiempos": [
+      "colacion"
+    ],
+    "proteina": "ninguna",
+    "ingredientes": [
+      {
+        "alimento": "Galletas de arroz inflado",
+        "cantidad": "2 piezas"
+      },
+      {
+        "alimento": "Aguacate",
+        "cantidad": "⅓ pieza"
+      }
+    ],
+    "equivalentes": {
+      "cereales": 1,
+      "grasas": 1
+    },
+    "alergenos": [],
+    "contiene": [],
+    "etiquetas": [
+      "rapido",
+      "sin-coccion"
+    ]
+  },
+  {
+    "clave": "licuado-leche-platano",
+    "nombre": "Licuado de leche con plátano",
+    "tiempos": [
+      "colacion"
+    ],
+    "proteina": "lacteo",
+    "ingredientes": [
+      {
+        "alimento": "Leche descremada",
+        "cantidad": "1 taza"
+      },
+      {
+        "alimento": "Plátano",
+        "cantidad": "½ pieza"
+      }
+    ],
+    "equivalentes": {
+      "lacteos": 1,
+      "frutas": 1
+    },
+    "alergenos": [
+      "lacteos"
+    ],
+    "contiene": [],
+    "etiquetas": [
+      "rapido",
+      "sin-coccion"
+    ]
+  },
+  {
+    "clave": "mandarina-y-pepitas",
+    "nombre": "Mandarina con pepitas de calabaza",
+    "tiempos": [
+      "colacion"
+    ],
+    "proteina": "ninguna",
+    "ingredientes": [
+      {
+        "alimento": "Mandarina",
+        "cantidad": "2 piezas"
+      },
+      {
+        "alimento": "Pepitas de calabaza",
+        "cantidad": "1 cucharada"
+      }
+    ],
+    "equivalentes": {
+      "frutas": 1,
+      "grasasProteina": 0.5
+    },
+    "alergenos": [],
+    "contiene": [],
+    "etiquetas": [
+      "rapido",
+      "sin-coccion"
+    ]
+  },
+  {
+    "clave": "pepino-con-garbanzo-tostado",
+    "nombre": "Garbanzos tostados con pepino",
+    "tiempos": [
+      "colacion"
+    ],
+    "proteina": "leguminosa",
+    "ingredientes": [
+      {
+        "alimento": "Garbanzos tostados al horno",
+        "cantidad": "¼ taza"
+      },
+      {
+        "alimento": "Pepino",
+        "cantidad": "1 taza"
+      }
+    ],
+    "equivalentes": {
+      "leguminosas": 0.5,
+      "verduras": 1
+    },
+    "alergenos": [],
+    "contiene": [],
+    "etiquetas": [
+      "rapido"
+    ]
+  },
+  {
+    "clave": "pollo-plancha-arroz-verduras",
+    "nombre": "Pechuga de pollo a la plancha con arroz y verduras",
+    "tiempos": [
+      "comida"
+    ],
+    "proteina": "pollo",
+    "ingredientes": [
+      {
+        "alimento": "Pechuga de pollo",
+        "cantidad": "100 g"
+      },
+      {
+        "alimento": "Arroz integral cocido",
+        "cantidad": "½ taza"
+      },
+      {
+        "alimento": "Calabacita, zanahoria y brócoli",
+        "cantidad": "1½ tazas"
+      },
+      {
+        "alimento": "Aceite de oliva",
+        "cantidad": "1 cucharadita"
+      }
+    ],
+    "equivalentes": {
+      "aoa": 3,
+      "cereales": 2,
+      "verduras": 2,
+      "grasas": 1
+    },
+    "alergenos": [],
+    "contiene": [
+      "pollo"
+    ],
+    "etiquetas": []
+  },
+  {
+    "clave": "pescado-veracruzana",
+    "nombre": "Filete de pescado a la veracruzana con arroz",
+    "tiempos": [
+      "comida"
+    ],
+    "proteina": "pescado",
+    "ingredientes": [
+      {
+        "alimento": "Filete de pescado blanco",
+        "cantidad": "120 g"
+      },
+      {
+        "alimento": "Salsa de jitomate con aceitunas y alcaparras",
+        "cantidad": "½ taza"
+      },
+      {
+        "alimento": "Arroz blanco cocido",
+        "cantidad": "½ taza"
+      },
+      {
+        "alimento": "Aceite de oliva",
+        "cantidad": "1 cucharadita"
+      }
+    ],
+    "equivalentes": {
+      "aoa": 3,
+      "cereales": 2,
+      "verduras": 1.5,
+      "grasas": 1.5
+    },
+    "alergenos": [
+      "pescado"
+    ],
+    "contiene": [],
+    "etiquetas": []
+  },
+  {
+    "clave": "tinga-pollo-tostadas",
+    "nombre": "Tostadas horneadas de tinga de pollo",
+    "tiempos": [
+      "comida",
+      "cena"
+    ],
+    "proteina": "pollo",
+    "ingredientes": [
+      {
+        "alimento": "Pollo deshebrado en tinga",
+        "cantidad": "80 g"
+      },
+      {
+        "alimento": "Tostada de maíz horneada",
+        "cantidad": "2 piezas"
+      },
+      {
+        "alimento": "Lechuga y jitomate",
+        "cantidad": "1 taza"
+      },
+      {
+        "alimento": "Aguacate",
+        "cantidad": "⅙ pieza"
+      }
+    ],
+    "equivalentes": {
+      "aoa": 2,
+      "cereales": 2,
+      "verduras": 1,
+      "grasas": 1
+    },
+    "alergenos": [],
+    "contiene": [
+      "pollo"
+    ],
+    "etiquetas": []
+  },
+  {
+    "clave": "caldo-pollo-verduras",
+    "nombre": "Caldo de pollo con verduras y arroz",
+    "tiempos": [
+      "comida",
+      "cena"
+    ],
+    "proteina": "pollo",
+    "ingredientes": [
+      {
+        "alimento": "Pollo sin piel",
+        "cantidad": "80 g"
+      },
+      {
+        "alimento": "Zanahoria, calabacita y chayote",
+        "cantidad": "1½ tazas"
+      },
+      {
+        "alimento": "Arroz cocido",
+        "cantidad": "¼ taza"
+      },
+      {
+        "alimento": "Tortilla de maíz",
+        "cantidad": "1 pieza"
+      }
+    ],
+    "equivalentes": {
+      "aoa": 2,
+      "verduras": 2,
+      "cereales": 1.5
+    },
+    "alergenos": [],
+    "contiene": [
+      "pollo"
+    ],
+    "etiquetas": []
+  },
+  {
+    "clave": "lentejas-con-verduras",
+    "nombre": "Lentejas guisadas con verduras y tortillas",
+    "tiempos": [
+      "comida",
+      "cena"
+    ],
+    "proteina": "leguminosa",
+    "ingredientes": [
+      {
+        "alimento": "Lentejas cocidas",
+        "cantidad": "1 taza"
+      },
+      {
+        "alimento": "Zanahoria, jitomate y cebolla",
+        "cantidad": "1 taza"
+      },
+      {
+        "alimento": "Tortilla de maíz",
+        "cantidad": "1 pieza"
+      },
+      {
+        "alimento": "Aceite vegetal",
+        "cantidad": "1 cucharadita"
+      }
+    ],
+    "equivalentes": {
+      "leguminosas": 2,
+      "verduras": 1.5,
+      "cereales": 1,
+      "grasas": 1
+    },
+    "alergenos": [],
+    "contiene": [],
+    "etiquetas": []
+  },
+  {
+    "clave": "bistec-res-nopales-frijoles",
+    "nombre": "Bistec de res asado con nopales y frijoles",
+    "tiempos": [
+      "comida"
+    ],
+    "proteina": "res",
+    "ingredientes": [
+      {
+        "alimento": "Bistec de res magro",
+        "cantidad": "100 g"
+      },
+      {
+        "alimento": "Nopales asados",
+        "cantidad": "1 taza"
+      },
+      {
+        "alimento": "Frijoles de la olla",
+        "cantidad": "½ taza"
+      },
+      {
+        "alimento": "Tortilla de maíz",
+        "cantidad": "1 pieza"
+      }
+    ],
+    "equivalentes": {
+      "aoa": 3,
+      "verduras": 1.5,
+      "leguminosas": 1,
+      "cereales": 1
+    },
+    "alergenos": [],
+    "contiene": [
+      "res"
+    ],
+    "etiquetas": []
+  },
+  {
+    "clave": "tacos-pescado-plancha",
+    "nombre": "Tacos de pescado a la plancha con col y aguacate",
+    "tiempos": [
+      "comida",
+      "cena"
+    ],
+    "proteina": "pescado",
+    "ingredientes": [
+      {
+        "alimento": "Filete de pescado blanco",
+        "cantidad": "90 g"
+      },
+      {
+        "alimento": "Tortilla de maíz",
+        "cantidad": "2 piezas"
+      },
+      {
+        "alimento": "Col morada y pico de gallo",
+        "cantidad": "1 taza"
+      },
+      {
+        "alimento": "Aguacate",
+        "cantidad": "⅓ pieza"
+      }
+    ],
+    "equivalentes": {
+      "aoa": 2.5,
+      "cereales": 2,
+      "verduras": 1,
+      "grasas": 1
+    },
+    "alergenos": [
+      "pescado"
+    ],
+    "contiene": [],
+    "etiquetas": []
+  },
+  {
+    "clave": "albondigas-chipotle",
+    "nombre": "Albóndigas de res en salsa de chipotle con arroz",
+    "tiempos": [
+      "comida"
+    ],
+    "proteina": "res",
+    "ingredientes": [
+      {
+        "alimento": "Carne molida de res magra",
+        "cantidad": "100 g"
+      },
+      {
+        "alimento": "Huevo y pan molido (para unir)",
+        "cantidad": "1 cucharada"
+      },
+      {
+        "alimento": "Salsa de jitomate con chipotle",
+        "cantidad": "½ taza"
+      },
+      {
+        "alimento": "Arroz cocido",
+        "cantidad": "½ taza"
+      }
+    ],
+    "equivalentes": {
+      "aoa": 3,
+      "cereales": 2,
+      "verduras": 1,
+      "grasas": 1
+    },
+    "alergenos": [
+      "huevo",
+      "gluten"
+    ],
+    "contiene": [
+      "res"
+    ],
+    "etiquetas": []
+  },
+  {
+    "clave": "ensalada-atun",
+    "nombre": "Ensalada de atún con galletas integrales",
+    "tiempos": [
+      "comida",
+      "cena"
+    ],
+    "proteina": "pescado",
+    "ingredientes": [
+      {
+        "alimento": "Atún en agua",
+        "cantidad": "1 lata (120 g)"
+      },
+      {
+        "alimento": "Lechuga, jitomate, pepino y zanahoria",
+        "cantidad": "2 tazas"
+      },
+      {
+        "alimento": "Mayonesa ligera",
+        "cantidad": "1 cucharadita"
+      },
+      {
+        "alimento": "Galletas integrales",
+        "cantidad": "4 piezas"
+      }
+    ],
+    "equivalentes": {
+      "aoa": 2,
+      "verduras": 2,
+      "cereales": 1,
+      "grasas": 1
+    },
+    "alergenos": [
+      "pescado",
+      "gluten",
+      "huevo"
+    ],
+    "contiene": [],
+    "etiquetas": [
+      "rapido",
+      "sin-coccion",
+      "alto-sodio"
+    ]
+  },
+  {
+    "clave": "pozole-verde-pollo",
+    "nombre": "Pozole verde de pollo",
+    "tiempos": [
+      "comida"
+    ],
+    "proteina": "pollo",
+    "ingredientes": [
+      {
+        "alimento": "Pollo deshebrado",
+        "cantidad": "80 g"
+      },
+      {
+        "alimento": "Maíz pozolero cocido",
+        "cantidad": "1 taza"
+      },
+      {
+        "alimento": "Caldo verde (tomate, pepita y chile)",
+        "cantidad": "1 taza"
+      },
+      {
+        "alimento": "Lechuga, rábano y cebolla",
+        "cantidad": "½ taza"
+      }
+    ],
+    "equivalentes": {
+      "aoa": 2,
+      "cereales": 2,
+      "verduras": 1,
+      "grasas": 1
+    },
+    "alergenos": [],
+    "contiene": [
+      "pollo"
+    ],
+    "etiquetas": []
+  },
+  {
+    "clave": "chiles-rellenos-horno",
+    "nombre": "Chiles poblanos rellenos de queso al horno con arroz",
+    "tiempos": [
+      "comida"
+    ],
+    "proteina": "lacteo",
+    "ingredientes": [
+      {
+        "alimento": "Chile poblano asado",
+        "cantidad": "2 piezas"
+      },
+      {
+        "alimento": "Queso panela",
+        "cantidad": "80 g"
+      },
+      {
+        "alimento": "Caldillo de jitomate",
+        "cantidad": "½ taza"
+      },
+      {
+        "alimento": "Arroz cocido",
+        "cantidad": "⅓ taza"
+      }
+    ],
+    "equivalentes": {
+      "aoa": 2,
+      "verduras": 2,
+      "cereales": 1,
+      "grasas": 0.5
+    },
+    "alergenos": [
+      "lacteos"
+    ],
+    "contiene": [],
+    "etiquetas": []
+  },
+  {
+    "clave": "fajitas-res-pimientos",
+    "nombre": "Fajitas de res con pimientos y tortillas",
+    "tiempos": [
+      "comida"
+    ],
+    "proteina": "res",
+    "ingredientes": [
+      {
+        "alimento": "Fajitas de res magra",
+        "cantidad": "100 g"
+      },
+      {
+        "alimento": "Pimientos y cebolla",
+        "cantidad": "1½ tazas"
+      },
+      {
+        "alimento": "Tortilla de maíz",
+        "cantidad": "2 piezas"
+      },
+      {
+        "alimento": "Aceite vegetal",
+        "cantidad": "1 cucharadita"
+      }
+    ],
+    "equivalentes": {
+      "aoa": 3,
+      "verduras": 2,
+      "cereales": 2,
+      "grasas": 1
+    },
+    "alergenos": [],
+    "contiene": [
+      "res"
+    ],
+    "etiquetas": []
+  },
+  {
+    "clave": "salmon-horno-papa",
+    "nombre": "Salmón al horno con papa y espárragos",
+    "tiempos": [
+      "comida"
+    ],
+    "proteina": "pescado",
+    "ingredientes": [
+      {
+        "alimento": "Salmón",
+        "cantidad": "100 g"
+      },
+      {
+        "alimento": "Papa cocida",
+        "cantidad": "1 pieza mediana"
+      },
+      {
+        "alimento": "Espárragos",
+        "cantidad": "1 taza"
+      }
+    ],
+    "equivalentes": {
+      "aoa": 3,
+      "grasas": 1,
+      "cereales": 1.5,
+      "verduras": 1.5
+    },
+    "alergenos": [
+      "pescado"
+    ],
+    "contiene": [],
+    "etiquetas": []
+  },
+  {
+    "clave": "camarones-ajillo-arroz",
+    "nombre": "Camarones al ajillo con arroz y ensalada",
+    "tiempos": [
+      "comida"
+    ],
+    "proteina": "mariscos",
+    "ingredientes": [
+      {
+        "alimento": "Camarón limpio",
+        "cantidad": "120 g"
+      },
+      {
+        "alimento": "Ajo y chile guajillo",
+        "cantidad": "al gusto"
+      },
+      {
+        "alimento": "Arroz cocido",
+        "cantidad": "½ taza"
+      },
+      {
+        "alimento": "Ensalada verde",
+        "cantidad": "1 taza"
+      },
+      {
+        "alimento": "Aceite de oliva",
+        "cantidad": "1½ cucharaditas"
+      }
+    ],
+    "equivalentes": {
+      "aoa": 2.5,
+      "cereales": 2,
+      "verduras": 1,
+      "grasas": 1.5
+    },
+    "alergenos": [
+      "mariscos"
+    ],
+    "contiene": [],
+    "etiquetas": []
+  },
+  {
+    "clave": "frijoles-olla-arroz-calabacitas",
+    "nombre": "Frijoles de la olla con arroz y calabacitas",
+    "tiempos": [
+      "comida",
+      "cena"
+    ],
+    "proteina": "leguminosa",
+    "ingredientes": [
+      {
+        "alimento": "Frijoles de la olla",
+        "cantidad": "1 taza"
+      },
+      {
+        "alimento": "Arroz cocido",
+        "cantidad": "½ taza"
+      },
+      {
+        "alimento": "Calabacitas guisadas",
+        "cantidad": "1 taza"
+      }
+    ],
+    "equivalentes": {
+      "leguminosas": 1.5,
+      "cereales": 2,
+      "verduras": 1.5,
+      "grasas": 0.5
+    },
+    "alergenos": [],
+    "contiene": [],
+    "etiquetas": []
+  },
+  {
+    "clave": "enchiladas-suizas-horneadas",
+    "nombre": "Enchiladas suizas de pollo horneadas",
+    "tiempos": [
+      "comida"
+    ],
+    "proteina": "pollo",
+    "ingredientes": [
+      {
+        "alimento": "Tortilla de maíz",
+        "cantidad": "2 piezas"
+      },
+      {
+        "alimento": "Pollo deshebrado",
+        "cantidad": "70 g"
+      },
+      {
+        "alimento": "Salsa verde",
+        "cantidad": "½ taza"
+      },
+      {
+        "alimento": "Crema ligera y queso manchego",
+        "cantidad": "2 cucharadas"
+      }
+    ],
+    "equivalentes": {
+      "aoa": 2,
+      "cereales": 2,
+      "verduras": 1,
+      "lacteos": 0.5,
+      "grasas": 1
+    },
+    "alergenos": [
+      "lacteos"
+    ],
+    "contiene": [
+      "pollo"
+    ],
+    "etiquetas": []
+  },
+  {
+    "clave": "lomo-cerdo-salsa-verde",
+    "nombre": "Lomo de cerdo en salsa verde con verduras",
+    "tiempos": [
+      "comida"
+    ],
+    "proteina": "cerdo",
+    "ingredientes": [
+      {
+        "alimento": "Lomo de cerdo",
+        "cantidad": "100 g"
+      },
+      {
+        "alimento": "Salsa verde",
+        "cantidad": "½ taza"
+      },
+      {
+        "alimento": "Ejotes y zanahoria",
+        "cantidad": "1 taza"
+      },
+      {
+        "alimento": "Tortilla de maíz",
+        "cantidad": "1½ piezas"
+      }
+    ],
+    "equivalentes": {
+      "aoa": 3,
+      "verduras": 2,
+      "cereales": 1.5,
+      "grasas": 1
+    },
+    "alergenos": [],
+    "contiene": [
+      "cerdo"
+    ],
+    "etiquetas": []
+  },
+  {
+    "clave": "cochinita-pibil",
+    "nombre": "Tacos de cochinita pibil con cebolla morada",
+    "tiempos": [
+      "comida"
+    ],
+    "proteina": "cerdo",
+    "ingredientes": [
+      {
+        "alimento": "Carne de cerdo en achiote (cochinita)",
+        "cantidad": "90 g"
+      },
+      {
+        "alimento": "Tortilla de maíz",
+        "cantidad": "2 piezas"
+      },
+      {
+        "alimento": "Cebolla morada encurtida",
+        "cantidad": "½ taza"
+      },
+      {
+        "alimento": "Ensalada de pepino",
+        "cantidad": "½ taza"
+      }
+    ],
+    "equivalentes": {
+      "aoa": 3,
+      "cereales": 2,
+      "verduras": 1,
+      "grasas": 1
+    },
+    "alergenos": [],
+    "contiene": [
+      "cerdo"
+    ],
+    "etiquetas": []
+  },
+  {
+    "clave": "ensalada-garbanzo-quinoa",
+    "nombre": "Ensalada de garbanzo y quinoa con verduras",
+    "tiempos": [
+      "comida",
+      "cena"
+    ],
+    "proteina": "leguminosa",
+    "ingredientes": [
+      {
+        "alimento": "Garbanzos cocidos",
+        "cantidad": "¾ taza"
+      },
+      {
+        "alimento": "Quinoa cocida",
+        "cantidad": "½ taza"
+      },
+      {
+        "alimento": "Jitomate, pepino y pimiento",
+        "cantidad": "1½ tazas"
+      },
+      {
+        "alimento": "Aceite de oliva y limón",
+        "cantidad": "1 cucharadita"
+      }
+    ],
+    "equivalentes": {
+      "leguminosas": 1.5,
+      "cereales": 1.5,
+      "verduras": 2,
+      "grasas": 1
+    },
+    "alergenos": [],
+    "contiene": [],
+    "etiquetas": [
+      "sin-coccion"
+    ]
+  },
+  {
+    "clave": "sopa-verduras-tofu",
+    "nombre": "Sopa de verduras con tofu y fideo",
+    "tiempos": [
+      "comida",
+      "cena"
+    ],
+    "proteina": "leguminosa",
+    "ingredientes": [
+      {
+        "alimento": "Tofu firme en cubos",
+        "cantidad": "100 g"
+      },
+      {
+        "alimento": "Verduras mixtas",
+        "cantidad": "1½ tazas"
+      },
+      {
+        "alimento": "Fideo cocido",
+        "cantidad": "½ taza"
+      }
+    ],
+    "equivalentes": {
+      "leguminosas": 1,
+      "verduras": 2,
+      "cereales": 1
+    },
+    "alergenos": [
+      "soya",
+      "gluten"
+    ],
+    "contiene": [],
+    "etiquetas": []
+  },
+  {
+    "clave": "pasta-integral-pollo-brocoli",
+    "nombre": "Pasta integral con pollo y brócoli",
+    "tiempos": [
+      "comida"
+    ],
+    "proteina": "pollo",
+    "ingredientes": [
+      {
+        "alimento": "Pasta integral cocida",
+        "cantidad": "1 taza"
+      },
+      {
+        "alimento": "Pechuga de pollo en cubos",
+        "cantidad": "70 g"
+      },
+      {
+        "alimento": "Brócoli",
+        "cantidad": "1 taza"
+      },
+      {
+        "alimento": "Aceite de oliva y ajo",
+        "cantidad": "1 cucharadita"
+      }
+    ],
+    "equivalentes": {
+      "cereales": 3,
+      "aoa": 2,
+      "verduras": 1.5,
+      "grasas": 1
+    },
+    "alergenos": [
+      "gluten"
+    ],
+    "contiene": [
+      "pollo"
+    ],
+    "etiquetas": []
+  },
+  {
+    "clave": "hamburguesa-lenteja",
+    "nombre": "Hamburguesa de lenteja en pan integral",
+    "tiempos": [
+      "comida",
+      "cena"
+    ],
+    "proteina": "leguminosa",
+    "ingredientes": [
+      {
+        "alimento": "Torta de lenteja y linaza",
+        "cantidad": "1 pieza"
+      },
+      {
+        "alimento": "Pan integral para hamburguesa (sin lácteos)",
+        "cantidad": "1 pieza"
+      },
+      {
+        "alimento": "Lechuga, jitomate y cebolla",
+        "cantidad": "1 taza"
+      },
+      {
+        "alimento": "Aguacate",
+        "cantidad": "⅙ pieza"
+      }
+    ],
+    "equivalentes": {
+      "leguminosas": 1.5,
+      "cereales": 2,
+      "verduras": 1,
+      "grasas": 1
+    },
+    "alergenos": [
+      "gluten"
+    ],
+    "contiene": [],
+    "etiquetas": []
+  },
+  {
+    "clave": "pechuga-rellena-espinaca",
+    "nombre": "Pechuga rellena de espinaca y queso con arroz",
+    "tiempos": [
+      "comida"
+    ],
+    "proteina": "pollo",
+    "ingredientes": [
+      {
+        "alimento": "Pechuga de pollo",
+        "cantidad": "100 g"
+      },
+      {
+        "alimento": "Espinacas",
+        "cantidad": "1 taza"
+      },
+      {
+        "alimento": "Queso panela",
+        "cantidad": "30 g"
+      },
+      {
+        "alimento": "Arroz cocido",
+        "cantidad": "½ taza"
+      }
+    ],
+    "equivalentes": {
+      "aoa": 3.5,
+      "verduras": 1.5,
+      "cereales": 1.5
+    },
+    "alergenos": [
+      "lacteos"
+    ],
+    "contiene": [
+      "pollo"
+    ],
+    "etiquetas": []
+  },
+  {
+    "clave": "tostadas-ceviche-pescado",
+    "nombre": "Tostadas de ceviche de pescado",
+    "tiempos": [
+      "comida",
+      "cena"
+    ],
+    "proteina": "pescado",
+    "ingredientes": [
+      {
+        "alimento": "Pescado blanco curado en limón",
+        "cantidad": "100 g"
+      },
+      {
+        "alimento": "Jitomate, cebolla, pepino y cilantro",
+        "cantidad": "1 taza"
+      },
+      {
+        "alimento": "Tostada de maíz horneada",
+        "cantidad": "2 piezas"
+      },
+      {
+        "alimento": "Aguacate",
+        "cantidad": "⅓ pieza"
+      }
+    ],
+    "equivalentes": {
+      "aoa": 2.5,
+      "verduras": 1.5,
+      "cereales": 2,
+      "grasas": 1
+    },
+    "alergenos": [
+      "pescado"
+    ],
+    "contiene": [],
+    "etiquetas": [
+      "sin-coccion"
+    ]
+  },
+  {
+    "clave": "calabacitas-elote-queso",
+    "nombre": "Calabacitas a la mexicana con elote y queso fresco",
+    "tiempos": [
+      "comida",
+      "cena"
+    ],
+    "proteina": "lacteo",
+    "ingredientes": [
+      {
+        "alimento": "Calabacitas, jitomate y cebolla",
+        "cantidad": "1½ tazas"
+      },
+      {
+        "alimento": "Elote desgranado",
+        "cantidad": "½ taza"
+      },
+      {
+        "alimento": "Queso fresco",
+        "cantidad": "40 g"
+      },
+      {
+        "alimento": "Tortilla de maíz",
+        "cantidad": "1 pieza"
+      }
+    ],
+    "equivalentes": {
+      "verduras": 2,
+      "cereales": 2,
+      "aoa": 1
+    },
+    "alergenos": [
+      "lacteos"
+    ],
+    "contiene": [],
+    "etiquetas": []
+  },
+  {
+    "clave": "tacos-nopal-frijol",
+    "nombre": "Tacos de nopales asados con frijol y salsa",
+    "tiempos": [
+      "comida",
+      "cena"
+    ],
+    "proteina": "leguminosa",
+    "ingredientes": [
+      {
+        "alimento": "Nopales asados",
+        "cantidad": "1 taza"
+      },
+      {
+        "alimento": "Frijoles cocidos",
+        "cantidad": "½ taza"
+      },
+      {
+        "alimento": "Tortilla de maíz",
+        "cantidad": "3 piezas"
+      },
+      {
+        "alimento": "Salsa de molcajete",
+        "cantidad": "al gusto"
+      }
+    ],
+    "equivalentes": {
+      "verduras": 1,
+      "leguminosas": 1,
+      "cereales": 3,
+      "grasas": 0.5
+    },
+    "alergenos": [],
+    "contiene": [],
+    "etiquetas": [
+      "rapido"
+    ]
+  },
+  {
+    "clave": "chili-frijol-verduras",
+    "nombre": "Chili de frijol con verduras y arroz",
+    "tiempos": [
+      "comida",
+      "cena"
+    ],
+    "proteina": "leguminosa",
+    "ingredientes": [
+      {
+        "alimento": "Frijol bayo cocido",
+        "cantidad": "¾ taza"
+      },
+      {
+        "alimento": "Pimiento, elote y jitomate",
+        "cantidad": "1 taza"
+      },
+      {
+        "alimento": "Arroz integral cocido",
+        "cantidad": "½ taza"
+      },
+      {
+        "alimento": "Aceite vegetal",
+        "cantidad": "1 cucharadita"
+      }
+    ],
+    "equivalentes": {
+      "leguminosas": 1.5,
+      "verduras": 1,
+      "cereales": 2,
+      "grasas": 1
+    },
+    "alergenos": [],
+    "contiene": [],
+    "etiquetas": []
+  },
+  {
+    "clave": "arroz-verduras-garbanzo",
+    "nombre": "Arroz con verduras salteadas y garbanzo",
+    "tiempos": [
+      "comida",
+      "cena"
+    ],
+    "proteina": "leguminosa",
+    "ingredientes": [
+      {
+        "alimento": "Arroz integral cocido",
+        "cantidad": "¾ taza"
+      },
+      {
+        "alimento": "Garbanzos cocidos",
+        "cantidad": "½ taza"
+      },
+      {
+        "alimento": "Brócoli, zanahoria y ejotes",
+        "cantidad": "1½ tazas"
+      },
+      {
+        "alimento": "Aceite de oliva",
+        "cantidad": "1 cucharadita"
+      }
+    ],
+    "equivalentes": {
+      "cereales": 2.5,
+      "leguminosas": 1,
+      "verduras": 1.5,
+      "grasas": 1
+    },
+    "alergenos": [],
+    "contiene": [],
+    "etiquetas": []
+  },
+  {
+    "clave": "ensalada-lentejas",
+    "nombre": "Ensalada fría de lentejas con jitomate y aguacate",
+    "tiempos": [
+      "comida",
+      "cena"
+    ],
+    "proteina": "leguminosa",
+    "ingredientes": [
+      {
+        "alimento": "Lentejas cocidas",
+        "cantidad": "¾ taza"
+      },
+      {
+        "alimento": "Jitomate, cebolla y cilantro",
+        "cantidad": "1 taza"
+      },
+      {
+        "alimento": "Aguacate",
+        "cantidad": "⅓ pieza"
+      },
+      {
+        "alimento": "Tostada horneada",
+        "cantidad": "1 pieza"
+      }
+    ],
+    "equivalentes": {
+      "leguminosas": 1.5,
+      "verduras": 1,
+      "grasas": 1,
+      "cereales": 1
+    },
+    "alergenos": [],
+    "contiene": [],
+    "etiquetas": [
+      "sin-coccion"
+    ]
+  },
+  {
+    "clave": "calabacitas-rellenas-quinoa",
+    "nombre": "Calabacitas rellenas de quinoa y frijol",
+    "tiempos": [
+      "comida",
+      "cena"
+    ],
+    "proteina": "leguminosa",
+    "ingredientes": [
+      {
+        "alimento": "Calabacita",
+        "cantidad": "2 piezas"
+      },
+      {
+        "alimento": "Quinoa cocida",
+        "cantidad": "½ taza"
+      },
+      {
+        "alimento": "Frijol negro cocido",
+        "cantidad": "½ taza"
+      },
+      {
+        "alimento": "Salsa de jitomate",
+        "cantidad": "¼ taza"
+      }
+    ],
+    "equivalentes": {
+      "verduras": 2,
+      "cereales": 1.5,
+      "leguminosas": 1,
+      "grasas": 0.5
+    },
+    "alergenos": [],
+    "contiene": [],
+    "etiquetas": []
+  },
+  {
+    "clave": "sopa-verduras-pollo",
+    "nombre": "Sopa de verduras con pollo deshebrado",
+    "tiempos": [
+      "cena"
+    ],
+    "proteina": "pollo",
+    "ingredientes": [
+      {
+        "alimento": "Pollo deshebrado",
+        "cantidad": "60 g"
+      },
+      {
+        "alimento": "Verduras mixtas",
+        "cantidad": "1½ tazas"
+      },
+      {
+        "alimento": "Tortilla de maíz",
+        "cantidad": "1 pieza"
+      }
+    ],
+    "equivalentes": {
+      "aoa": 1.5,
+      "verduras": 2,
+      "cereales": 1
+    },
+    "alergenos": [],
+    "contiene": [
+      "pollo"
+    ],
+    "etiquetas": []
+  },
+  {
+    "clave": "tacos-champinones-queso",
+    "nombre": "Tacos de champiñones con queso",
+    "tiempos": [
+      "cena"
+    ],
+    "proteina": "lacteo",
+    "ingredientes": [
+      {
+        "alimento": "Champiñones salteados",
+        "cantidad": "1 taza"
+      },
+      {
+        "alimento": "Queso Oaxaca",
+        "cantidad": "30 g"
+      },
+      {
+        "alimento": "Tortilla de maíz",
+        "cantidad": "2 piezas"
+      }
+    ],
+    "equivalentes": {
+      "verduras": 1.5,
+      "aoa": 1,
+      "cereales": 2
+    },
+    "alergenos": [
+      "lacteos"
+    ],
+    "contiene": [],
+    "etiquetas": [
+      "rapido"
+    ]
+  },
+  {
+    "clave": "ensalada-pollo-manzana-nuez",
+    "nombre": "Ensalada de pollo con manzana y nuez",
+    "tiempos": [
+      "cena"
+    ],
+    "proteina": "pollo",
+    "ingredientes": [
+      {
+        "alimento": "Pechuga de pollo cocida",
+        "cantidad": "70 g"
+      },
+      {
+        "alimento": "Lechuga y espinaca",
+        "cantidad": "2 tazas"
+      },
+      {
+        "alimento": "Manzana en cubos",
+        "cantidad": "½ pieza"
+      },
+      {
+        "alimento": "Nuez",
+        "cantidad": "3 mitades"
+      }
+    ],
+    "equivalentes": {
+      "aoa": 2,
+      "verduras": 2,
+      "frutas": 0.5,
+      "grasasProteina": 1
+    },
+    "alergenos": [
+      "frutos-secos"
+    ],
+    "contiene": [
+      "pollo"
+    ],
+    "etiquetas": [
+      "sin-coccion"
+    ]
+  },
+  {
+    "clave": "crema-calabaza-pan",
+    "nombre": "Crema de calabaza con pan integral tostado",
+    "tiempos": [
+      "cena"
+    ],
+    "proteina": "lacteo",
+    "ingredientes": [
+      {
+        "alimento": "Calabacita cocida",
+        "cantidad": "1½ tazas"
+      },
+      {
+        "alimento": "Leche descremada",
+        "cantidad": "½ taza"
+      },
+      {
+        "alimento": "Pan integral tostado",
+        "cantidad": "1 rebanada"
+      }
+    ],
+    "equivalentes": {
+      "verduras": 2,
+      "lacteos": 0.5,
+      "cereales": 1
+    },
+    "alergenos": [
+      "lacteos",
+      "gluten"
+    ],
+    "contiene": [],
+    "etiquetas": []
+  },
+  {
+    "clave": "rollitos-lechuga-atun",
+    "nombre": "Rollitos de lechuga con atún",
+    "tiempos": [
+      "cena"
+    ],
+    "proteina": "pescado",
+    "ingredientes": [
+      {
+        "alimento": "Atún en agua",
+        "cantidad": "1 lata (120 g)"
+      },
+      {
+        "alimento": "Hojas de lechuga",
+        "cantidad": "4 piezas"
+      },
+      {
+        "alimento": "Jitomate, cebolla y limón",
+        "cantidad": "½ taza"
+      },
+      {
+        "alimento": "Aguacate",
+        "cantidad": "⅙ pieza"
+      }
+    ],
+    "equivalentes": {
+      "aoa": 2,
+      "verduras": 1.5,
+      "grasas": 0.5
+    },
+    "alergenos": [
+      "pescado"
+    ],
+    "contiene": [],
+    "etiquetas": [
+      "rapido",
+      "sin-coccion",
+      "alto-sodio"
+    ]
+  },
+  {
+    "clave": "tortitas-avena-verduras",
+    "nombre": "Tortitas de avena y verduras al horno",
+    "tiempos": [
+      "cena"
+    ],
+    "proteina": "huevo",
+    "ingredientes": [
+      {
+        "alimento": "Avena en hojuelas",
+        "cantidad": "⅓ taza"
+      },
+      {
+        "alimento": "Zanahoria y calabacita rallada",
+        "cantidad": "1 taza"
+      },
+      {
+        "alimento": "Huevo",
+        "cantidad": "1 pieza"
+      }
+    ],
+    "equivalentes": {
+      "cereales": 1.5,
+      "verduras": 1,
+      "aoa": 1
+    },
+    "alergenos": [
+      "gluten",
+      "huevo"
+    ],
+    "contiene": [],
+    "etiquetas": []
+  },
+  {
+    "clave": "tostada-frijol-nopales",
+    "nombre": "Tostadas de frijol con nopales",
+    "tiempos": [
+      "cena"
+    ],
+    "proteina": "leguminosa",
+    "ingredientes": [
+      {
+        "alimento": "Tostada de maíz horneada",
+        "cantidad": "2 piezas"
+      },
+      {
+        "alimento": "Frijoles cocidos machacados",
+        "cantidad": "½ taza"
+      },
+      {
+        "alimento": "Ensalada de nopales",
+        "cantidad": "1 taza"
+      }
+    ],
+    "equivalentes": {
+      "leguminosas": 1,
+      "cereales": 2,
+      "verduras": 1.5,
+      "grasas": 0.5
+    },
+    "alergenos": [],
+    "contiene": [],
+    "etiquetas": [
+      "rapido"
+    ]
+  },
+  {
+    "clave": "pescado-empapelado-verduras",
+    "nombre": "Pescado empapelado con verduras",
+    "tiempos": [
+      "cena",
+      "comida"
+    ],
+    "proteina": "pescado",
+    "ingredientes": [
+      {
+        "alimento": "Filete de pescado blanco",
+        "cantidad": "100 g"
+      },
+      {
+        "alimento": "Calabacita, pimiento y cebolla",
+        "cantidad": "1½ tazas"
+      },
+      {
+        "alimento": "Aceite de oliva",
+        "cantidad": "1 cucharadita"
+      },
+      {
+        "alimento": "Tortilla de maíz",
+        "cantidad": "1 pieza"
+      }
+    ],
+    "equivalentes": {
+      "aoa": 2.5,
+      "verduras": 2,
+      "grasas": 1,
+      "cereales": 1
+    },
+    "alergenos": [
+      "pescado"
+    ],
+    "contiene": [],
+    "etiquetas": []
+  },
+  {
+    "clave": "tacos-pollo-asado-ensalada",
+    "nombre": "Tacos de pollo asado con ensalada",
+    "tiempos": [
+      "cena",
+      "comida"
+    ],
+    "proteina": "pollo",
+    "ingredientes": [
+      {
+        "alimento": "Pechuga de pollo asada",
+        "cantidad": "80 g"
+      },
+      {
+        "alimento": "Tortilla de maíz",
+        "cantidad": "2 piezas"
+      },
+      {
+        "alimento": "Ensalada de lechuga y pepino",
+        "cantidad": "1 taza"
+      },
+      {
+        "alimento": "Salsa verde",
+        "cantidad": "al gusto"
+      }
+    ],
+    "equivalentes": {
+      "aoa": 2.5,
+      "cereales": 2,
+      "verduras": 1
+    },
+    "alergenos": [],
+    "contiene": [
+      "pollo"
+    ],
+    "etiquetas": [
+      "rapido"
+    ]
+  }
+]

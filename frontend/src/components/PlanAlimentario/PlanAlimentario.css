@@ -1,0 +1,71 @@
+/* ==========================================
+   PLAN ALIMENTARIO GENERADO · preferencias y vista semanal
+   Solo tokens del tema (funciona en modo claro y oscuro).
+========================================== */
+
+/* Grupos de opciones tipo "chip" (radio y checkbox accesibles) */
+.grupo-opciones { margin: 0; padding: 0; border: 0; }
+.grupo-opciones legend { margin-bottom: 6px; font-size: var(--fs-sm); font-weight: 500; color: var(--texto-2); }
+.grupo-opciones__lista { display: flex; flex-wrap: wrap; gap: var(--e2); }
+.opcion-chip {
+  display: inline-flex; align-items: center; gap: var(--e2);
+  min-height: 40px; padding: 6px var(--e3);
+  border: 1px solid var(--borde-fuerte); border-radius: 999px;
+  background: var(--superficie-2); color: var(--texto-2);
+  font-size: var(--fs-sm); cursor: pointer;
+  transition: background 0.15s ease, border-color 0.15s ease, color 0.15s ease;
+}
+.opcion-chip:hover { border-color: var(--beige); color: var(--texto); }
+.campo .opcion-chip input, .opcion-chip input { flex: 0 0 auto; width: 16px; height: 16px; min-height: 0; margin: 0; padding: 0; border: 0; box-shadow: none; background: none; accent-color: var(--verde-natural); }
+.opcion-chip--activa { background: rgba(var(--tinte-rgb), 0.22); border-color: var(--verde-natural); color: var(--texto); font-weight: 600; }
+.opcion-chip:focus-within { outline: 2px solid var(--beige); outline-offset: 2px; }
+
+/* Advertencia siempre visible */
+.plan-advertencia { display: flex; gap: var(--e2); align-items: flex-start; margin: 0; }
+.plan-advertencia svg { width: 18px; height: 18px; flex-shrink: 0; margin-top: 2px; }
+
+/* Faltantes y estado */
+.plan-faltantes { margin: 0; padding-left: var(--e5); display: flex; flex-direction: column; gap: 4px; }
+.plan-estado { display: flex; flex-wrap: wrap; align-items: center; gap: var(--e2); }
+
+/* Vista semanal */
+.plan-semanal { display: flex; flex-direction: column; gap: var(--e3); }
+.plan-resumen { display: flex; flex-wrap: wrap; gap: var(--e2); }
+.plan-exclusiones summary, .plan-compras summary { cursor: pointer; font-size: var(--fs-sm); color: var(--texto-2); }
+.plan-exclusiones ul { margin: var(--e2) 0 0; padding-left: var(--e5); font-size: var(--fs-sm); color: var(--texto-3); }
+.plan-dias { display: grid; grid-template-columns: repeat(auto-fill, minmax(230px, 1fr)); gap: var(--e3); }
+.plan-dia {
+  display: flex; flex-direction: column; gap: var(--e2); min-width: 0;
+  padding: var(--e3); border: 1px solid var(--borde); border-radius: var(--radio-lg);
+  background: var(--superficie);
+}
+.plan-dia__encabezado { display: flex; align-items: center; gap: var(--e2); }
+.plan-dia__encabezado h3 { margin: 0; font-size: var(--fs-md); }
+.plan-dia__kcal { margin-left: auto; font-size: var(--fs-xs); color: var(--texto-3); font-variant-numeric: tabular-nums; }
+.plan-comidas { margin: 0; padding: 0; list-style: none; display: flex; flex-direction: column; gap: var(--e2); }
+.plan-comida {
+  position: relative; display: flex; flex-direction: column; gap: 2px;
+  padding: var(--e2) var(--e3); border-radius: var(--radio);
+  border: 1px solid var(--borde); background: var(--superficie-2);
+}
+.plan-comida--fija { border-color: var(--verde-natural); box-shadow: inset 3px 0 var(--verde-natural); }
+.plan-comida__tiempo { font-size: var(--fs-xs); font-weight: 600; letter-spacing: 0.04em; text-transform: uppercase; color: var(--beige); }
+.plan-comida__nombre { font-size: var(--fs-sm); font-weight: 600; color: var(--texto); }
+.plan-comida--editable .plan-comida__nombre { padding-right: 76px; }
+.plan-comida__meta { font-size: var(--fs-xs); color: var(--texto-3); font-variant-numeric: tabular-nums; }
+.plan-comida__ingredientes summary { cursor: pointer; font-size: var(--fs-xs); color: var(--texto-2); }
+.plan-comida__ingredientes ul { margin: 4px 0 0; padding-left: var(--e4); font-size: var(--fs-xs); color: var(--texto-2); }
+.plan-comida__acciones { position: absolute; top: 4px; right: 4px; display: flex; gap: 2px; }
+.plan-compras ul { columns: 2 240px; margin: var(--e3) 0 0; padding-left: var(--e4); font-size: var(--fs-sm); color: var(--texto-2); }
+.plan-compras li { break-inside: avoid; margin-bottom: 4px; }
+.plan-compras summary { display: flex; align-items: center; gap: var(--e2); }
+.plan-compras summary svg { width: 18px; height: 18px; }
+
+@media (max-width: 640px) {
+  .plan-dias { grid-template-columns: 1fr; }
+  .plan-comida--editable .plan-comida__nombre { padding-right: 92px; }
+}
+@media print {
+  .plan-comida__acciones, .plan-dia__encabezado button { display: none; }
+  .plan-comida__ingredientes { display: block; }
+}

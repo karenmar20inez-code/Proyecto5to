@@ -84,6 +84,7 @@
   --campo-fondo: rgba(255, 252, 244, 0.82);
   --brillo-interior: rgba(255, 255, 255, 0.45);
   --login-velo: rgba(0, 0, 0, 0);
+  --fondo-app-velo: rgba(0, 0, 0, 0);            /* sobre Organico.png dentro de la app */
   --vidrio-movil: rgba(248, 237, 216, 0.98);
   --sobre-peligro: #FFFFFF;
   --fondo-imagen:
@@ -210,6 +211,7 @@
   --campo-fondo: rgba(18, 15, 10, 0.55);
   --brillo-interior: rgba(255, 255, 255, 0.06);
   --login-velo: rgba(18, 15, 10, 0.55);
+  --fondo-app-velo: rgba(22, 18, 13, 0.84);
   --vidrio-movil: rgba(33, 28, 20, 0.98);
   --sobre-peligro: #2B1A14;
   --fondo-imagen:

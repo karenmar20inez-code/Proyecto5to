@@ -14,6 +14,7 @@ import Antropometria from './pestanas/Antropometria';
 import Laboratorios from './pestanas/Laboratorios';
 import Diagnosticos from './pestanas/Diagnosticos';
 import PlanNutricional from './pestanas/PlanNutricional';
+import PlanAlimentario from './pestanas/PlanAlimentario';
 import Objetivos from './pestanas/Objetivos';
 import Evolucion from './pestanas/Evolucion';
 import Documentos from './pestanas/Documentos';
@@ -27,6 +28,7 @@ export const PESTANAS = [
   ['laboratorios', 'Laboratorios', Laboratorios],
   ['diagnosticos', 'Diagnósticos', Diagnosticos],
   ['plan', 'Plan nutricional', PlanNutricional],
+  ['alimentacion', 'Plan alimentario', PlanAlimentario],
   ['objetivos', 'Objetivos', Objetivos],
   ['evolucion', 'Evolución', Evolucion],
   ['documentos', 'Documentos', Documentos],

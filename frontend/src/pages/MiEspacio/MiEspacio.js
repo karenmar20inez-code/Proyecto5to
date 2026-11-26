@@ -1,6 +1,6 @@
 import { useEffect, useMemo, useState } from 'react';
 import { Link, useParams } from 'react-router-dom';
-import { CalendarDays, Utensils, TrendingUp, UserRound, RefreshCw, Lock } from 'lucide-react';
+import { CalendarDays, Utensils, TrendingUp, UserRound, RefreshCw, Lock, Salad } from 'lucide-react';
 import Layout from '../../components/Layout/Layout';
 import { SerieTemporal } from '../../components/Graficas/GraficasClinicas';
 import { portalApi } from '../../services/api';
@@ -10,12 +10,14 @@ import '../Dietas/Dietas.css';
 import './MiEspacio.css';
 import { useTema } from '../../context/TemaContext';
 import { MARCA } from '../../config/marca';
+import MiPlanAlimentario from './MiPlanAlimentario';
 
 const fechaHora = (f) => new Date(f).toLocaleString('es-MX', { weekday: 'long', day: 'numeric', month: 'long', hour: '2-digit', minute: '2-digit' });
 const ESTADO_CITA = { programada: ['Programada', 'info'], realizada: ['Realizada', 'ok'], cancelada: ['Cancelada', 'no'], no_asistio: ['No asistió', 'no'] };
 const SECCIONES = [
   ['', 'Inicio', UserRound],
   ['dieta', 'Mi dieta', Utensils],
+  ['plan', 'Mi plan alimentario', Salad],
   ['citas', 'Mis citas', CalendarDays],
   ['progreso', 'Mi progreso', TrendingUp],
 ];
@@ -201,7 +203,7 @@ function MiEspacio() {
   const cargar = () => { setError(''); portalApi.miEspacio().then(setDatos).catch((e) => setError(e.message)); };
   useEffect(cargar, []);
 
-  const Contenido = { '': Inicio, dieta: MiDieta, citas: MisCitas, progreso: MiProgreso }[seccion] || Inicio;
+  const Contenido = { '': Inicio, dieta: MiDieta, plan: MiPlanAlimentario, citas: MisCitas, progreso: MiProgreso }[seccion] || Inicio;
   const titulo = SECCIONES.find(([k]) => k === seccion)?.[1] || 'Inicio';
 
   return (

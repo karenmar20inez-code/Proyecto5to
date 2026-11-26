@@ -22,10 +22,11 @@ export const sesionGuardada = {
 };
 
 export class ApiError extends Error {
-  constructor(mensaje, status, errores = {}) {
+  constructor(mensaje, status, errores = {}, datos = null) {
     super(mensaje);
     this.status = status;
     this.errores = errores; // { campo: 'mensaje' } en errores de validación
+    this.datos = datos;     // respuesta completa (p. ej. { faltan, problemas } del generador de planes)
   }
 }
 
@@ -56,7 +57,7 @@ async function solicitud(ruta, { method = 'GET', body } = {}) {
     window.dispatchEvent(new CustomEvent('sesion-expirada', { detail: datos?.mensaje }));
   }
   if (!respuesta.ok) {
-    throw new ApiError(datos?.mensaje || `Error ${respuesta.status}`, respuesta.status, datos?.errores);
+    throw new ApiError(datos?.mensaje || `Error ${respuesta.status}`, respuesta.status, datos?.errores, datos);
   }
   return datos;
 }
@@ -112,6 +113,22 @@ export const pacientesApi = {
   crear: (paciente) => post('/pacientes', paciente),
   actualizar: (id, cambios) => put(`/pacientes/${id}`, cambios),
   eliminar: (id) => del(`/pacientes/${id}`),
+};
+
+/* Generador de planes alimentarios personalizados (borrador → aprobado por el nutriólogo) */
+export const generadorApi = {
+  platillos: (params) => get('/platillos', params),
+  actualizarPlatillo: (clave, datos) => put(`/platillos/${encodeURIComponent(clave)}`, datos),
+  preferencias: (pacienteId) => get(`/pacientes/${pacienteId}/preferencias-alimentarias`),
+  guardarPreferencias: (pacienteId, datos) => put(`/pacientes/${pacienteId}/preferencias-alimentarias`, datos),
+  planes: (pacienteId) => get(`/pacientes/${pacienteId}/planes-generados`),
+  generar: (pacienteId, opciones = {}) => post(`/pacientes/${pacienteId}/planes-generados`, opciones),
+  plan: (id) => get(`/planes-generados/${id}`),
+  aprobar: (id, nota, confirmarNoValidados = false) => put(`/planes-generados/${id}/aprobar`, { nota, confirmarNoValidados }),
+  archivar: (id) => put(`/planes-generados/${id}/archivar`, {}),
+  /* Portal del paciente: solo su plan aprobado y sus preferencias */
+  portalPlan: () => get('/portal/plan-alimentario'),
+  portalPreferencias: (datos) => put('/portal/preferencias', datos),
 };
 
 /* Catálogo de dietas (menús semanales) guardado en MongoDB */

@@ -20,6 +20,7 @@ const planeacion = require('../Controllers/planeacionController');
 const alerta = require('../Controllers/alertaController');
 const catalogo = require('../Controllers/catalogoController');
 const dieta = require('../Controllers/dietaController');
+const generador = require('../Controllers/generadorController');
 const listados = require('../Controllers/listadosController');
 const Auditoria = require('../Models/Auditoria');
 const { controlador, exigirId } = require('../Services/http');
@@ -60,6 +61,11 @@ expedientePaciente.post('/objetivos', planeacion.crearObjetivo);
 expedientePaciente.get('/planes', planeacion.listarPlanes);
 expedientePaciente.post('/planes', planeacion.crearPlan);
 expedientePaciente.get('/consentimientos', planeacion.listarConsentimientos);
+// Generador de planes alimentarios (preferencias del paciente y planes en borrador/aprobados)
+expedientePaciente.get('/preferencias-alimentarias', generador.obtenerPreferencias);
+expedientePaciente.put('/preferencias-alimentarias', generador.actualizarPreferencias);
+expedientePaciente.get('/planes-generados', generador.listarPlanes);
+expedientePaciente.post('/planes-generados', generador.generar);
 expedientePaciente.post('/consentimientos', planeacion.crearConsentimiento);
 
 /* Recursos de primer nivel */
@@ -134,6 +140,18 @@ dietas.get('/:clave', exigirPermiso('dietas:leer'), dieta.obtener);
 dietas.post('/', exigirPermiso('dietas:escribir'), dieta.crear);
 dietas.put('/:clave', exigirPermiso('dietas:escribir'), dieta.actualizar);
 
+/* /api/platillos · catálogo del generador de planes (leer: dietas:leer; crear/editar: dietas:escribir) */
+const platillos = express.Router();
+platillos.get('/', exigirPermiso('dietas:leer'), generador.listarPlatillos);
+platillos.post('/', exigirPermiso('dietas:escribir'), generador.crearPlatillo);
+platillos.put('/:clave', exigirPermiso('dietas:escribir'), generador.actualizarPlatillo);
+
+/* /api/planes-generados/:id · verifican el acceso clínico al paciente del plan */
+const planesGenerados = express.Router();
+planesGenerados.get('/:id', exigirPermiso('clinico:leer'), generador.obtenerPlan);
+planesGenerados.put('/:id/aprobar', exigirPermiso('clinico:escribir'), generador.aprobarPlan);
+planesGenerados.put('/:id/archivar', exigirPermiso('clinico:escribir'), generador.archivarPlan);
+
 /* /api/fhir (solo lectura) */
 const fhirRouter = express.Router();
 fhirRouter.get('/Patient/:pacienteId', accesoPaciente, expediente.fhirPaciente);
@@ -161,5 +179,5 @@ auditoria.get('/', exigirPermiso('auditoria:leer'), controlador(async (req, res)
 module.exports = {
   citasPaciente, expedientePaciente, mediciones, evaluaciones, citas, adherencias,
   calculos: calculosRouter, estadisticas: estadisticasRouter, antecedentes, consultas, laboratorios,
-  diagnosticos, objetivos, planes, consentimientos, alertas, catalogos, dietas, fhir: fhirRouter, reportes, auditoria, expedientes,
+  diagnosticos, objetivos, planes, consentimientos, alertas, catalogos, dietas, platillos, planesGenerados, fhir: fhirRouter, reportes, auditoria, expedientes,
 };

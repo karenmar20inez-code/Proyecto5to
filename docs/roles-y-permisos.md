@@ -90,3 +90,30 @@ lo que el rol no puede usar. La única fuente de verdad es
   las gráficas leen los tokens `--grafica-*` y `--clinica-*` al dibujarse.
 - La identidad de NUTRIONIX (nombre, eslogan «Innovación para nutrir mejor», descriptor, logotipo e ilustración) está en
   `frontend/src/config/marca.js`.
+
+## Generador de planes alimentarios
+
+- **Dónde:** expediente del paciente → pestaña **Plan alimentario** (personal clínico) y portal → **Mi plan alimentario**
+  (paciente).
+- **Datos que usa:** alergias e intolerancias de la Historia clínica (antecedentes activos), alergias que el paciente
+  reporta en su portal (se excluyen siempre, pero deben confirmarse en el expediente), diagnósticos activos
+  (diabetes → sin azúcar añadida; hipertensión → sin platillos altos en sodio; celiaquía → sin gluten), kcal de la
+  prescripción o del plan nutricional vigente, y las preferencias: tipo de alimentación, número de comidas (3, 4 o 5),
+  restricciones culturales o religiosas, gustos, rechazos y preparación preferida.
+- **Datos mínimos:** sin alergias registradas (o negadas), sin kcal, sin tipo de alimentación o sin número de comidas
+  **no se genera**: la pantalla dice qué falta y dónde capturarlo.
+- **Cómo genera:** primero excluye todo platillo que choque con una restricción (por etiqueta y por texto de
+  ingredientes); después sortea entre los permitidos con una semilla guardada (prioriza lo que le gusta, máximo
+  2 veces por semana el mismo platillo, nunca en días seguidos, rota la proteína) y ajusta porciones (×½ a ×2½) para
+  quedar a ±10 % de las kcal. Un validador independiente revisa el plan antes de guardarlo. Si no hay combinación
+  posible, explica la causa; nunca relaja una restricción.
+- **Revisión profesional:** todo plan nace en **borrador** y solo el personal con `clinico:escribir` lo aprueba. Al
+  aprobar se vuelve a validar contra las restricciones vigentes; si cambiaron, no se aprueba. Solo hay un plan aprobado
+  a la vez y es el único que ve el paciente, siempre con la advertencia de que es orientativo.
+- **Regenerar:** el plan completo, un día, una comida o todo lo no fijado (candado); se conservan las mismas
+  restricciones y el borrador anterior se archiva.
+- **Catálogo:** colección `platillos` (API `/api/platillos`, leer `dietas:leer`, editar `dietas:escribir`). Las kcal se
+  calculan con los equivalentes del SMAE. Los platillos iniciales llegan **pendientes de validación** por un nutriólogo;
+  no se borran, se desactivan.
+- **Colecciones nuevas:** `platillos`, `preferencias_alimentarias` (notas y alergias reportadas cifradas) y
+  `planes_generados` (copia de cada platillo y del perfil usado). Todo queda en la bitácora de auditoría.

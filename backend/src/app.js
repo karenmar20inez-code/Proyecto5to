@@ -10,6 +10,7 @@ const expediente = require('./Routes/expedienteRoutes');
 const { authRouter, usuariosRouter, consultoriosRouter, solicitudesRouter } = require('./Routes/authRoutes');
 const { autenticar, soloPortalParaPacientes, exigirCambioContrasena, exigirPermiso } = require('./Services/seguridad/middleware');
 const portal = require('./Controllers/portalController');
+const generador = require('./Controllers/generadorController');
 
 const app = express();
 app.disable('x-powered-by');
@@ -54,6 +55,8 @@ app.use('/api/consultorios', consultoriosRouter);
 app.use('/api/solicitudes', solicitudesRouter);
 // Portal del paciente: solo su propia información (el paciente se toma de la sesión)
 app.get('/api/portal', exigirPermiso('portal:propio'), portal.miEspacio);
+app.get('/api/portal/plan-alimentario', exigirPermiso('portal:propio'), generador.portalPlan);
+app.put('/api/portal/preferencias', exigirPermiso('portal:propio'), generador.portalPreferencias);
 app.use('/api/pacientes', pacienteRoutes);
 app.use('/api/pacientes/:pacienteId/citas', expediente.citasPaciente);
 app.use('/api/pacientes/:pacienteId', expediente.expedientePaciente);
@@ -74,6 +77,8 @@ app.use('/api/consentimientos', expediente.consentimientos);
 app.use('/api/alertas', expediente.alertas);
 app.use('/api/catalogos', expediente.catalogos);
 app.use('/api/dietas', expediente.dietas);
+app.use('/api/platillos', expediente.platillos);
+app.use('/api/planes-generados', expediente.planesGenerados);
 app.use('/api/fhir', expediente.fhir);
 app.use('/api/reportes', expediente.reportes);
 app.use('/api/auditoria', expediente.auditoria);
