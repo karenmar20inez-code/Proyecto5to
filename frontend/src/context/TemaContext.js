@@ -28,7 +28,7 @@ const aplicar = (tema) => {
   raiz.dataset.tema = tema;
   raiz.style.colorScheme = tema === 'oscuro' ? 'dark' : 'light';
   const meta = document.querySelector('meta[name="theme-color"]');
-  if (meta) meta.setAttribute('content', tema === 'oscuro' ? '#1C1812' : '#EFE0C3');
+  if (meta) meta.setAttribute('content', tema === 'oscuro' ? '#0F1F1A' : '#EFE0C3');
 };
 
 export function TemaProvider({ children }) {
